@@ -26,12 +26,11 @@ public class WeaponController : MonoBehaviour
 		_rb = GetComponent<Rigidbody> ();
 		_audio = GetComponent<AudioSource> ();
 
-		if (gameObject.name.Equals("Handgun")) {
+		if (gameObject.tag.Equals("Weapon")) {
             
 			_keyCode = KeyCode.KeypadEnter;
 		}
-
-		shotSpawn.transform.localPosition = Vector3.zero; 
+        
 	}
 
 	void Update() {
