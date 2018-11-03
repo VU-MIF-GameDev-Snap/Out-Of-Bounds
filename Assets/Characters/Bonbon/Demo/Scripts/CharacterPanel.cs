@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class CharacterPanel : MonoBehaviour {
+public class demo_CharacterPanel : MonoBehaviour {
 
 	public GameObject character;
 	public Transform weaponsPanel;
@@ -13,8 +13,8 @@ public class CharacterPanel : MonoBehaviour {
 	public Button buttonPrefab;
 	public Slider motionSpeed;
 
-	Actions actions;
-	PlayerController controller;
+	demo_Actions actions;
+	demo_PlayerController controller;
 	Camera[] cameras;
 
 	void Start () {
@@ -22,10 +22,10 @@ public class CharacterPanel : MonoBehaviour {
 	}
 
 	void Initialize () {
-		actions = character.GetComponent<Actions> ();
-		controller = character.GetComponent<PlayerController> ();
+		actions = character.GetComponent<demo_Actions> ();
+		controller = character.GetComponent<demo_PlayerController> ();
 
-		foreach (PlayerController.Arsenal a in controller.arsenal)
+		foreach (demo_PlayerController.Arsenal a in controller.arsenal)
 			CreateWeaponButton(a.name);
 
 		CreateActionButton("Stay");
