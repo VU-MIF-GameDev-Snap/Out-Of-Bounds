@@ -923,7 +923,6 @@ GameObject:
   - component: {fileID: 4340756593852988}
   - component: {fileID: 95328768735403816}
   - component: {fileID: 143876720745749944}
-  - component: {fileID: 136900707646149816}
   - component: {fileID: 114980465727408920}
   m_Layer: 0
   m_Name: Valkyrie
@@ -1348,7 +1347,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819272110068340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.38299, y: 3.6499996, z: 26.854002}
+  m_LocalPosition: {x: 27.194387, y: 3.37, z: 26.567474}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005979302169318}
@@ -2083,8 +2082,8 @@ Animator:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819272110068340}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3c3fc619bafafe241b38f715425451c1, type: 3}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 97d3183532e74a84c8e450b53ebe7038, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6520d7760e24bb3429929a0b8a461f6e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2109,19 +2108,6 @@ MonoBehaviour:
   Gravity: -27.6
   DashDistance: 5
   Drag: {x: 1, y: 0, z: 0}
---- !u!136 &136900707646149816
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1819272110068340}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.3
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!137 &137216799778853880
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
