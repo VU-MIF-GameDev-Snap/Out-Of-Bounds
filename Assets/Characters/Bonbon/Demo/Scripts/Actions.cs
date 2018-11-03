@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (Animator))]
-public class Actions : MonoBehaviour {
+public class demo_Actions : MonoBehaviour {
 
 	private Animator animator;
 
