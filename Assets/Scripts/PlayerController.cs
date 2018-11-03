@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
         }   
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        _animator.SetFloat ("Speed", move.magnitude);
+        _animator.SetFloat ("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
         if (Input.GetButtonDown("Dash"))
         {
@@ -54,8 +54,10 @@ public class PlayerController : MonoBehaviour {
 
         _velocity.x /= 1 + Drag.x * Time.deltaTime;
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
-
+        Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (move * Speed)) * Time.deltaTime);
-        transform.rotation = Quaternion.LookRotation(move);
+        
+        if (move != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(move);
     }
 }
