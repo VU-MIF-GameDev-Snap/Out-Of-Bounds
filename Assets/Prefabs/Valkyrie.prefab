@@ -926,7 +926,7 @@ GameObject:
   - component: {fileID: 136900707646149816}
   - component: {fileID: 114980465727408920}
   m_Layer: 0
-  m_Name: xbot
+  m_Name: Valkyrie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

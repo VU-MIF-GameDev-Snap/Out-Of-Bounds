@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class CharacterViewer : MonoBehaviour {
+public class demo_CharacterViewer : MonoBehaviour {
 	
 	public Transform cameras;
 
