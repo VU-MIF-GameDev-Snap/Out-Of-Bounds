@@ -12,14 +12,15 @@ public class Boundary {
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponController : MonoBehaviour
 {
-	public GameObject shot;
+    private Rigidbody _rb;
+    private AudioSource _audio;
+    private float _nextFire;
+    private KeyCode _keyCode;
+
+    public GameObject shot;
 	public Transform shotSpawn;
 	public float fireRate;
-
-	private Rigidbody _rb;
-	private AudioSource _audio;
-	private float _nextFire;
-	private KeyCode _keyCode;
+    public int ammo;
 
 	void Start() {
 
@@ -35,13 +36,15 @@ public class WeaponController : MonoBehaviour
 
 	void Update() {
 
-		if (Input.GetKeyDown (_keyCode) && Time.time > _nextFire) {
+		if (Input.GetKey (_keyCode) && Time.time > _nextFire && ammo > 0) {
 			
 			_nextFire = Time.time + fireRate;
             
 			Instantiate (shot, shotSpawn.position, shotSpawn.rotation);
 
             _audio.Play ();
+
+            ammo--;
 		}
 	}
 }
