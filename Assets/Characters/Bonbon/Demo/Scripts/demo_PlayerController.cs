@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (Animator))]
+[RequireComponent (typeof(AudioSource))]
 public class demo_PlayerController : MonoBehaviour {
 
 	public Transform rightGunBone;
@@ -9,12 +10,24 @@ public class demo_PlayerController : MonoBehaviour {
 	public Arsenal[] arsenal;
 
 	private Animator animator;
+    private AudioSource _deathSound;
 
-	void Awake() {
+    private void Start()
+    {
+        _deathSound = GetComponent<AudioSource>();
+    }
+
+    public void Die()
+    {
+        _deathSound.Play();
+        new WaitForSeconds(1);
+    }
+
+    void Awake() {
 		animator = GetComponent<Animator> ();
 		if (arsenal.Length > 0)
 			SetArsenal (arsenal[0].name);
-		}
+	}
 
 	public void SetArsenal(string name) {
 		foreach (Arsenal hand in arsenal) {
@@ -37,7 +50,7 @@ public class demo_PlayerController : MonoBehaviour {
 				}
 				animator.runtimeAnimatorController = hand.controller;
 				return;
-				}
+			}
 		}
 	}
 

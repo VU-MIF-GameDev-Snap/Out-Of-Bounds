@@ -38,10 +38,11 @@ GameObject:
   - component: {fileID: 4217490237949512}
   - component: {fileID: 54081898563191090}
   - component: {fileID: 136664570683557026}
+  - component: {fileID: 114219699639527184}
   - component: {fileID: 114852216082371288}
   m_Layer: 0
   m_Name: Bolt Rifle
-  m_TagString: Enemy
+  m_TagString: Bolt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,6 +131,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114219699639527184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1989668967883728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff44af1ac2e8e94e83c55e5d00b3985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114852216082371288
 MonoBehaviour:
   m_ObjectHideFlags: 1
