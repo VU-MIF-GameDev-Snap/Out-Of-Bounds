@@ -76,10 +76,12 @@ public class HomingMissile : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject == Owner || other.CompareTag("Missile") || other.CompareTag("Boundary"))
+		if(other.transform.root.gameObject == Owner || other.CompareTag("Missile") || other.CompareTag("Boundary"))
 		{
 			return;
 		}
+
+		Debug.Log(other.name);
 
 		var missilePosition = transform.position;
 

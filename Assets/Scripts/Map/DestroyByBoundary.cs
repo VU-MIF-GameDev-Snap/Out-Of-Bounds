@@ -5,7 +5,7 @@ using UnityEngine;
 public class DestroyByBoundary : MonoBehaviour {
 
 	void OnTriggerExit(Collider other) {
-        if (other.CompareTag("Weapon") || other.CompareTag("Bolt"))
+        if (other.CompareTag("Weapon") || other.CompareTag("Bolt") || other.CompareTag("Missile"))
         {
             Destroy(other.gameObject);
         }
