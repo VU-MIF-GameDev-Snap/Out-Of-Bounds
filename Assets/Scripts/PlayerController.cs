@@ -63,5 +63,10 @@ public class PlayerController : MonoBehaviour {
         
         if (move != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(move);
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            _animator.SetTrigger("Punch");
+        }
     }
 }
