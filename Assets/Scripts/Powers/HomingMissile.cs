@@ -2,34 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Homing_missile : MonoBehaviour
+public class HomingMissile : MonoBehaviour
 {
-
+	private GameObject Owner;
 	private Rigidbody _rb;
 	private List<Transform> _characters = new List<Transform>();
 
 	public float distanceToFollow;
 	public float angleChangingSpeed;
 	public float movementSpeed;
-	public GameObject owner;
+
+	public void Initialize(object owner)
+	{
+		if(owner as GameObject)
+		{
+			Owner = owner as GameObject;
+		}
+
+		// Get all other characters to follow
+		var characters = GameObject.FindGameObjectsWithTag("Character");
+
+		foreach(GameObject c in characters)
+		{
+			var character = c.transform.parent.parent;
+
+			if(character.gameObject != Owner)
+			{
+				_characters.Add(character);
+			}
+		}
+	}
 
 	// Use this for initialization
 	void Start ()
 	{
 		_rb = GetComponent<Rigidbody>();
-
-		// Get all other characters to follow
-		var characters = GameObject.FindGameObjectsWithTag("Character");
-		
-		foreach(GameObject c in characters)
-		{
-			var character = c.transform.parent.parent;
-
-			if(character.gameObject != owner)
-			{
-				_characters.Add(character);
-			}
-		}
 	}
 	
 	void FixedUpdate ()
@@ -48,27 +55,27 @@ public class Homing_missile : MonoBehaviour
 
 		if(!target || distanceToFollow < Vector3.Distance(transform.position, target.position))
 		{
-			flyStraight();
+			FlyStraight();
 		}
 		else
 		{
-			flyStraight();
-			followTarget(target.GetComponent<Collider>().bounds.center);
+			FlyStraight();
+			FollowTarget(target.GetComponent<Collider>().bounds.center);
 		}
     }
 
-	private void flyForward()
+	private void FlyForward()
 	{
 		_rb.velocity = transform.forward * movementSpeed;
 	}
 
-	private void flyStraight()
+	private void FlyStraight()
 	{
 		_rb.angularVelocity = new Vector3(0, 0, 0);
-		flyForward();
+		FlyForward();
 	}
 
-	private void followTarget(Vector3 target)
+	private void FollowTarget(Vector3 target)
 	{
 		var target2D = new Vector2(target.x, target.y);
 		var rocket2D = new Vector2(transform.position.x, transform.position.y);
@@ -79,6 +86,6 @@ public class Homing_missile : MonoBehaviour
 
 		_rb.angularVelocity = new Vector3(0, 0, angleChangingSpeed * Mathf.Clamp(-angle, -1, 1));
 		
-		flyForward();
+		FlyForward();
 	}
 }

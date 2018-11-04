@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114789289926630660}
   - component: {fileID: 54327911405330282}
   m_Layer: 0
-  m_Name: Homing_missile
+  m_Name: HomingMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26bb3220556d2448bcfe8ba91bdf6e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToFollow: 12
+  distanceToFollow: 8
   angleChangingSpeed: 3
   movementSpeed: 7
-  owner: {fileID: 0}
+  Owner: {fileID: 0}
