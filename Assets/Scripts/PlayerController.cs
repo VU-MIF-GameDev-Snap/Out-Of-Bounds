@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour {
 
     [Header("Player controller variables")]
@@ -17,12 +18,15 @@ public class PlayerController : MonoBehaviour {
     private Vector3 _velocity;
     private Animator _animator;
     private PlayerInputManager _inputManager;
+    private AudioSource _deathSound;
+    private float _deathTime;
 
     void Start ()
     {
         _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _inputManager = GetComponent<PlayerInputManager>();
+        _deathSound = GetComponent<AudioSource>();
     }
 
     void Update ()
@@ -63,5 +67,16 @@ public class PlayerController : MonoBehaviour {
         
         if (move != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(move);
+
+        if(_deathTime > 0 && _deathTime <= Time.time)
+            Destroy(gameObject);
+    }
+
+    public void Die()
+    {
+        _deathSound.Play();
+        //yield return new WaitForSeconds(1);
+        // wait for 1 sec
+        _deathTime = Time.time + 2;
     }
 }
