@@ -14,12 +14,21 @@ public class PlayerController : MonoBehaviour {
     public float DashDistance = 5f;
     public Vector3 Drag;
 
+    [Header("Power1")]
+    public GameObject Rocket;
+    public Transform RocketSpawn1;
+    public Transform RocketSpawn2;
+    public float Power1Cooldown;
+
     private CharacterController _controller;
     private Vector3 _velocity;
     private Animator _animator;
     private PlayerInputManager _inputManager;
     private AudioSource _deathSound;
     private float _deathTime;
+
+    // for Power1
+    private float _timeStamp = 0;
 
     void Start ()
     {
@@ -68,6 +77,11 @@ public class PlayerController : MonoBehaviour {
         if (move != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(move);
 
+        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
+        {
+            Power1();
+        }
+
         if(_deathTime > 0 && _deathTime <= Time.time)
             Destroy(gameObject);
     }
@@ -78,5 +92,19 @@ public class PlayerController : MonoBehaviour {
         //yield return new WaitForSeconds(1);
         // wait for 1 sec
         _deathTime = Time.time + 2;
+    }
+
+    private void Power1()
+    {
+        if (_timeStamp <= Time.time)
+        {
+            _timeStamp = Time.time + Power1Cooldown;
+
+            var rocket1 = Instantiate (Rocket, RocketSpawn1.position, RocketSpawn1.rotation);
+            var rocket2 = Instantiate (Rocket, RocketSpawn2.position, RocketSpawn2.rotation);
+
+            rocket1.SendMessage("Initialize", transform.root.gameObject);
+            rocket2.SendMessage("Initialize", transform.root.gameObject);
+        }
     }
 }

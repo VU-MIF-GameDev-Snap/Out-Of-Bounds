@@ -12,7 +12,6 @@ public class Boundary {
 [RequireComponent(typeof(Rigidbody))]
 public class WeaponController : MonoBehaviour
 {
-    private Rigidbody _rb;
     private AudioSource _audio;
     private float _nextFire;
     private KeyCode _keyCode;
@@ -23,8 +22,6 @@ public class WeaponController : MonoBehaviour
     public int ammo;
 
 	void Start() {
-
-		_rb = GetComponent<Rigidbody> ();
 		_audio = GetComponent<AudioSource> ();
 
 		if (gameObject.tag.Equals("Weapon")) {
