@@ -81,7 +81,10 @@ public class PlayerController : MonoBehaviour
         if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
-        }
+        }   
+
+        // Force z-axis lock
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         _velocity.x /= 1 + Drag.x * Time.deltaTime;
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
