@@ -24,7 +24,7 @@ public class HitEvent : MonoBehaviour
                 return;
 
             var enemy = collider.gameObject.GetComponent<PlayerController>();
-            enemy.SendMessage("ReceiveHit", _message);
+            enemy.SendMessage("OnHit", _message);
 
             // '_message' is explicitly set to null to avoid double hit registration
             _message = null;
