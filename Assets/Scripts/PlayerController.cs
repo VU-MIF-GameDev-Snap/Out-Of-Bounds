@@ -7,10 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour 
 {
     [Header("Player's body parts")]
-    public GameObject RightFist;
+    public GameObject RightFist; 
     private HitEvent _rightFist;
 
 
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _velocity;
     private Animator _animator;
     private PlayerInputManager _inputManager;
+    private AudioSource _deathSound;
+    private float _deathTime;
 
 
     void Start ()
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _inputManager = GetComponent<PlayerInputManager>();
         _rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
+        _deathSound = GetComponent<AudioSource>();
     }
 
     void Update ()
@@ -73,6 +77,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
             Hit(_rightFist, HitType.Punch, PunchDamage);
+
+        if(_deathTime > 0 && _deathTime <= Time.time)
+            Destroy(gameObject);
     }
 
     private void Jump ()
@@ -112,5 +119,13 @@ public class PlayerController : MonoBehaviour
             return;
 
         Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
+    }
+
+    public void Die()
+    {
+        _deathSound.Play();
+        //yield return new WaitForSeconds(1);
+        // wait for 1 sec
+        _deathTime = Time.time + 2;
     }
 }
