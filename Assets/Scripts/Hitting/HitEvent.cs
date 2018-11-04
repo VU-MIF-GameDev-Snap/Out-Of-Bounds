@@ -18,7 +18,7 @@ public class HitEvent : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {   
-        if (collider.gameObject.CompareTag("Enemy"))
+        if (collider.gameObject.CompareTag("Player"))
         {
             if (_message == null)
                 return;
