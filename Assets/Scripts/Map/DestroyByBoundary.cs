@@ -9,5 +9,11 @@ public class DestroyByBoundary : MonoBehaviour {
         {
             Destroy(other.gameObject);
         }
-	}
+
+        if (other.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerController>().Die();
+            //Destroy(other.gameObject);
+        }
+    }
 }
