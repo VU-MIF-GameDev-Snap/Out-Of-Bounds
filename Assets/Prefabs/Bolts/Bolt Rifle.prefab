@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 136664570683557026}
   - component: {fileID: 114219699639527184}
   - component: {fileID: 114852216082371288}
+  - component: {fileID: 114777114284217492}
   m_Layer: 0
   m_Name: Bolt Rifle
   m_TagString: Bolt
@@ -142,6 +143,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ff44af1ac2e8e94e83c55e5d00b3985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114777114284217492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1989668967883728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ef42a023c2c264e9cdd15cdd6569cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114852216082371288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f4fb0c475746645b8c9a90c61c11e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 10
 --- !u!136 &136664570683557026
 CapsuleCollider:
   m_ObjectHideFlags: 1

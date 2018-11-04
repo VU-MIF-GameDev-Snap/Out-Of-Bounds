@@ -14,7 +14,8 @@ public class WeaponController : MonoBehaviour
     [Header("Weapon attributes")]
 	public float FireRate = 0.1f;
     public int Ammo = 5;
-    public float Damage;    
+    public int Damage = 5;
+    public int KnockbackValue = 5;
 
     [Header("External objects")]
     public GameObject Shot;
@@ -52,7 +53,11 @@ public class WeaponController : MonoBehaviour
             return;
 
         _nextFire = Time.time + FireRate;
-        Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
+
+        var bullet = Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
+        var message = new HitMessage() 
+        { HitType = HitType.Rifle, Damage = Damage, KnockbackValue = KnockbackValue, KnockbackDirection = this.transform.forward };
+        bullet.SendMessage("Initialise", message);
         _audio.Play();
         Ammo--;
         if (Ammo <= 0)
