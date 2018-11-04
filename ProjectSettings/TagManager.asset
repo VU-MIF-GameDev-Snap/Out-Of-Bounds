@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Bolt
   - Weapon
+  - Character
   layers:
   - Default
   - TransparentFX

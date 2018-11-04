@@ -58,10 +58,20 @@ public class Homing_missile : MonoBehaviour {
 	}
 
 	private void followTarget(Transform target) {
-		var direction = (target.position - transform.position).normalized;
-		var lookRotation = Quaternion.LookRotation(direction);
+		Vector3 aimVector = target.position - transform.position;
+		Quaternion newRotation = Quaternion.LookRotation(aimVector, transform.up);
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * angleChangingSpeed);
+		transform.eulerAngles = new Vector3(transform.eulerAngles.x, 270, 0);
+		//direction.y = 0;
+		//direction.z = 0;
+		//var lookRotation = Quaternion.LookRotation(direction);
+		//lookRotation = Quaternion.Euler(lookRotation.eulerAngles.x, transform.eulerAngles.y, 0);
 
-		transform.rotation = Quaternion.Slerp (transform.rotation, lookRotation, Time.deltaTime * angleChangingSpeed);
+
+		//var yCoord = transform.rotation.eulerAngles.y;
+		//var temp = Quaternion.Slerp (transform.rotation, lookRotation, Time.deltaTime * angleChangingSpeed);
+		//transform.rotation = Quaternion.Euler(temp.eulerAngles.x, transform.rotation.eulerAngles.y, 0f);
+		//transform.eulerAngles = new Vector3(transform.rotation.eulerAngles.x, yCoord, 0);
 		
 		flyStraight();
 	}
