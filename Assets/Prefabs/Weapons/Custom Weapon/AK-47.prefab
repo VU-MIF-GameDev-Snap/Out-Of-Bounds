@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1348378874746838}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.75924426, y: 2.14, z: -0.037822723}
+  m_LocalPosition: {x: 2.58, y: 1.66, z: -0.037822723}
   m_LocalScale: {x: 0.03416309, y: 0.03416309, z: 0.03416309}
   m_Children:
   - {fileID: 4920837066223600}
@@ -414,6 +414,7 @@ MonoBehaviour:
   SelfDestructTimer: 5
   FireRate: 0.1
   Ammo: 5
-  Damage: 0
+  Damage: 5
+  KnockbackValue: 5
   Shot: {fileID: 1989668967883728, guid: 99ab7b7acbd3b0c4da1c384c59e29bd2, type: 2}
   shotSpawn: {fileID: 4475767614550628}
