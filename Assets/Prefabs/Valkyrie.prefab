@@ -923,7 +923,8 @@ GameObject:
   - component: {fileID: 4340756593852988}
   - component: {fileID: 95328768735403816}
   - component: {fileID: 143876720745749944}
-  - component: {fileID: 114980465727408920}
+  - component: {fileID: 114365761844886974}
+  - component: {fileID: 114610106542214402}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Untagged
@@ -1346,8 +1347,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1819272110068340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.194387, y: 3.37, z: 26.567474}
+  m_LocalRotation: {x: 0, y: 0.6688062, z: 0, w: 0.7434368}
+  m_LocalPosition: {x: 25.327883, y: 3.37, z: 26.615065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005979302169318}
@@ -1355,7 +1356,7 @@ Transform:
   - {fileID: 4486549407978880}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 83.95, z: 0}
 --- !u!4 &4358364818195968
 Transform:
   m_ObjectHideFlags: 1
@@ -2084,15 +2085,15 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 97d3183532e74a84c8e450b53ebe7038, type: 3}
   m_Controller: {fileID: 9100000, guid: 6520d7760e24bb3429929a0b8a461f6e, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114980465727408920
+--- !u!114 &114365761844886974
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2100,14 +2101,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1819272110068340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b214f1aa5a572640bde25a0dcd17291, type: 3}
+  m_Script: {fileID: 11500000, guid: e9aa840a3854ebd47b920d1a5c7d693f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3.41
-  JumpHeight: 2.95
-  Gravity: -27.6
+  Speed: 5
+  JumpHeight: 2
+  Gravity: -30
   DashDistance: 5
   Drag: {x: 1, y: 0, z: 0}
+--- !u!114 &114610106542214402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1819272110068340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d464f6391bedaef4bbd8e84da238f210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerId: 1
 --- !u!137 &137216799778853880
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -2322,4 +2335,4 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.99, z: 0}
