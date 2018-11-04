@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4475937, g: 0.4975618, b: 0.57535064, a: 1}
+  m_IndirectSpecularColor: {r: 0.44759393, g: 0.49756253, b: 0.5753516, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -467,16 +467,6 @@ Prefab:
       propertyPath: m_Name
       value: Valkyrie (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 114610106542214402, guid: d4a9249b34808ff4ba6bb6904191c9b1,
-        type: 2}
-      propertyPath: PlayerId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114652524466864490, guid: d4a9249b34808ff4ba6bb6904191c9b1,
-        type: 2}
-      propertyPath: KnockValue
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a9249b34808ff4ba6bb6904191c9b1, type: 2}
   m_IsPrefabAsset: 0
@@ -603,24 +593,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 82952131887435508, guid: d4a9249b34808ff4ba6bb6904191c9b1,
-        type: 2}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340756593852988, guid: d4a9249b34808ff4ba6bb6904191c9b1, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 114610106542214402, guid: d4a9249b34808ff4ba6bb6904191c9b1,
         type: 2}
       propertyPath: PlayerId
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114652524466864490, guid: d4a9249b34808ff4ba6bb6904191c9b1,
-        type: 2}
-      propertyPath: hitpoints
-      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a9249b34808ff4ba6bb6904191c9b1, type: 2}
