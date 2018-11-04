@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 move = new Vector3(horizontalInput, 0, 0);
         _animator.SetFloat ("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool ("IsGrounded", _controller.isGrounded);
-
+    
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
         {
             Debug.Log("Dash");
