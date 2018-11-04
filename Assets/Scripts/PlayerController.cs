@@ -11,12 +11,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour 
 {
     [Header("Player's body parts")]
-    public GameObject RightFist; 
+    public GameObject RightFist; // USE: for punch events
     private HitEvent _rightFist;
 
 
     [Header("Player's damage")]
     public int PunchDamage = 54;
+
+
+    private GameObject _weapon;
 
 
     [Header("Player controller variables")]
@@ -47,8 +50,9 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
         _inputManager = GetComponent<PlayerInputManager>();
-        _rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
         _deathSound = GetComponent<AudioSource>();
+
+        _rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
     }
 
     void Update ()
@@ -82,13 +86,14 @@ public class PlayerController : MonoBehaviour
         if (direction != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(direction);
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage);
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
-        {
             Power1();
-        }
+
+        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
+            Shoot();
 
         if(_deathTime > 0 && _deathTime <= Time.time)
             Destroy(gameObject);
@@ -124,15 +129,13 @@ public class PlayerController : MonoBehaviour
         _animator.SetTrigger(type.ToString());
     }
 
-    public void ReceiveHit(object message)
+    private void Shoot()
     {
-        var msg = message as HitMessage;
-        if (msg == null)
+        if (_weapon == null)
             return;
 
-        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
+        _weapon.SendMessage("Fire");
     }
-
     public void Die()
     {
         _deathSound.Play();
@@ -153,5 +156,36 @@ public class PlayerController : MonoBehaviour
             rocket1.SendMessage("Initialize", transform.root.gameObject);
             rocket2.SendMessage("Initialize", transform.root.gameObject);
         }
+    }
+
+    // --------------------------------------------
+    // ------------------ EVENTS ------------------
+    // --------------------------------------------
+
+    public void OnWeaponPickup (object message)
+    {
+        var weapon = message as GameObject;
+        if (weapon == null || _weapon != null)
+            return;
+
+        // Will stick when player jumps instead of detaching
+        weapon.GetComponent<Rigidbody>().isKinematic = true;
+        // Make sure the weapon faces the same direction as the player
+        var playerDirection = transform.forward;
+        weapon.transform.forward = playerDirection;
+        // Stick it to the player's body
+        weapon.transform.SetParent(this.transform, true);
+        _weapon = weapon;
+
+        Debug.Log(gameObject.name + " picked up a " + weapon.name);
+    }
+
+    public void OnHit(object message)
+    {
+        var msg = message as HitMessage;
+        if (msg == null)
+            return;
+
+        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
     }
 }
