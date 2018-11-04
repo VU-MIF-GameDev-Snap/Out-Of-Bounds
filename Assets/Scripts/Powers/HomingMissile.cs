@@ -81,12 +81,13 @@ public class HomingMissile : MonoBehaviour
 			return;
 		}
 
-		var position = transform.position;
+		var missilePosition = transform.position;
 
 		// Hit players with explosion if necessary
 		foreach(Transform t in _characters)
 		{
-			var distance = Vector3.Distance(position, t.position);
+			var target = t.GetComponent<Collider>().bounds.center;
+			var distance = Vector3.Distance(missilePosition, target);
 
 			if(distance < ExplosionRadius)
 			{
@@ -94,11 +95,10 @@ public class HomingMissile : MonoBehaviour
 				var hitMessage = new HitMessage();
 				
 				hitMessage.Damage = (int)(Damage * factor);
-				// TODO: add these to hitMessage after hitMessage is updated
-				var knockbackStrength = KnockbackStrength * factor;
-				var knockbackDirection = (t.position - position).normalized;
+				hitMessage.KnockbackValue = (int)(KnockbackStrength * factor);
+				hitMessage.KnockbackDirection = (target - missilePosition).normalized;
 
-				//t.gameObject.SendMessage("OnHit", hitMessage);
+				t.gameObject.SendMessage("OnHit", hitMessage);
 			}
 		}
 
