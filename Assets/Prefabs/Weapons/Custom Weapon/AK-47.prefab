@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 54072830483383354}
   - component: {fileID: 82197463879572286}
   - component: {fileID: 114486786976403314}
-  - component: {fileID: 114560648860190608}
   - component: {fileID: 65943973583069296}
   m_Layer: 0
   m_Name: AK-47
@@ -103,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1348378874746838}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 4.3361177, y: 1.607, z: -0.13402808}
+  m_LocalPosition: {x: -0.75924426, y: 2.14, z: -0.037822723}
   m_LocalScale: {x: 0.03416309, y: 0.03416309, z: 0.03416309}
   m_Children:
   - {fileID: 4920837066223600}
@@ -412,19 +411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b97ab52cf0cd44eaee17f087097635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 1989668967883728, guid: 99ab7b7acbd3b0c4da1c384c59e29bd2, type: 2}
+  SelfDestructTimer: 5
+  FireRate: 0.1
+  Ammo: 5
+  Damage: 0
+  Shot: {fileID: 1989668967883728, guid: 99ab7b7acbd3b0c4da1c384c59e29bd2, type: 2}
   shotSpawn: {fileID: 4475767614550628}
-  fireRate: 0.1
-  ammo: 5
---- !u!114 &114560648860190608
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1348378874746838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8374110114f11d4b968792af25a443c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifetime: 3

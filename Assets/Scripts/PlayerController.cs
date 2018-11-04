@@ -135,27 +135,6 @@ public class PlayerController : MonoBehaviour
         _animator.SetTrigger(type.ToString());
     }
     
-    public void OnHit(object message)
-    {
-        var msg = message as HitMessage;
-        if (msg == null)
-            return;
-
-        if (hitpoints < maxHitpoints)
-        {
-            if (msg.Damage + hitpoints <= maxHitpoints)
-                hitpoints += msg.Damage;
-            else if (msg.Damage + hitpoints > maxHitpoints)
-                hitpoints = maxHitpoints;
-        }
-
-        if (msg.KnockbackValue >= 0 && msg.KnockbackValue <= 100)
-            _velocity += msg.KnockbackDirection * msg.KnockbackValue * hitpoints * KnockbackFactor;
-
-        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
-        Debug.Log(" Player HP: '" + hitpoints);
-        Debug.Log(" Player Velocity: '" + _velocity);
-    }
     public void Die()
     {
         _deathSound.Play();
@@ -189,6 +168,27 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     // ------------------ EVENTS ------------------
     // --------------------------------------------
+    public void OnHit(object message)
+    {
+        var msg = message as HitMessage;
+        if (msg == null)
+            return;
+
+        if (hitpoints < maxHitpoints)
+        {
+            if (msg.Damage + hitpoints <= maxHitpoints)
+                hitpoints += msg.Damage;
+            else if (msg.Damage + hitpoints > maxHitpoints)
+                hitpoints = maxHitpoints;
+        }
+
+        if (msg.KnockbackValue >= 0 && msg.KnockbackValue <= 100)
+            _velocity += msg.KnockbackDirection * msg.KnockbackValue * hitpoints * KnockbackFactor;
+
+        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
+        Debug.Log(" Player HP: '" + hitpoints);
+        Debug.Log(" Player Velocity: '" + _velocity);
+    }
 
     public void OnWeaponPickup (object message)
     {
