@@ -13,7 +13,6 @@ public class DestroyByBoundary : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().Die();
-            //Destroy(other.gameObject);
         }
     }
 }
