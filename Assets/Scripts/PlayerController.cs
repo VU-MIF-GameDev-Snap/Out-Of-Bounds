@@ -206,11 +206,15 @@ public class PlayerController : MonoBehaviour
         if (weapon == null || _weapon != null)
             return;
 
-        // Will stick when player jumps instead of detaching
+        // Will make it stick when player jumps instead of detaching
         weapon.GetComponent<Rigidbody>().isKinematic = true;
         // Make sure the weapon faces the same direction as the player
         var playerDirection = transform.forward;
         weapon.transform.forward = playerDirection;
+        // Put the weapon in the middle of the player's model
+        var playerBottom = transform.position;
+        playerBottom.y += 1; // halfway from bottom of model
+        weapon.transform.position = playerBottom;
         // Stick it to the player's body
         weapon.transform.SetParent(this.transform, true);
         _weapon = weapon;
