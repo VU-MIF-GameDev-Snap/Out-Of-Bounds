@@ -14,10 +14,14 @@ public class PlayerController : MonoBehaviour
     public GameObject RightFist; // USE: for punch events
     private HitEvent _rightFist;
 
+    [Header("Player's hitpoints")]
+    public int hitpoints = 0;
+    public int maxHitpoints = 300;
 
     [Header("Player's damage")]
-    public int PunchDamage = 54;
-
+    public int PunchDamage = 5;
+    public int KnockValue = 5;
+    //public Vector3 KnockDirection = GameObject.transform.forward;
 
     private GameObject _weapon;
 
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public float JumpHeight = 2f;
     public float Gravity = -9.81f;
     public float DashDistance = 5f;
+    public float KnockbackFactor = 0.002f;
     public Vector3 Drag;
 
     [Header("Power1")]
@@ -87,7 +92,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direction);
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
-            Hit(_rightFist, HitType.Punch, PunchDamage);
+            Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
             Power1();
@@ -120,13 +125,43 @@ public class PlayerController : MonoBehaviour
     }
 
     // You use your '_rightHand' to 'HitType.Punch' and deal '50' damage
-    private void Hit(HitEvent bodyPart, HitType type, int damage)
+    private void Hit(HitEvent bodyPart, HitType type, int damage, int knockValue)
     {
-        var msg = new HitMessage() { HitType = type, Damage = damage };
+        var msg = new HitMessage()
+        { HitType = type, Damage = damage, KnockbackValue = knockValue, KnockbackDirection = transform.forward };
         bodyPart.SendMessage("Initialise", msg);
 
         // Debug.Log("Type: " + hit + " Damage: " + damage);
         _animator.SetTrigger(type.ToString());
+    }
+    
+    public void OnHit(object message)
+    {
+        var msg = message as HitMessage;
+        if (msg == null)
+            return;
+
+        if (hitpoints < maxHitpoints)
+        {
+            if (msg.Damage + hitpoints <= maxHitpoints)
+                hitpoints += msg.Damage;
+            else if (msg.Damage + hitpoints > maxHitpoints)
+                hitpoints = maxHitpoints;
+        }
+
+        if (msg.KnockbackValue >= 0 && msg.KnockbackValue <= 100)
+            _velocity += msg.KnockbackDirection * msg.KnockbackValue * hitpoints * KnockbackFactor;
+
+        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
+        Debug.Log(" Player HP: '" + hitpoints);
+        Debug.Log(" Player Velocity: '" + _velocity);
+    }
+    public void Die()
+    {
+        _deathSound.Play();
+        //yield return new WaitForSeconds(1);
+        // wait for 1 sec
+        _deathTime = Time.time + 2;
     }
 
     private void Shoot()
@@ -135,13 +170,6 @@ public class PlayerController : MonoBehaviour
             return;
 
         _weapon.SendMessage("Fire");
-    }
-    public void Die()
-    {
-        _deathSound.Play();
-        //yield return new WaitForSeconds(1);
-        // wait for 1 sec
-        _deathTime = Time.time + 2;
     }
 
     private void Power1()
@@ -178,14 +206,5 @@ public class PlayerController : MonoBehaviour
         _weapon = weapon;
 
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
-    }
-
-    public void OnHit(object message)
-    {
-        var msg = message as HitMessage;
-        if (msg == null)
-            return;
-
-        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
     }
 }
