@@ -7,7 +7,7 @@ public class PickupEvent : MonoBehaviour
 {
     public GameObject PlayerModel;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
         // TODO: Won't work if weapon is on the ground
         if (collision.gameObject.CompareTag("Weapon"))
