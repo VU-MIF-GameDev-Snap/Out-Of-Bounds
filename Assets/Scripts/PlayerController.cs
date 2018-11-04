@@ -3,6 +3,9 @@ using System.Collections;
 
 using UnityEngine;
 
+// VERY TEMPORARY PLS DELETE AS SOON AS POSSIBLE!!
+using UnityEngine.SceneManagement;
+
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
@@ -104,7 +107,11 @@ public class PlayerController : MonoBehaviour
             Shoot();
 
         if(_deathTime > 0 && _deathTime <= Time.time)
+        {
             Destroy(gameObject);
+            // THIS SHOULD NOT BE HERE DELETE THIS NOW
+            SceneManager.LoadScene(1);
+        }
     }
 
     private void Jump ()
