@@ -11,10 +11,11 @@ public class PlayerInputManager : MonoBehaviour
 
 	public enum Key
 	{
-		Jump,
-		Dash,
 		MoveHorizontal,
 		MoveVertical,
+		Jump,
+		Dash,
+		Punch,
 	}
 
 
