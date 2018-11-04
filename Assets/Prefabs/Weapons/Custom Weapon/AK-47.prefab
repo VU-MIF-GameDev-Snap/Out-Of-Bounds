@@ -415,7 +415,7 @@ MonoBehaviour:
   shot: {fileID: 1989668967883728, guid: 99ab7b7acbd3b0c4da1c384c59e29bd2, type: 2}
   shotSpawn: {fileID: 4475767614550628}
   fireRate: 0.1
-  ammo: 0
+  ammo: 5
 --- !u!114 &114560648860190608
 MonoBehaviour:
   m_ObjectHideFlags: 1
