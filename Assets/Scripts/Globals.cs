@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class Globals
 {
-	public static IList<int> ActivePlayers = new List<int>();
+	public static IList<PlayerDescriptor> Players = new List<PlayerDescriptor>();
 }

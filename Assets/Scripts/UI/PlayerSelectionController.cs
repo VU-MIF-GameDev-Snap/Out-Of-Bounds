@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerSelectionController : MonoBehaviour {
 
@@ -16,45 +17,57 @@ public class PlayerSelectionController : MonoBehaviour {
 		});
 		_uiSelectPlayers = GameObject.FindGameObjectsWithTag("UI_CharacterSelectComponent");
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		// wait for button presses from all players "a" "space" stuff like that
-		// if pressed, show required elements.
-		// 
-		if(!_uiSelectPlayers.Any((GameObject s) => {
-			var selector = s.GetComponent<CharacterSelectionController>();
-			return selector.PlayerId != 0 && !selector.Confirmed;
-		}) && 2 <= _uiSelectPlayers.Count((GameObject s) => {
-			var selector = s.GetComponent<CharacterSelectionController>();
-			return selector.PlayerId != 0 && !selector.Confirmed;
-		}))
+		if(!gameObject.activeSelf)
 		{
 			return;
 		}
 
+		// Load first scene if at least 2 players have selected and confirmed selection.
+		if(_uiSelectPlayers.Where((GameObject s) => {
+			var selector = s.GetComponent<CharacterSelectionController>();
+			return selector.PlayerId != 0;
+		}).All((GameObject s) => {
+			var selector = s.GetComponent<CharacterSelectionController>();
+			return selector.Confirmed;
+		}) && 2 <= _uiSelectPlayers.Count((GameObject s) => {
+			var selector = s.GetComponent<CharacterSelectionController>();
+			return selector.PlayerId != 0 && selector.Confirmed;
+		}))
+		{
+			SceneManager.LoadScene(1);
+		}
+
 		foreach (var manager in _playerInputManagers)
 		{
+			if(_uiSelectPlayers.Any((o) =>
+				{
+					return o.GetComponent<CharacterSelectionController>().PlayerId == manager.PlayerId;
+				}))
+			{
+				continue;
+			}
+
 			if(manager.IsButtonPressed(PlayerInputManager.Key.Jump))
 			{
-				if(Globals.ActivePlayers.Contains(manager.PlayerId) || Globals.ActivePlayers.Count >= 4)
+				// New player has pressed "join"
+				// If there are any free spots only then add new player
+				var freeSpot = _uiSelectPlayers.FirstOrDefault((GameObject o) =>
+					{
+						return (o.GetComponent<CharacterSelectionController>().PlayerId == 0);
+					});
+
+				if(freeSpot == null)
 				{
 					break;
 				}
-				Globals.ActivePlayers.Add(manager.PlayerId);
-				// set board 
-				
-				var freeSpot = _uiSelectPlayers.FirstOrDefault((GameObject o) => {
-					return (o.GetComponent<CharacterSelectionController>().PlayerId == 0);
-				});
-				
-				if(freeSpot == null)
-					break;
-				
+
 				freeSpot.GetComponent<CharacterSelectionController>().PlayerId = manager.PlayerId;
 			}
 		}
 	}
 
-	
+
 }
