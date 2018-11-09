@@ -4,12 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerSelectionController : MonoBehaviour {
+public class PlayerSelectionController : MonoBehaviour
+{
 
 	private IEnumerable<PlayerInputManager> _playerInputManagers;
 	private IEnumerable<GameObject> _uiSelectPlayers;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		_playerInputManagers = GetComponents(typeof(PlayerInputManager)).Where((Component c) => {
 			return c is PlayerInputManager;
 		}).Select((Component c) => {
@@ -19,12 +21,8 @@ public class PlayerSelectionController : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
-		if(!gameObject.activeSelf)
-		{
-			return;
-		}
-
+	void Update ()
+	{
 		// Load first scene if at least 2 players have selected and confirmed selection.
 		if(_uiSelectPlayers.Where((GameObject s) => {
 			var selector = s.GetComponent<CharacterSelectionController>();
@@ -69,5 +67,12 @@ public class PlayerSelectionController : MonoBehaviour {
 		}
 	}
 
-
+	public void ResetPlayerSelections ()
+	{
+		foreach (var uiSelector in _uiSelectPlayers)
+		{
+			uiSelector.GetComponent<CharacterSelectionController>().Reset();
+		}
+		Globals.Players.Clear();
+	}
 }

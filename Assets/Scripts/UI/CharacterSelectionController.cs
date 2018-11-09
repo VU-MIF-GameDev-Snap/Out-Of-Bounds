@@ -85,6 +85,13 @@ public class CharacterSelectionController : MonoBehaviour
 		}
 	}
 
+	public void Reset ()
+	{
+		PlayerId = 0;
+		UnloadCharacterData();
+		Confirmed = false;
+	}
+
 	bool TryLoadCharacterData (int characterId)
 	{
 		if(_loadedData == characterId)
@@ -128,6 +135,7 @@ public class CharacterSelectionController : MonoBehaviour
 
 		CharacterImageGroup.SetActive(false);
 		CharacterDescriptionGroup.SetActive(false);
+		ConfirmedObject.SetActive(false);
 		PressJoinObject.SetActive(true);
 	}
 }
