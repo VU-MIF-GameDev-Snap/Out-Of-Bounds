@@ -48,14 +48,14 @@ public class HomingMissile : MonoBehaviour
 	{
 		_rb = GetComponent<Rigidbody>();
 	}
-	
+
 	void FixedUpdate ()
     {
 		Transform target = null;
 
 		foreach(Transform c in _characters)
 		{
-			if(!target || 
+			if(!target ||
 			Vector3.Distance(transform.position, c.position) <
 			Vector3.Distance(transform.position, target.position))
 			{
@@ -95,7 +95,7 @@ public class HomingMissile : MonoBehaviour
 			{
 				var factor = 1 - distance / ExplosionRadius;
 				var hitMessage = new HitMessage();
-				
+
 				hitMessage.Damage = (int)(Damage * factor);
 				hitMessage.KnockbackValue = (int)(KnockbackStrength * factor);
 				hitMessage.KnockbackDirection = (target - missilePosition).normalized;
@@ -129,7 +129,7 @@ public class HomingMissile : MonoBehaviour
 		var angle = Vector2.SignedAngle(aimVector, rocketRotation2D);
 
 		_rb.angularVelocity = new Vector3(0, 0, AngleChangingSpeed * Mathf.Clamp(-angle, -1, 1));
-		
+
 		FlyForward();
 	}
 }
