@@ -9,13 +9,15 @@ public class GameController : MonoBehaviour {
     public float weaponSpawnWait;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
+        SpawnPlayers();
         StartCoroutine(SpawnWeaponWaves());
     }
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     IEnumerator SpawnWeaponWaves()
@@ -29,6 +31,27 @@ public class GameController : MonoBehaviour {
             Instantiate(weapon, spawnPosition, spawnRotation);
 
             yield return new WaitForSeconds(weaponSpawnWait);
+        }
+    }
+
+    private void SpawnPlayers ()
+    {
+        var playerSpawnpoints = GameObject.FindGameObjectWithTag("PlayerSpawnpoints");
+        var spawnpointsList = new List<Vector3>();
+        for (int i = 0; i < playerSpawnpoints.transform.childCount; i++)
+        {
+            spawnpointsList.Add(playerSpawnpoints.transform.GetChild(i).transform.position);
+        }
+
+        for (int i = 0; i < Globals.Players.Count; i++)
+        {
+            var targetSpawnpointId = Random.Range(0, spawnpointsList.Count);
+            var spawnpoint = spawnpointsList[targetSpawnpointId];
+
+            var obj = Instantiate(CharactersManager.CharactersList[Globals.Players[i].CharacterId].CharacterPrefab, spawnpoint, new Quaternion());
+            obj.GetComponent<PlayerInputManager>().PlayerId = Globals.Players[i].ControlsId;
+
+            spawnpointsList.RemoveAt(targetSpawnpointId);
         }
     }
 }

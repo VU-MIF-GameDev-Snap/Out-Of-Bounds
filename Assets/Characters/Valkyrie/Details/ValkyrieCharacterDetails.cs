@@ -44,4 +44,12 @@ public class ValkyrieCharacterDetails : ICharacterDetails
             return "This is a description, long description, whatever....";
         }
     }
+
+    public GameObject CharacterPrefab
+    {
+        get
+        {
+            return Resources.Load("Characters/Valkyrie/Valkyrie") as GameObject;
+        }
+    }
 }

@@ -12,4 +12,5 @@ public interface ICharacterDetails
     string Power1Description { get; }
     string Power2Description { get; }
     string Description { get; }
+	GameObject CharacterPrefab { get; }
 }
