@@ -17,6 +17,8 @@ public class PlayerInputManager : MonoBehaviour
 		Jump,
 		Dash,
 		Punch,
+		Power1,
+        Shoot
 	}
 
 
