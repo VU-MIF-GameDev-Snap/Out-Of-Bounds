@@ -9,7 +9,7 @@ public class BonbonCharacterDetails : ICharacterDetails
     {
         get
         {
-            return "Characters/Valkyrie/Preview";
+            return "Characters/Bonbon/Preview";
         }
     }
 

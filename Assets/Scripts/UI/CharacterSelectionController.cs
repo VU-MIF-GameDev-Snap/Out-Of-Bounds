@@ -58,7 +58,7 @@ public class CharacterSelectionController : MonoBehaviour
 				});
 		}
 
-		if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0)
+		if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0)
 		{
 			// move down the list
 			if(_selectedCharacterId >= CharactersManager.CharactersList.Count -1)
@@ -71,7 +71,7 @@ public class CharacterSelectionController : MonoBehaviour
 			}
 
 		}
-		else if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0)
+		else if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0)
 		{
 			// move up the list
 			if(_selectedCharacterId <= 0)
@@ -90,6 +90,14 @@ public class CharacterSelectionController : MonoBehaviour
 		PlayerId = 0;
 		UnloadCharacterData();
 		Confirmed = false;
+	}
+
+	void UpdateUpDownArrows ()
+	{
+		var upArrowImageObj = CharacterImageGroup.transform.GetChild(1).gameObject;
+		upArrowImageObj.SetActive(_selectedCharacterId > 0);
+		var downArrowImageObj = CharacterImageGroup.transform.GetChild(2).gameObject;
+		downArrowImageObj.SetActive(_selectedCharacterId < CharactersManager.CharactersList.Count - 1);
 	}
 
 	bool TryLoadCharacterData (int characterId)
@@ -120,6 +128,8 @@ public class CharacterSelectionController : MonoBehaviour
 		descriptionObj.text = CharactersManager.CharactersList[characterId].Description;
 
 		PressJoinObject.SetActive(false);
+
+		UpdateUpDownArrows();
 
 		return true;
 	}
