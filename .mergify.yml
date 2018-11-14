@@ -1,5 +1,5 @@
 pull_request_rules:
-  - name: automatic merge when at least 1 review
+  - name: automatic merge when at least 1 review received
     conditions:
       - "#approved-reviews-by>=1"
       - label!=work-in-progress
