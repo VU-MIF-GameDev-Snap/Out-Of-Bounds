@@ -519,8 +519,8 @@ GameObject:
   - component: {fileID: 95989647626879106}
   - component: {fileID: 143032238769855020}
   - component: {fileID: 82519286725057608}
-  - component: {fileID: 114215572472906980}
   - component: {fileID: 114670107898656198}
+  - component: {fileID: 114215572472906980}
   - component: {fileID: 114341789394754116}
   m_Layer: 0
   m_Name: Valkyrie
@@ -2119,7 +2119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.4970101, y: 0.29660416, z: -0.5692625}
+  m_LocalPosition: {x: -6.0388613, y: 0.29660416, z: 0.97719246}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2270,7 +2270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RightFist: {fileID: 1848642684663594}
-  hitpoints: 35
+  hitpoints: 0
   maxHitpoints: 300
   PunchDamage: 5
   KnockValue: 100

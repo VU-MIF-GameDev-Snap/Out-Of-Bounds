@@ -7,7 +7,7 @@ public class HitEvent : MonoBehaviour
 {
     private HitMessage _message = null;
 
-    
+
     // Constructor - use class HitMessage as parameter
     public void Initialise (object message)
     {
@@ -17,9 +17,12 @@ public class HitEvent : MonoBehaviour
 
 
     void OnTriggerEnter(Collider collider)
-    {   
+    {
         if (collider.gameObject.CompareTag("Player"))
         {
+            if(collider.gameObject == gameObject.transform.root.gameObject)
+                return;
+
             if (_message == null)
                 return;
 

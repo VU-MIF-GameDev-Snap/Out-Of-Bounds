@@ -608,12 +608,12 @@ GameObject:
   - component: {fileID: 95620326841995700}
   - component: {fileID: 143483058974397330}
   - component: {fileID: 82776929179092144}
-  - component: {fileID: 114888941551253446}
   - component: {fileID: 114194258236138870}
+  - component: {fileID: 114888941551253446}
   - component: {fileID: 114440009246963214}
   m_Layer: 0
   m_Name: Bonbon
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -673,6 +673,23 @@ GameObject:
   - component: {fileID: 4988439556105754}
   m_Layer: 0
   m_Name: RigArmRightFing12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1875791611515046
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4624626641248272}
+  - component: {fileID: 135461349717338600}
+  - component: {fileID: 114807110076642248}
+  m_Layer: 0
+  m_Name: RightHandCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,7 +1026,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1827993397342690}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -1.1909151, y: 1.25, z: -0.6211755}
+  m_LocalPosition: {x: -8.664, y: 0.97, z: 0.13065338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4905292676377370}
@@ -1242,6 +1259,19 @@ Transform:
   m_Father: {fileID: 4316610009037702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4624626641248272
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875791611515046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalScale: {x: 0.095, y: 0.095, z: 0.095}
+  m_Children: []
+  m_Father: {fileID: 4634191751659018}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4625467751125582
 Transform:
   m_ObjectHideFlags: 1
@@ -1281,6 +1311,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.99999994}
   m_Children:
   - {fileID: 4921128840457436}
+  - {fileID: 4624626641248272}
   m_Father: {fileID: 4078985732137276}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1574,6 +1605,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13920eb63bfa88a47a6ab2c7c7d77f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114807110076642248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875791611515046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ef42a023c2c264e9cdd15cdd6569cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114888941551253446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1585,7 +1627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b214f1aa5a572640bde25a0dcd17291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RightFist: {fileID: 0}
+  RightFist: {fileID: 1875791611515046}
   hitpoints: 0
   maxHitpoints: 300
   PunchDamage: 5
@@ -1596,6 +1638,18 @@ MonoBehaviour:
   DashDistance: 5
   KnockbackFactor: 0.002
   Drag: {x: 1, y: 0, z: 0}
+--- !u!135 &135461349717338600
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1875791611515046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137738919301266380
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
