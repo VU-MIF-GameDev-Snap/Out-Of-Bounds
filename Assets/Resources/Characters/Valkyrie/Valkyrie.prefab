@@ -522,6 +522,7 @@ GameObject:
   - component: {fileID: 114670107898656198}
   - component: {fileID: 114215572472906980}
   - component: {fileID: 114341789394754116}
+  - component: {fileID: 114339569195018586}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Player
@@ -869,6 +870,21 @@ GameObject:
   - component: {fileID: 4167548033262288}
   m_Layer: 0
   m_Name: mixamorig:LeftForeArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1794781670742514
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4870110864476152}
+  m_Layer: 0
+  m_Name: RiflePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1323,6 +1339,7 @@ Transform:
   - {fileID: 4447941031541674}
   - {fileID: 4166911067241184}
   - {fileID: 4104912387392730}
+  - {fileID: 4870110864476152}
   m_Father: {fileID: 4149542723674398}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2028,6 +2045,19 @@ Transform:
   m_Father: {fileID: 4651330590363350}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4870110864476152
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794781670742514}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4118391295315790}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!4 &4886263618374520
 Transform:
   m_ObjectHideFlags: 1
@@ -2119,7 +2149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -6.0388613, y: 0.29660416, z: 0.97719246}
+  m_LocalPosition: {x: -2.47, y: 0.48, z: 0.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2270,6 +2300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RightFist: {fileID: 1848642684663594}
+  RiflePosition: {fileID: 1794781670742514}
   hitpoints: 0
   maxHitpoints: 300
   PunchDamage: 5
@@ -2279,7 +2310,7 @@ MonoBehaviour:
   Gravity: -9.81
   DashDistance: 5
   KnockbackFactor: 0.002
-  Drag: {x: 1, y: 0, z: 0}
+  Drag: {x: 1, y: 1, z: 0}
 --- !u!114 &114304187482691622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2291,6 +2322,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27ef42a023c2c264e9cdd15cdd6569cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114339569195018586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1455253603412050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54dccd5fbccf1004299b702698b006b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetDirection: {x: 0, y: 0, z: 0}
+  LookAtLerp: 7
+  LookAtWeight: 1
+  LookAtBodyWeight: 1
+  LookAtHeadWeight: 1
+  LookAtEyesWeight: 1
+  LookAtClampWeight: 0
 --- !u!114 &114341789394754116
 MonoBehaviour:
   m_ObjectHideFlags: 1

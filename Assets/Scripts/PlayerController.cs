@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player's body parts")]
     public GameObject RightFist; // USE: for punch events
+    [SerializeField]
+    GameObject RiflePosition;
     private HitEvent _rightFist;
 
     [Header("Player's hitpoints")]
@@ -41,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Vector3 _velocity;
     private Animator _animator;
+    private AimIK _aimIK;
     private PlayerInputManager _inputManager;
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
@@ -49,6 +52,7 @@ public class PlayerController : MonoBehaviour
     void Start ()
     {
         _animator = GetComponent<Animator>();
+        _aimIK = GetComponent<AimIK>();
         _controller = GetComponent<CharacterController>();
         _inputManager = GetComponent<PlayerInputManager>();
         _deathSound = GetComponent<AudioSource>();
@@ -63,11 +67,15 @@ public class PlayerController : MonoBehaviour
 
         var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
         var direction = new Vector3(horizontalInput, 0, 0);
-        _animator.SetFloat ("Speed", Mathf.Abs(horizontalInput));
-        _animator.SetBool ("IsGrounded", _controller.isGrounded);
+        var aimDirection = _inputManager.GetAimDirection();
+        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        _animator.SetBool("IsGrounded", _controller.isGrounded);
+        _animator.SetBool("HasRifle", _weapon != null);
+
+        _aimIK.TargetDirection = aimDirection;
 
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(direction);
+            Dash(aimDirection);
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -87,8 +95,8 @@ public class PlayerController : MonoBehaviour
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
 
-        if (direction != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(direction);
+        if (aimDirection.x != 0)
+            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
@@ -120,8 +128,8 @@ public class PlayerController : MonoBehaviour
         var dashingVelocity = Vector3.Scale(
             direction,
             DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime),
-            0,
-            (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime))
+            (Mathf.Log(1f / (Time.deltaTime * Drag.y + 1)) / -Time.deltaTime),
+            0)
         );
         _velocity += dashingVelocity;
         Debug.Log("dashing velo: " + dashingVelocity);
@@ -188,14 +196,16 @@ public class PlayerController : MonoBehaviour
         // Will make it stick when player jumps instead of detaching
         weapon.GetComponent<Rigidbody>().isKinematic = true;
         // Make sure the weapon faces the same direction as the player
-        var playerDirection = transform.forward;
-        weapon.transform.forward = playerDirection;
+        //var playerDirection = transform.forward;
+        //weapon.transform.forward = playerDirection;
         // Put the weapon in the middle of the player's model
-        var playerBottom = transform.position;
-        playerBottom.y += 1; // halfway from bottom of model
-        weapon.transform.position = playerBottom;
+        //var playerBottom = transform.position;
+        //playerBottom.y += 1; // halfway from bottom of model
+        //weapon.transform.position = playerBottom;
+        weapon.transform.position = RiflePosition.transform.position;
+        weapon.transform.rotation = RiflePosition.transform.rotation;
         // Stick it to the player's body
-        weapon.transform.SetParent(this.transform, true);
+        weapon.transform.SetParent(RiflePosition.transform, true);
         _weapon = weapon;
 
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
