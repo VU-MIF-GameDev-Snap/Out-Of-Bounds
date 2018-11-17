@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 // VERY TEMPORARY PLS DELETE AS SOON AS POSSIBLE!!
@@ -48,6 +48,40 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
+    private Dictionary<PlayerAbilities, bool> _abilitiesAvailable = new Dictionary<PlayerAbilities, bool>();
+    public enum PlayerAbilities
+    {
+        Walk,
+        Jump,
+        Dash,
+        Punch,
+        Shoot,
+        Aim,
+        PickupWeapon,
+        Power1,
+        Power2,
+    };
+
+    public void AbilityToggle (PlayerAbilities ability, Nullable<bool> toggle = null)
+    {
+        if(!_abilitiesAvailable.ContainsKey(ability))
+        {
+            _abilitiesAvailable.Add(ability, toggle.HasValue ? toggle.Value : false);
+            return;
+        }
+        _abilitiesAvailable[ability] = toggle.HasValue ? toggle.Value : !_abilitiesAvailable[ability];
+    }
+
+    public bool AbilityCheck (PlayerAbilities ability)
+    {
+        bool abilityAvailable = true;
+        if(!_abilitiesAvailable.TryGetValue(ability, out abilityAvailable))
+        {
+            // Ability not in list, return true by default.
+            abilityAvailable = true;
+        }
+        return abilityAvailable;
+    }
 
     void Start ()
     {
@@ -62,20 +96,22 @@ public class PlayerController : MonoBehaviour
 
     void Update ()
     {
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
-            Jump();
+        if(AbilityCheck(PlayerAbilities.Jump))
+        {
+            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
+                Jump();
+        }
 
-        var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
-        var direction = new Vector3(horizontalInput, 0, 0);
         var aimDirection = _inputManager.GetAimDirection();
-        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
-        _aimIK.TargetDirection = aimDirection;
+        if(AbilityCheck(PlayerAbilities.Jump))
+        {
+            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+                Dash(aimDirection);
+        }
 
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(aimDirection);
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -92,20 +128,41 @@ public class PlayerController : MonoBehaviour
 
         _velocity.x /= 1 + Drag.x * Time.deltaTime;
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
-        // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
-        _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
+        _controller.Move(_velocity * Time.deltaTime);
 
-        if (aimDirection.x != 0)
-            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+        if(AbilityCheck(PlayerAbilities.Walk))
+        {
+            var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
+            _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+            var movementDirection = new Vector3(horizontalInput, 0, 0);
+            _controller.Move(movementDirection * Speed * Time.deltaTime);
+        }
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
-            Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
+        if(AbilityCheck(PlayerAbilities.Aim))
+        {
+            _aimIK.TargetDirection = aimDirection;
+            if (aimDirection.x != 0)
+                transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+        }
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
-            _powerController.StartPower1();
+        if(AbilityCheck(PlayerAbilities.Punch))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
+                Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
+        }
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
-            Shoot();
+        if(AbilityCheck(PlayerAbilities.Power1))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
+                _powerController.StartPower1();
+        }
+
+        if(AbilityCheck(PlayerAbilities.Shoot))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
+                Shoot();
+        }
+
 
         if(_deathTime > 0 && _deathTime <= Time.time)
         {
@@ -210,6 +267,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if(!AbilityCheck(PlayerAbilities.PickupWeapon))
+        {
+            return;
+        }
+
         // TODO: Won't work if weapon is on the ground
         if (collision.gameObject.CompareTag("Weapon"))
         {
