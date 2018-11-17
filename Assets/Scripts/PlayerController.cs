@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         // Force z-axis lock
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        _velocity.x /= 1 + Drag.x * Time.deltaTime;
+        _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
@@ -152,8 +152,8 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        _controller.Move(_currentDashingVelocity);
+        _velocity = _currentDashingVelocity;
+        _controller.Move(_currentDashingVelocity * Time.deltaTime);
     }
 
     public bool IsDashing

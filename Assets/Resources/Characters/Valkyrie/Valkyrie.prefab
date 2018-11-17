@@ -2149,7 +2149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5037646, y: 0.29660416, z: 0.18780613}
+  m_LocalPosition: {x: 1.4518905, y: 0.29660416, z: -0.18752575}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2311,7 +2311,7 @@ MonoBehaviour:
   KnockbackFactor: 0.002
   Drag: {x: 1, y: 1, z: 0}
   DashDuration: 0.2
-  DashDistance: 0.8
+  DashDistance: 9
   DashDelay: 2
 --- !u!114 &114304187482691622
 MonoBehaviour:
