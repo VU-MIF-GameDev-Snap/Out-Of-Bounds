@@ -36,9 +36,12 @@ public class PlayerController : MonoBehaviour
     public float Speed = 5f;
     public float JumpHeight = 2f;
     public float Gravity = -9.81f;
-    public float DashDistance = 5f;
     public float KnockbackFactor = 0.002f;
     public Vector3 Drag;
+    [Header("Player controller variables")]
+    public float DashDuration = 2f;
+    public float DashDistance = 5f;
+    public float DashDelay = 2f;
 
     private CharacterController _controller;
     private Vector3 _velocity;
@@ -48,6 +51,9 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
+    // ability - dash
+    private float _dashStartTime;
+    private Vector3 _currentDashingVelocity;
 
     void Start ()
     {
@@ -76,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
             Dash(aimDirection);
+        HandleDashing();
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -124,16 +131,38 @@ public class PlayerController : MonoBehaviour
 
     private void Dash (Vector3 direction)
     {
-        Debug.Log("Dash");
-        var dashingVelocity = Vector3.Scale(
-            direction,
-            DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime),
-            (Mathf.Log(1f / (Time.deltaTime * Drag.y + 1)) / -Time.deltaTime),
-            0)
-        );
-        _velocity += dashingVelocity;
-        Debug.Log("dashing velo: " + dashingVelocity);
+        if(_dashStartTime + DashDelay > Time.time)
+        {
+            // Can't yet dash.
+            return;
+        }
+
+        Debug.Log("Dash start");
+        _dashStartTime = Time.time;
+        _currentDashingVelocity = direction * DashDistance;
+
+        // _velocity += dashingVelocity;
+        // Debug.Log("dashing velo: " + dashingVelocity);
     }
+
+    private void HandleDashing()
+    {
+        _animator.SetBool("Dashing", IsDashing);
+        if(!IsDashing)
+        {
+            return;
+        }
+
+        _controller.Move(_currentDashingVelocity);
+    }
+
+    public bool IsDashing
+    {
+        get
+        {
+            return _dashStartTime + DashDuration > Time.time;
+        }
+     }
 
     // You use your '_rightHand' to 'HitType.Punch' and deal '50' damage
     private void Hit(HitEvent bodyPart, HitType type, int damage, int knockValue)
@@ -167,6 +196,12 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     public void OnHit(object message)
     {
+        if(IsDashing)
+        {
+            // Invincibility while dashing.
+            return;
+        }
+
         var msg = message as HitMessage;
         if (msg == null)
             return;
