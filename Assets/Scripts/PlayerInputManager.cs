@@ -8,6 +8,7 @@ public class PlayerInputManager : MonoBehaviour
 {
 	[Header("Who controls this player")]
 	public int PlayerId = 1;
+	private int _previousPlayerId = 1;
 
 	public enum Key
 	{
@@ -25,15 +26,19 @@ public class PlayerInputManager : MonoBehaviour
 
 	public void Start ()
 	{
+		_playerKeyMappings = new Dictionary<Key, string>();
 		var values = Enum.GetValues(typeof(Key)).Cast<Key>();
 		foreach (var item in values)
 		{
 			_playerKeyMappings.Add(item, "Player" + PlayerId + "_" + item.ToString("G"));
 		}
+		_previousPlayerId = PlayerId;
 	}
 
 	public bool IsButtonDown (Key key)
 	{
+		UpdateKeyMappings();
+
 		string value;
 		if(!_playerKeyMappings.TryGetValue(key, out value))
 		{
@@ -45,6 +50,8 @@ public class PlayerInputManager : MonoBehaviour
 
 	public bool IsButtonPressed (Key key)
 	{
+		UpdateKeyMappings();
+
 		string value;
 		if(!_playerKeyMappings.TryGetValue(key, out value))
 		{
@@ -56,6 +63,8 @@ public class PlayerInputManager : MonoBehaviour
 
 	public float GetAxis (Key key)
 	{
+		UpdateKeyMappings();
+
 		string value;
 		if(!_playerKeyMappings.TryGetValue(key, out value))
 		{
@@ -63,5 +72,13 @@ public class PlayerInputManager : MonoBehaviour
 		}
 		
 		return Input.GetAxis(value);
+	}
+
+	private void UpdateKeyMappings ()
+	{
+		if(PlayerId != _previousPlayerId)
+		{
+			Start();
+		}
 	}
 }

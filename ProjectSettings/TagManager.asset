@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Bolt
-  - Weapon
-  - Character
   - Boundary
   - Platform
+  - PlayerSpawnpoints
+  - Bolt
   - Missile
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -19,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - 
   - 
   - 
   - 
