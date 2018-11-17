@@ -11,10 +11,13 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
 [RequireComponent(typeof(AudioSource))]
-public class PlayerController : MonoBehaviour 
+[RequireComponent(typeof(ICharacterPowerController))]
+public class PlayerController : MonoBehaviour
 {
     [Header("Player's body parts")]
     public GameObject RightFist; // USE: for punch events
+    [SerializeField]
+    GameObject RiflePosition;
     private HitEvent _rightFist;
 
     [Header("Player's hitpoints")]
@@ -26,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public int KnockValue = 5;
     //public Vector3 KnockDirection = GameObject.transform.forward;
 
-    private GameObject _weapon;
+    private WeaponController _weapon;
 
 
     [Header("Player controller variables")]
@@ -37,29 +40,23 @@ public class PlayerController : MonoBehaviour
     public float KnockbackFactor = 0.002f;
     public Vector3 Drag;
 
-    [Header("Power1")]
-    public GameObject Rocket;
-    public Transform RocketSpawn1;
-    public Transform RocketSpawn2;
-    public float Power1Cooldown;
-
     private CharacterController _controller;
     private Vector3 _velocity;
     private Animator _animator;
+    private AimIK _aimIK;
     private PlayerInputManager _inputManager;
+    private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
-
-    // for Power1
-    private float _timeStamp = 0;
 
     void Start ()
     {
         _animator = GetComponent<Animator>();
+        _aimIK = GetComponent<AimIK>();
         _controller = GetComponent<CharacterController>();
         _inputManager = GetComponent<PlayerInputManager>();
         _deathSound = GetComponent<AudioSource>();
-
+        _powerController = GetComponent<ICharacterPowerController>();
         _rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
     }
 
@@ -70,11 +67,15 @@ public class PlayerController : MonoBehaviour
 
         var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
         var direction = new Vector3(horizontalInput, 0, 0);
-        _animator.SetFloat ("Speed", Mathf.Abs(horizontalInput));
-        _animator.SetBool ("IsGrounded", _controller.isGrounded);
-    
+        var aimDirection = _inputManager.GetAimDirection();
+        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        _animator.SetBool("IsGrounded", _controller.isGrounded);
+        _animator.SetBool("HasRifle", _weapon != null);
+
+        _aimIK.TargetDirection = aimDirection;
+
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(direction);
+            Dash(aimDirection);
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
         if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
-        }   
+        }
 
         // Force z-axis lock
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -93,15 +94,15 @@ public class PlayerController : MonoBehaviour
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
-        
-        if (direction != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(direction);
+
+        if (aimDirection.x != 0)
+            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
-            Power1();
+            _powerController.StartPower1();
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
             Shoot();
@@ -125,10 +126,10 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Dash");
         var dashingVelocity = Vector3.Scale(
-            direction, 
-            DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime), 
-            0, 
-            (Mathf.Log(1f / (Time.deltaTime * Drag.z + 1)) / -Time.deltaTime))
+            direction,
+            DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime),
+            (Mathf.Log(1f / (Time.deltaTime * Drag.y + 1)) / -Time.deltaTime),
+            0)
         );
         _velocity += dashingVelocity;
         Debug.Log("dashing velo: " + dashingVelocity);
@@ -144,7 +145,7 @@ public class PlayerController : MonoBehaviour
         // Debug.Log("Type: " + hit + " Damage: " + damage);
         _animator.SetTrigger(type.ToString());
     }
-    
+
     public void Die()
     {
         _deathSound.Play();
@@ -158,21 +159,7 @@ public class PlayerController : MonoBehaviour
         if (_weapon == null)
             return;
 
-        _weapon.SendMessage("Fire");
-    }
-
-    private void Power1()
-    {
-        if (_timeStamp <= Time.time)
-        {
-            _timeStamp = Time.time + Power1Cooldown;
-
-            var rocket1 = Instantiate (Rocket, RocketSpawn1.position, RocketSpawn1.rotation);
-            var rocket2 = Instantiate (Rocket, RocketSpawn2.position, RocketSpawn2.rotation);
-
-            rocket1.SendMessage("Initialize", transform.root.gameObject);
-            rocket2.SendMessage("Initialize", transform.root.gameObject);
-        }
+        _weapon.Fire();
     }
 
     // --------------------------------------------
@@ -208,17 +195,25 @@ public class PlayerController : MonoBehaviour
 
         // Will make it stick when player jumps instead of detaching
         weapon.GetComponent<Rigidbody>().isKinematic = true;
-        // Make sure the weapon faces the same direction as the player
-        var playerDirection = transform.forward;
-        weapon.transform.forward = playerDirection;
-        // Put the weapon in the middle of the player's model
-        var playerBottom = transform.position;
-        playerBottom.y += 1; // halfway from bottom of model
-        weapon.transform.position = playerBottom;
-        // Stick it to the player's body
-        weapon.transform.SetParent(this.transform, true);
-        _weapon = weapon;
+
+        weapon.transform.position = RiflePosition.transform.position;
+        weapon.transform.rotation = RiflePosition.transform.rotation;
+        // Stick it to the player's hand
+        weapon.transform.SetParent(RiflePosition.transform, true);
+        _weapon = weapon.GetComponent<WeaponController>();
+
+        _aimIK.TransformTargetForLeftHand = _weapon.GetLeftHandPosition();
+        _aimIK.RifleHoldingMode = true;
 
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        // TODO: Won't work if weapon is on the ground
+        if (collision.gameObject.CompareTag("Weapon"))
+        {
+            OnWeaponPickup(collision.gameObject);
+        }
     }
 }

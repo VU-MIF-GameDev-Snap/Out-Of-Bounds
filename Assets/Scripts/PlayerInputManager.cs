@@ -14,6 +14,8 @@ public class PlayerInputManager : MonoBehaviour
 	{
 		MoveHorizontal,
 		MoveVertical,
+		AimHorizontal,
+		AimVertical,
 		Jump,
 		Dash,
 		Punch,
@@ -44,7 +46,7 @@ public class PlayerInputManager : MonoBehaviour
 		{
 			return false;
 		}
-		
+
 		return Input.GetButton(value);
 	}
 
@@ -57,7 +59,7 @@ public class PlayerInputManager : MonoBehaviour
 		{
 			return false;
 		}
-		
+
 		return Input.GetButtonDown(value);
 	}
 
@@ -70,8 +72,29 @@ public class PlayerInputManager : MonoBehaviour
 		{
 			return 0;
 		}
-		
+
 		return Input.GetAxis(value);
+	}
+
+	public Vector2 GetAimDirection ()
+	{
+		if(PlayerId == 1)
+		{
+			// Special case for Player1: Aim direction is direction from player to mouse cursor.
+
+			var playerPosOnScreen = Camera.main.WorldToScreenPoint(transform.position);
+			return (Input.mousePosition - playerPosOnScreen).normalized;
+		}
+
+		var moveHorizontal = GetAxis(Key.MoveHorizontal);
+		var moveVertical = GetAxis(Key.MoveVertical);
+		var aimHorizontal = GetAxis(Key.AimHorizontal);
+		var aimVertical = GetAxis(Key.AimVertical);
+		if(aimHorizontal == 0 && aimVertical == 0)
+		{
+			return new Vector2(moveHorizontal, moveVertical).normalized;
+		}
+		return new Vector2(aimHorizontal, aimVertical).normalized;
 	}
 
 	private void UpdateKeyMappings ()

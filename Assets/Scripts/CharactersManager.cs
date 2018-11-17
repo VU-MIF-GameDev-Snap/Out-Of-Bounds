@@ -11,6 +11,7 @@ public static class CharactersManager
 	static CharactersManager ()
 	{
 		CharactersList.Add(new ValkyrieCharacterDetails());
+        CharactersList.Add(new BonbonCharacterDetails());
 	}
 
     public static IList<ICharacterDetails> CharactersList
