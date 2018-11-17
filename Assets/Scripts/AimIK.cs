@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class AimIK : MonoBehaviour
 {
-	[SerializeField]
-	public Vector3 TargetDirection;
+	private Vector3 _ikLookPos;
+	private Animator _animator;
+	private Quaternion _rightHandRotationTarget;
+	private Vector3 _actualLeftHandTargetPos;
+
+	// For configuration.
 	[SerializeField]
 	float LookAtLerp = 7f;
 	[SerializeField]
@@ -18,19 +22,50 @@ public class AimIK : MonoBehaviour
 	float LookAtEyesWeight = 1f;
 	[SerializeField]
 	float LookAtClampWeight = 0f;
-	Vector3 ik_lookPos;
-	Animator animator;
+
+	// Accessed from other scripts.
+	public Vector3 TargetDirection;
+	public bool RifleHoldingMode = false;
+	public Transform TransformTargetForLeftHand;
+
 	void Start ()
 	{
-		animator = GetComponent<Animator>();
+		_animator = GetComponent<Animator>();
 	}
 
 	void OnAnimatorIK ()
 	{
 		if(TargetDirection == Vector3.zero)
-			return;
-		ik_lookPos = Vector3.Lerp(ik_lookPos, transform.position + TargetDirection*20, Time.deltaTime * LookAtLerp);
-		animator.SetLookAtWeight(LookAtWeight, LookAtBodyWeight, LookAtHeadWeight, LookAtEyesWeight, LookAtClampWeight);
-		animator.SetLookAtPosition(ik_lookPos);
+		{
+			TargetDirection = transform.forward;
+		}
+
+		if(RifleHoldingMode)
+		{
+			_animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+			_animator.SetIKRotation(AvatarIKGoal.RightHand, Quaternion.LookRotation(TargetDirection, transform.right));
+			_animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+			_animator.SetIKPosition(AvatarIKGoal.LeftHand, _actualLeftHandTargetPos);
+		}
+
+		_ikLookPos = Vector3.Lerp(_ikLookPos, transform.position + TargetDirection*20, Time.deltaTime * LookAtLerp);
+		_animator.SetLookAtWeight(LookAtWeight, LookAtBodyWeight, LookAtHeadWeight, LookAtEyesWeight, LookAtClampWeight);
+		_animator.SetLookAtPosition(_ikLookPos);
+
+
+	}
+
+	void LateUpdate ()
+	{
+		// We have to cache target positions here,
+		// Only in LateUpdate all bones positions are correct after animation is applied.
+		if(TransformTargetForLeftHand != null)
+		{
+			_actualLeftHandTargetPos = TransformTargetForLeftHand.position;
+		}
+		else if (RifleHoldingMode)
+		{
+			RifleHoldingMode = false;
+		}
 	}
 }

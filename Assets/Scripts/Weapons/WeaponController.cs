@@ -20,24 +20,25 @@ public class WeaponController : MonoBehaviour
     [Header("External objects")]
     public GameObject Shot;
 	public Transform shotSpawn;
+    public Transform LeftHandPosition;
 
 
     private AudioSource _audio;
     private float _nextFire;
     private KeyCode _keyCode;
-    
+
     private Transform _originalParent;
 
-	void Start() 
+	void Start()
     {
 		_audio = GetComponent<AudioSource> ();
         _originalParent = gameObject.transform.root;
 
-		if (gameObject.tag.Equals("Weapon")) 
+		if (gameObject.tag.Equals("Weapon"))
 			_keyCode = KeyCode.KeypadEnter;
 	}
 
-	void Update() 
+	void Update()
     {
         if (ShouldSelfDestruct() && !IsBeingHeld())
             Destroy(gameObject);
@@ -55,13 +56,18 @@ public class WeaponController : MonoBehaviour
         _nextFire = Time.time + FireRate;
 
         var bullet = Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
-        var message = new HitMessage() 
+        var message = new HitMessage()
         { HitType = HitType.Rifle, Damage = Damage, KnockbackValue = KnockbackValue, KnockbackDirection = this.transform.forward };
         bullet.SendMessage("Initialise", message);
         _audio.Play();
         Ammo--;
         if (Ammo <= 0)
             Destroy(gameObject);
+    }
+
+    public Transform GetLeftHandPosition ()
+    {
+        return LeftHandPosition;
     }
 
     private bool ShouldSelfDestruct ()

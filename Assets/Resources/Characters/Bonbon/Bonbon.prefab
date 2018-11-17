@@ -881,7 +881,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1461196064356984}
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.0382, y: -0, z: 0}
+  m_LocalPosition: {x: -0.065, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4096144739926980}
@@ -1263,8 +1263,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095315060400738}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -0.9524272, y: 0.29660416, z: 0.020266533}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.518, y: 0.797, z: 0.004}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4592109075993766}
   - {fileID: 4665306707452832}
@@ -1342,7 +1342,7 @@ Transform:
   m_GameObject: {fileID: 1578608953224116}
   m_LocalRotation: {x: 0.39542955, y: -0.44934624, z: -0.52960193, w: 0.60103685}
   m_LocalPosition: {x: -0.0015857549, y: 0.46621478, z: -0.008559643}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4428232801977356}
   - {fileID: 4703646511420426}
@@ -1670,12 +1670,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetDirection: {x: 0, y: 0, z: 0}
+  TargetForLeftHand: {fileID: 0}
   LookAtLerp: 7
   LookAtWeight: 1
   LookAtBodyWeight: 1
   LookAtHeadWeight: 1
   LookAtEyesWeight: 1
   LookAtClampWeight: 0
+  RifleHoldingMode: 1
 --- !u!114 &114920446943430566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1802,10 +1804,10 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.8
-  m_Radius: 0.3
+  m_Height: 0.9
+  m_Radius: 0.18
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.47, z: 0}
+  m_Center: {x: 0, y: 0.43, z: 0}

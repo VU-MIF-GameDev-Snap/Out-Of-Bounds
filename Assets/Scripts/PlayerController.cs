@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public int KnockValue = 5;
     //public Vector3 KnockDirection = GameObject.transform.forward;
 
-    private GameObject _weapon;
+    private WeaponController _weapon;
 
 
     [Header("Player controller variables")]
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
         if (_weapon == null)
             return;
 
-        _weapon.SendMessage("Fire");
+        _weapon.Fire();
     }
 
     // --------------------------------------------
@@ -195,18 +195,15 @@ public class PlayerController : MonoBehaviour
 
         // Will make it stick when player jumps instead of detaching
         weapon.GetComponent<Rigidbody>().isKinematic = true;
-        // Make sure the weapon faces the same direction as the player
-        //var playerDirection = transform.forward;
-        //weapon.transform.forward = playerDirection;
-        // Put the weapon in the middle of the player's model
-        //var playerBottom = transform.position;
-        //playerBottom.y += 1; // halfway from bottom of model
-        //weapon.transform.position = playerBottom;
+
         weapon.transform.position = RiflePosition.transform.position;
         weapon.transform.rotation = RiflePosition.transform.rotation;
-        // Stick it to the player's body
+        // Stick it to the player's hand
         weapon.transform.SetParent(RiflePosition.transform, true);
-        _weapon = weapon;
+        _weapon = weapon.GetComponent<WeaponController>();
+
+        _aimIK.TransformTargetForLeftHand = _weapon.GetLeftHandPosition();
+        _aimIK.RifleHoldingMode = true;
 
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
     }
