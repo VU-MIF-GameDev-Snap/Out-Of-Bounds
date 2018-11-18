@@ -58,20 +58,23 @@ public class PlayerController : MonoBehaviour
 
     void Update ()
     {
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
-            Jump();
-
         var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
         var direction = new Vector3(horizontalInput, 0, 0);
         var aimDirection = _inputManager.GetAimDirection();
+
+        ProcessButtonInput(aimDirection);
+        
+
         _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
+
         _aimIK.TargetDirection = aimDirection;
 
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(aimDirection);
+        if (aimDirection.x != 0)
+            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -83,16 +86,28 @@ public class PlayerController : MonoBehaviour
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-        // Force z-axis lock
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         _velocity.x /= 1 + Drag.x * Time.deltaTime;
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
+        // Force z-axis lock
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        if (aimDirection.x != 0)
-            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+
+        if(_deathTime > 0 && _deathTime <= Time.time)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void ProcessButtonInput(Vector2 aimDirection)
+    {
+        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+            Dash(aimDirection);
+
+        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
+            Jump();
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
@@ -102,11 +117,6 @@ public class PlayerController : MonoBehaviour
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
             Shoot();
-
-        if(_deathTime > 0 && _deathTime <= Time.time)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void Jump ()
