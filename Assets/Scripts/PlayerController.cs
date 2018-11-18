@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
-    private Dictionary<PlayerAbilities, bool> _abilitiesAvailable = new Dictionary<PlayerAbilities, bool>();
-    public enum PlayerAbilities
+    private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
+    public enum PlayerAbility
     {
         Walk,
         Jump,
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         Power2,
     };
 
-    public void AbilityToggle (PlayerAbilities ability, Nullable<bool> toggle = null)
+    public void AbilityToggle (PlayerAbility ability, Nullable<bool> toggle = null)
     {
         if(!_abilitiesAvailable.ContainsKey(ability))
         {
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         _abilitiesAvailable[ability] = toggle.HasValue ? toggle.Value : !_abilitiesAvailable[ability];
     }
 
-    public bool AbilityCheck (PlayerAbilities ability)
+    public bool AbilityCheck (PlayerAbility ability)
     {
         bool abilityAvailable = true;
         if(!_abilitiesAvailable.TryGetValue(ability, out abilityAvailable))
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
     void Update ()
     {
-        if(AbilityCheck(PlayerAbilities.Jump))
+        if(AbilityCheck(PlayerAbility.Jump))
         {
             if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
                 Jump();
@@ -106,12 +106,27 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
-        if(AbilityCheck(PlayerAbilities.Jump))
+        if(AbilityCheck(PlayerAbility.Jump))
         {
             if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
                 Dash(aimDirection);
         }
 
+        if(AbilityCheck(PlayerAbility.Walk))
+        {
+            var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
+            _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+            var movementDirection = new Vector3(horizontalInput, 0, 0);
+            _controller.Move(movementDirection * Speed * Time.deltaTime);
+        }
+
+        // Force z-axis lock
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        _velocity.z = 0;
+
+        _velocity.x /= 1 + Drag.x * Time.deltaTime;
+        _velocity.y /= 1 + Drag.y * Time.deltaTime;
+        _controller.Move(_velocity * Time.deltaTime);
 
         if (_controller.isGrounded && _velocity.y < 0)
         {
@@ -123,41 +138,26 @@ public class PlayerController : MonoBehaviour
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-        // Force z-axis lock
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
-        _velocity.x /= 1 + Drag.x * Time.deltaTime;
-        _velocity.y /= 1 + Drag.y * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
-
-        if(AbilityCheck(PlayerAbilities.Walk))
-        {
-            var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
-            _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
-            var movementDirection = new Vector3(horizontalInput, 0, 0);
-            _controller.Move(movementDirection * Speed * Time.deltaTime);
-        }
-
-        if(AbilityCheck(PlayerAbilities.Aim))
+        if(AbilityCheck(PlayerAbility.Aim))
         {
             _aimIK.TargetDirection = aimDirection;
             if (aimDirection.x != 0)
                 transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
         }
 
-        if(AbilityCheck(PlayerAbilities.Punch))
+        if(AbilityCheck(PlayerAbility.Punch))
         {
             if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
                 Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
         }
 
-        if(AbilityCheck(PlayerAbilities.Power1))
+        if(AbilityCheck(PlayerAbility.Power1))
         {
             if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
                 _powerController.StartPower1();
         }
 
-        if(AbilityCheck(PlayerAbilities.Shoot))
+        if(AbilityCheck(PlayerAbility.Shoot))
         {
             if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
                 Shoot();
@@ -222,26 +222,30 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     // ------------------ EVENTS ------------------
     // --------------------------------------------
+    public void OnHit(HitMessage message)
+    {
+        if (hitpoints < maxHitpoints)
+        {
+            if (message.Damage + hitpoints <= maxHitpoints)
+                hitpoints += message.Damage;
+            else if (message.Damage + hitpoints > maxHitpoints)
+                hitpoints = maxHitpoints;
+        }
+
+        if (message.KnockbackValue >= 0)
+            _velocity += message.KnockbackDirection * message.KnockbackValue * (hitpoints + 1) * KnockbackFactor;
+
+        Debug.Log(this.name + " got hit by a '" + message.HitType + "' and received '" + message.Damage + "' damage");
+        Debug.Log(" Player HP: '" + hitpoints);
+        Debug.Log(" Player Velocity: '" + _velocity);
+    }
+
     public void OnHit(object message)
     {
         var msg = message as HitMessage;
         if (msg == null)
             return;
-
-        if (hitpoints < maxHitpoints)
-        {
-            if (msg.Damage + hitpoints <= maxHitpoints)
-                hitpoints += msg.Damage;
-            else if (msg.Damage + hitpoints > maxHitpoints)
-                hitpoints = maxHitpoints;
-        }
-
-        if (msg.KnockbackValue >= 0 && msg.KnockbackValue <= 100)
-            _velocity += msg.KnockbackDirection * msg.KnockbackValue * hitpoints * KnockbackFactor;
-
-        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
-        Debug.Log(" Player HP: '" + hitpoints);
-        Debug.Log(" Player Velocity: '" + _velocity);
+        OnHit(msg);
     }
 
     public void OnWeaponPickup (object message)
@@ -267,7 +271,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(!AbilityCheck(PlayerAbilities.PickupWeapon))
+        if(!AbilityCheck(PlayerAbility.PickupWeapon))
         {
             return;
         }
