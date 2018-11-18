@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public float Gravity = -9.81f;
     public float DashDistance = 5f;
     public float KnockbackFactor = 0.002f;
+    public float LandingDelay = 0.1f;
     public Vector3 Drag;
 
     private CharacterController _controller;
@@ -44,6 +45,9 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
+    // For JustLanded method
+    private bool _previousGrounded;
+    private float _landedTimeStamp = 0;
 
     void Start ()
     {
@@ -75,17 +79,10 @@ public class PlayerController : MonoBehaviour
         if (aimDirection.x != 0)
             transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
 
-
-        if (_controller.isGrounded && _velocity.y < 0)
-        {
-            // When on ground remove downward gravity pull
-            _velocity.y = 0f;
-        }
         if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
         }
-
 
         _velocity.x /= 1 + Drag.x * Time.deltaTime;
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
@@ -106,7 +103,9 @@ public class PlayerController : MonoBehaviour
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
             Dash(aimDirection);
 
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
+        // It must be called every update
+        var jump = JumpAvailable();
+        if (jump && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump))
             Jump();
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
@@ -119,9 +118,24 @@ public class PlayerController : MonoBehaviour
             Shoot();
     }
 
+    private bool JumpAvailable()
+    {
+        var grounded = _controller.isGrounded;
+        var previousGrounded = _previousGrounded;
+        _previousGrounded = grounded;
+
+        if(grounded && !previousGrounded)
+            _landedTimeStamp = Time.time + LandingDelay;
+
+        if(grounded && Time.time >= _landedTimeStamp)
+            return true;
+
+        return false;
+    }
+
     private void Jump ()
     {
-        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity);
+        _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
         Debug.Log("jump");
         _animator.SetTrigger("Jump");
     }
