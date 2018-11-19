@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
     public float DashDistance = 5f;
     public float KnockbackFactor = 0.002f;
     public float LandingDelay = 0.1f;
+    public float JumpHoldDuration = 1f;
+    public float JumpHoldStrength = 1f;
+    
     public Vector3 Drag;
 
     private CharacterController _controller;
@@ -45,9 +48,14 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
-    // For JustLanded method
+    
+    // Necessary for jump delay after landing
     private bool _previousGrounded;
     private float _landedTimeStamp = 0;
+
+    // For jumping higher when holding button
+    private bool _isJumping;
+    private float _jumpTimeStamp = 0;
 
     void Start ()
     {
@@ -79,7 +87,11 @@ public class PlayerController : MonoBehaviour
         if (aimDirection.x != 0)
             transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
 
-        if (!_controller.isGrounded)
+        if (_controller.isGrounded && _velocity.y <= 0)
+        {
+            _velocity.y = Gravity * Time.deltaTime;
+        }
+        else if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
         }
@@ -92,7 +104,7 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
 
-        if(_deathTime > 0 && _deathTime <= Time.time)
+        if (_deathTime > 0 && _deathTime <= Time.time)
         {
             Destroy(gameObject);
         }
@@ -104,9 +116,11 @@ public class PlayerController : MonoBehaviour
             Dash(aimDirection);
 
         // It must be called every update
-        var jump = JumpAvailable();
-        if (jump && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump))
+        var jumpAvailable = JumpAvailable();
+        if ((jumpAvailable || _isJumping) && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump))
             Jump();
+        else
+            _isJumping = false;
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
@@ -124,10 +138,10 @@ public class PlayerController : MonoBehaviour
         var previousGrounded = _previousGrounded;
         _previousGrounded = grounded;
 
-        if(grounded && !previousGrounded)
+        if (grounded && !previousGrounded)
             _landedTimeStamp = Time.time + LandingDelay;
 
-        if(grounded && Time.time >= _landedTimeStamp)
+        if (grounded && Time.time >= _landedTimeStamp)
             return true;
 
         return false;
@@ -135,9 +149,29 @@ public class PlayerController : MonoBehaviour
 
     private void Jump ()
     {
-        _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        Debug.Log("jump");
-        _animator.SetTrigger("Jump");
+        // If player just started to jump propel him upwards
+        if (!_isJumping)
+        {
+            _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            Debug.Log("jump");
+            _animator.SetTrigger("Jump");
+
+            _isJumping = true;
+            _jumpTimeStamp = Time.time + JumpHoldDuration;
+            return;
+        }
+
+        // If player should stop jumping
+        if(Time.time > _jumpTimeStamp)
+        {
+            _isJumping = false;
+            return;
+        }
+
+        // If player is continuing to hold jump button
+        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity) * Time.deltaTime * JumpHoldStrength;
+
+
     }
 
     private void Dash (Vector3 direction)
