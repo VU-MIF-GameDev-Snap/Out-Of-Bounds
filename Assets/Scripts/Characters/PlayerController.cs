@@ -3,10 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// VERY TEMPORARY PLS DELETE AS SOON AS POSSIBLE!!
-using UnityEngine.SceneManagement;
-
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
@@ -36,9 +32,16 @@ public class PlayerController : MonoBehaviour
     public float Speed = 5f;
     public float JumpHeight = 2f;
     public float Gravity = -9.81f;
-    public float DashDistance = 5f;
     public float KnockbackFactor = 0.002f;
+    public float LandingDelay = 0.1f;
+    public float JumpHoldDuration = 1f;
+    public float JumpHoldStrength = 1f;
+
     public Vector3 Drag;
+    [Header("Player controller variables")]
+    public float DashDuration = 2f;
+    public float DashDistance = 5f;
+    public float DashDelay = 2f;
 
     [Header("For External Scripts")]
     public float KnockbackResistance = 0f;
@@ -53,6 +56,19 @@ public class PlayerController : MonoBehaviour
     private AudioSource _deathSound;
     private float _deathTime;
     private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
+
+    // Necessary for jump delay after landing
+    private bool _previousGrounded;
+    private float _landedTimeStamp = 0;
+
+    // For jumping higher when holding button
+    private bool _isJumping;
+    private float _jumpTimeStamp = 0;
+
+    // ability - dash
+    private float _dashStartTime;
+    private Vector3 _currentDashingVelocity;
+
     public enum PlayerAbility
     {
         Walk,
@@ -100,47 +116,20 @@ public class PlayerController : MonoBehaviour
 
     void Update ()
     {
-        if(AbilityCheck(PlayerAbility.Jump))
+        var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
+        if(!AbilityCheck(PlayerAbility.Walk))
         {
-            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
-                Jump();
+            horizontalInput = 0;
         }
 
+        var movementDirection = new Vector3(horizontalInput, 0, 0);
         var aimDirection = _inputManager.GetAimDirection();
+
+        ProcessButtonInput(aimDirection);
+
+        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
-
-        if(AbilityCheck(PlayerAbility.Jump))
-        {
-            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-                Dash(aimDirection);
-        }
-
-        if(AbilityCheck(PlayerAbility.Walk))
-        {
-            var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
-            _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
-            var movementDirection = new Vector3(horizontalInput, 0, 0);
-            _controller.Move(movementDirection * Speed * Time.deltaTime);
-        }
-
-        // Force z-axis lock
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-        _velocity.z = 0;
-
-        _velocity.x /= 1 + Drag.x * Time.deltaTime;
-        _velocity.y /= 1 + Drag.y * Time.deltaTime;
-        _controller.Move(_velocity * Time.deltaTime);
-
-        if (_controller.isGrounded && _velocity.y < 0)
-        {
-            // When on ground remove downward gravity pull
-            _velocity.y = 0f;
-        }
-        if (!_controller.isGrounded)
-        {
-            _velocity.y += Gravity * Time.deltaTime;
-        }
 
         if(AbilityCheck(PlayerAbility.Aim))
         {
@@ -148,6 +137,44 @@ public class PlayerController : MonoBehaviour
             if (aimDirection.x != 0)
                 transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
         }
+
+        if (_controller.isGrounded && _velocity.y <= 0)
+        {
+            _velocity.y = Gravity * Time.deltaTime;
+        }
+        else if (!_controller.isGrounded)
+        {
+            _velocity.y += Gravity * Time.deltaTime;
+        }
+
+        _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
+        _velocity.y /= 1 + Drag.y * Time.deltaTime;
+        _velocity.z = 0;
+        // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
+        _controller.Move((_velocity + (movementDirection * Speed)) * Time.deltaTime);
+
+        // Force z-axis lock
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+        if (_deathTime > 0 && _deathTime <= Time.time)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void ProcessButtonInput(Vector2 aimDirection)
+    {
+        if(AbilityCheck(PlayerAbility.Jump))
+        {
+            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+                Dash(aimDirection);
+        }
+        // It must be called every update
+        var jumpAvailable = JumpAvailable();
+        if ((jumpAvailable || _isJumping) && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && AbilityCheck(PlayerAbility.Jump))
+            Jump();
+        else
+            _isJumping = false;
 
         if(AbilityCheck(PlayerAbility.Punch))
         {
@@ -174,33 +201,87 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if(_deathTime > 0 && _deathTime <= Time.time)
-        {
-            Destroy(gameObject);
-            // THIS SHOULD NOT BE HERE DELETE THIS NOW
-            SceneManager.LoadScene(1);
-        }
+        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+            Dash(aimDirection);
+        HandleDashing();
+    }
+
+    private bool JumpAvailable()
+    {
+        var grounded = _controller.isGrounded;
+        var previousGrounded = _previousGrounded;
+        _previousGrounded = grounded;
+
+        if (grounded && !previousGrounded)
+            _landedTimeStamp = Time.time + LandingDelay;
+
+        if (grounded && Time.time >= _landedTimeStamp)
+            return true;
+
+        return false;
     }
 
     private void Jump ()
     {
-        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        Debug.Log("jump");
-        _animator.SetTrigger("Jump");
+        // If player just started to jump propel him upwards
+        if (!_isJumping)
+        {
+            _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            Debug.Log("jump");
+            _animator.SetTrigger("Jump");
+
+            _isJumping = true;
+            _jumpTimeStamp = Time.time + JumpHoldDuration;
+            return;
+        }
+
+        // If player should stop jumping
+        if(Time.time > _jumpTimeStamp)
+        {
+            _isJumping = false;
+            return;
+        }
+
+        // If player is continuing to hold jump button
+        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity) * Time.deltaTime * JumpHoldStrength;
+
+
     }
 
     private void Dash (Vector3 direction)
     {
-        Debug.Log("Dash");
-        var dashingVelocity = Vector3.Scale(
-            direction,
-            DashDistance * new Vector3((Mathf.Log(1f / (Time.deltaTime * Drag.x + 1)) / -Time.deltaTime),
-            (Mathf.Log(1f / (Time.deltaTime * Drag.y + 1)) / -Time.deltaTime),
-            0)
-        );
-        _velocity += dashingVelocity;
-        Debug.Log("dashing velo: " + dashingVelocity);
+        if(_dashStartTime + DashDelay > Time.time)
+        {
+            // Can't yet dash.
+            return;
+        }
+
+        Debug.Log("Dash start");
+        _dashStartTime = Time.time;
+        _currentDashingVelocity = direction * DashDistance;
+
+        // _velocity += dashingVelocity;
+        // Debug.Log("dashing velo: " + dashingVelocity);
     }
+
+    private void HandleDashing()
+    {
+        _animator.SetBool("Dashing", IsDashing);
+        if(!IsDashing)
+        {
+            return;
+        }
+        _velocity = _currentDashingVelocity;
+        _controller.Move(_currentDashingVelocity * Time.deltaTime);
+    }
+
+    public bool IsDashing
+    {
+        get
+        {
+            return _dashStartTime + DashDuration > Time.time;
+        }
+     }
 
     // You use your '_rightHand' to 'HitType.Punch' and deal '50' damage
     private void Hit(HitEvent bodyPart, HitType type, int damage, int knockValue)
@@ -234,10 +315,17 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     public void OnHit(HitMessage message)
     {
+        if(IsDashing)
+        {
+            // Invincibility while dashing.
+            return;
+        }
+
         var damageResistanceValue = Mathf.Clamp(1 - DamageResistance, 0, 1);
         var knockbakcResistanceValue = Mathf.Clamp(1 - KnockbackResistance, 0, 1);
         message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
         message.Damage = (int)(message.Damage * damageResistanceValue);
+
         if (hitpoints < maxHitpoints)
         {
             if (message.Damage + hitpoints <= maxHitpoints)

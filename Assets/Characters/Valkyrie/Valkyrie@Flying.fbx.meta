@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cadd6e1451da8ad4db5c01a392293ec2
+guid: 7b4d82c02866ffe4482f034d3c83523c
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -139,7 +139,7 @@ ModelImporter:
     400130: mixamorig:Spine1
     400132: mixamorig:Spine2
     400134: //RootNode
-    7400000: Jumping
+    7400000: Flying
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -170,17 +170,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jumping
+      name: Flying
       takeName: mixamo.com
-      firstFrame: 30
-      lastFrame: 50
+      firstFrame: 0
+      lastFrame: 178
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
