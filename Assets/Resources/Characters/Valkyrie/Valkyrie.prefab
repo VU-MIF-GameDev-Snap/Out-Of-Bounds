@@ -2307,8 +2307,12 @@ MonoBehaviour:
   KnockValue: 100
   Speed: 5
   JumpHeight: 2
-  Gravity: -9.81
+  Gravity: -30
+  DashDistance: 5
   KnockbackFactor: 0.002
+  LandingDelay: 0.1
+  JumpHoldDuration: 1
+  JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
   DashDuration: 0.2
   DashDistance: 9

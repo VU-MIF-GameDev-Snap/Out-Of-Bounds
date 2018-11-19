@@ -3,10 +3,6 @@ using System.Collections;
 
 using UnityEngine;
 
-// VERY TEMPORARY PLS DELETE AS SOON AS POSSIBLE!!
-using UnityEngine.SceneManagement;
-
-
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
@@ -37,6 +33,10 @@ public class PlayerController : MonoBehaviour
     public float JumpHeight = 2f;
     public float Gravity = -9.81f;
     public float KnockbackFactor = 0.002f;
+    public float LandingDelay = 0.1f;
+    public float JumpHoldDuration = 1f;
+    public float JumpHoldStrength = 1f;
+    
     public Vector3 Drag;
     [Header("Player controller variables")]
     public float DashDuration = 2f;
@@ -51,6 +51,15 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
+    
+    // Necessary for jump delay after landing
+    private bool _previousGrounded;
+    private float _landedTimeStamp = 0;
+
+    // For jumping higher when holding button
+    private bool _isJumping;
+    private float _jumpTimeStamp = 0;
+    
     // ability - dash
     private float _dashStartTime;
     private Vector3 _currentDashingVelocity;
@@ -68,42 +77,59 @@ public class PlayerController : MonoBehaviour
 
     void Update ()
     {
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && _controller.isGrounded)
-            Jump();
-
         var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
         var direction = new Vector3(horizontalInput, 0, 0);
         var aimDirection = _inputManager.GetAimDirection();
+
+        ProcessButtonInput(aimDirection);
+        
+
         _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
+
         _aimIK.TargetDirection = aimDirection;
 
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(aimDirection);
-        HandleDashing();
+        if (aimDirection.x != 0)
+            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
 
-        if (_controller.isGrounded && _velocity.y < 0)
+        if (_controller.isGrounded && _velocity.y <= 0)
         {
-            // When on ground remove downward gravity pull
-            _velocity.y = 0f;
+            _velocity.y = Gravity * Time.deltaTime;
         }
-        if (!_controller.isGrounded)
+        else if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-        // Force z-axis lock
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
         _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
+        
+        // Force z-axis lock
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        if (aimDirection.x != 0)
-            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+
+        if (_deathTime > 0 && _deathTime <= Time.time)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void ProcessButtonInput(Vector2 aimDirection)
+    {
+        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+            Dash(aimDirection);
+
+        // It must be called every update
+        var jumpAvailable = JumpAvailable();
+        if ((jumpAvailable || _isJumping) && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump))
+            Jump();
+        else
+            _isJumping = false;
 
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
             Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
@@ -114,19 +140,51 @@ public class PlayerController : MonoBehaviour
         if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
             Shoot();
 
-        if(_deathTime > 0 && _deathTime <= Time.time)
-        {
-            Destroy(gameObject);
-            // THIS SHOULD NOT BE HERE DELETE THIS NOW
-            SceneManager.LoadScene(1);
-        }
+        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+            Dash(aimDirection);
+        HandleDashing();
+    }
+
+    private bool JumpAvailable()
+    {
+        var grounded = _controller.isGrounded;
+        var previousGrounded = _previousGrounded;
+        _previousGrounded = grounded;
+
+        if (grounded && !previousGrounded)
+            _landedTimeStamp = Time.time + LandingDelay;
+
+        if (grounded && Time.time >= _landedTimeStamp)
+            return true;
+
+        return false;
     }
 
     private void Jump ()
     {
-        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity);
-        Debug.Log("jump");
-        _animator.SetTrigger("Jump");
+        // If player just started to jump propel him upwards
+        if (!_isJumping)
+        {
+            _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+            Debug.Log("jump");
+            _animator.SetTrigger("Jump");
+
+            _isJumping = true;
+            _jumpTimeStamp = Time.time + JumpHoldDuration;
+            return;
+        }
+
+        // If player should stop jumping
+        if(Time.time > _jumpTimeStamp)
+        {
+            _isJumping = false;
+            return;
+        }
+
+        // If player is continuing to hold jump button
+        _velocity.y += Mathf.Sqrt(JumpHeight * -2f * Gravity) * Time.deltaTime * JumpHoldStrength;
+
+
     }
 
     private void Dash (Vector3 direction)
