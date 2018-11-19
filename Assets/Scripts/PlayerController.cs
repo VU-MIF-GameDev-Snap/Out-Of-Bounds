@@ -40,6 +40,10 @@ public class PlayerController : MonoBehaviour
     public float KnockbackFactor = 0.002f;
     public Vector3 Drag;
 
+    [Header("For External Scripts")]
+    public float KnockbackResistance = 0f;
+    public float DamageResistance = 0f;
+
     private CharacterController _controller;
     private Vector3 _velocity;
     private Animator _animator;
@@ -157,6 +161,12 @@ public class PlayerController : MonoBehaviour
                 _powerController.StartPower1();
         }
 
+        if(AbilityCheck(PlayerAbility.Power2))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power2))
+                _powerController.StartPower2();
+        }
+
         if(AbilityCheck(PlayerAbility.Shoot))
         {
             if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
@@ -224,6 +234,10 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     public void OnHit(HitMessage message)
     {
+        var damageResistanceValue = Mathf.Clamp(1 - DamageResistance, 0, 1);
+        var knockbakcResistanceValue = Mathf.Clamp(1 - KnockbackResistance, 0, 1);
+        message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
+        message.Damage = (int)(message.Damage * damageResistanceValue);
         if (hitpoints < maxHitpoints)
         {
             if (message.Damage + hitpoints <= maxHitpoints)
@@ -267,6 +281,11 @@ public class PlayerController : MonoBehaviour
         _aimIK.RifleHoldingMode = true;
 
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
+    }
+
+    public void ReduceHitpoints (int amount)
+    {
+        hitpoints = Mathf.Clamp(hitpoints - amount, 0, maxHitpoints);
     }
 
     private void OnTriggerEnter(Collider collision)

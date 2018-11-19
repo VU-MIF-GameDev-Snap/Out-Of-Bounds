@@ -16,11 +16,28 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         PlayerController.PlayerAbility.Power2,
         PlayerController.PlayerAbility.Punch,
         PlayerController.PlayerAbility.Shoot,
-        };
+        PlayerController.PlayerAbility.Dash,
+    };
+    private float _stoneFormStartTime;
+    private float _stoneFormCooldownStartTime;
+    private int _stoneFormAlreadyHealedAmount;
+    private bool _stoneFormActive = false;
+    private PlayerController.PlayerAbility[] _stoneFormAbilitiesToTurnOff = {
+        PlayerController.PlayerAbility.Jump,
+        PlayerController.PlayerAbility.Power1,
+        PlayerController.PlayerAbility.Punch,
+        PlayerController.PlayerAbility.Shoot,
+        PlayerController.PlayerAbility.Aim,
+        PlayerController.PlayerAbility.Dash,
+        PlayerController.PlayerAbility.Walk,
+    };
     private PlayerController _playerController;
     private PlayerInputManager _inputManager;
     private Animator _animator;
 
+    [SerializeField]
+    Renderer RendererForMaterial;
+    [Header("ChargePunch")]
     [SerializeField]
     ParticleSystem ChargePunchChargingParticleSystem;
     [SerializeField]
@@ -29,9 +46,30 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
     float ChargePunchCooldown = 10f;
     [SerializeField]
     float ChargePuchDamagePerSecond = 10f;
+    [SerializeField]
     float ChargePuchKnockbackPerSecond = 10f;
 
-    public void StartPower1()
+    [Header("StoneForm")]
+    [SerializeField]
+    ParticleSystem StoneFormFormingParticleSystem;
+    [SerializeField]
+    ParticleSystem StoneFormBreakParticleSystem;
+    [SerializeField]
+    ParticleSystem StoneFormHealingParticleSystem;
+    [SerializeField]
+    float StoneFormCooldown = 7f;
+    [SerializeField]
+    float StoneFormHealingPerSecond = 20f;
+    [SerializeField]
+    float StoneFormMaxDuration = 6f;
+    [SerializeField]
+    float StoneFormMinDuration = 1.2f;
+    [SerializeField]
+    Material OriginalMaterial;
+    [SerializeField]
+    Material StoneFormMaterial;
+
+    public void StartPower1 ()
     {
         if(_chargePunchCooldownStartTime + ChargePunchCooldown > Time.time || _chargePunchActive)
         {
@@ -47,18 +85,9 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
             _playerController.AbilityToggle(ability, false);
         }
         _animator.SetTrigger("ChargePunchTrigger");
-        return;
-        throw new System.NotImplementedException();
-        // Charge punch
-        // * Idea:
-        // * Press down button
-        // * While holding "charges"
-        // * Released start attack animation with damage calculated from charging time.
-
-        // ! While charging disable regular punch, power2
     }
 
-    private void HandleChargePunch()
+    private void HandleChargePunch ()
     {
         _animator.SetBool("ChargePunch", _chargePunchActive);
         if(!_chargePunchActive)
@@ -79,7 +108,7 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         }
     }
 
-    public void OnChargePunchLoop()
+    public void OnChargePunchLoop ()
     {
         var sphericalShape = ChargePunchChargingParticleSystem.shape;
         var newRadius = Mathf.Clamp((Time.time - _chargePunchStartTime) / 10f, 0.1f, 1.5f);
@@ -91,7 +120,7 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         ChargePunchChargingParticleSystem.Play();
     }
 
-    public void OnChargePunchFinish()
+    public void OnChargePunchFinish ()
     {
         var coneShape = ChargePunchFinishParticleSystem.shape;
         coneShape.angle = Mathf.Clamp((Time.time - _chargePunchStartTime) * 4.6f, 10f, 70f);
@@ -120,10 +149,63 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         }
     }
 
-    public void StartPower2()
+    public void StartPower2 ()
     {
-        throw new System.NotImplementedException();
-        // Stone form
+        if(_stoneFormCooldownStartTime + StoneFormCooldown > Time.time || _stoneFormActive)
+        {
+            // Can't activate yet.
+            return;
+        }
+        _stoneFormActive = true;
+        StoneFormFormingParticleSystem.Play();
+        _stoneFormAlreadyHealedAmount = 0;
+        _stoneFormStartTime = Time.time;
+    }
+
+    public void HandleStoneForm ()
+    {
+        if(!_stoneFormActive || (_stoneFormStartTime + 1 > Time.time))
+        {
+            return;
+        }
+        if(RendererForMaterial.material != StoneFormMaterial)
+        {
+            // * Power just activated!
+            RendererForMaterial.material = StoneFormMaterial;
+            foreach (var ability in _stoneFormAbilitiesToTurnOff)
+            {
+                _playerController.AbilityToggle(ability, false);
+            }
+            _playerController.DamageResistance = 1f;
+            _playerController.KnockbackResistance = 1f;
+            _animator.StartPlayback();
+        }
+
+        var duration = Time.time - _stoneFormStartTime - 1;
+        int rightNowHealAmount = (int)Math.Ceiling(duration * StoneFormHealingPerSecond);
+        if(rightNowHealAmount - _stoneFormAlreadyHealedAmount > 0)
+        {
+            StoneFormHealingParticleSystem.Play();
+            _playerController.ReduceHitpoints(rightNowHealAmount - _stoneFormAlreadyHealedAmount);
+            _stoneFormAlreadyHealedAmount = rightNowHealAmount;
+        }
+
+
+        if(duration > StoneFormMinDuration && (duration > StoneFormMaxDuration || !_inputManager.IsButtonDown(PlayerInputManager.Key.Power2)))
+        {
+            _animator.StopPlayback();
+            RendererForMaterial.material = OriginalMaterial;
+            _stoneFormActive = false;
+            _stoneFormCooldownStartTime = Time.time;
+            StoneFormBreakParticleSystem.Play();
+            _playerController.DamageResistance = 0f;
+            _playerController.KnockbackResistance = 0f;
+
+            foreach (var ability in _stoneFormAbilitiesToTurnOff)
+            {
+                _playerController.AbilityToggle(ability, true);
+            }
+        }
     }
 
     void Start ()
@@ -136,5 +218,6 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
 	void Update ()
 	{
         HandleChargePunch();
+        HandleStoneForm();
 	}
 }
