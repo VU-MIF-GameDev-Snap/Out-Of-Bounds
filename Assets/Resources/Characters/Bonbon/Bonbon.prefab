@@ -1389,7 +1389,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095315060400738}
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -1.6689686, y: 0.29660416, z: -0.19886589}
+  m_LocalPosition: {x: -2.189392, y: 0.29660416, z: -0.21181011}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4592109075993766}
@@ -1826,6 +1826,7 @@ MonoBehaviour:
   ChargePunchCooldown: 10
   ChargePuchDamagePerSecond: 10
   ChargePuchKnockbackPerSecond: 10
+  ChargePunchMaxChargeDuration: 15
   StoneFormFormingParticleSystem: {fileID: 198095403014497878}
   StoneFormBreakParticleSystem: {fileID: 198414615216036938}
   StoneFormHealingParticleSystem: {fileID: 198823258124836232}
@@ -1833,6 +1834,7 @@ MonoBehaviour:
   StoneFormHealingPerSecond: 20
   StoneFormMaxDuration: 6
   StoneFormMinDuration: 1.2
+  StoneFormActivationDelay: 1
   OriginalMaterial: {fileID: 2100000, guid: dac90dffb710eee4b9825779200b556d, type: 2}
   StoneFormMaterial: {fileID: 2100000, guid: acb23bffac3cff04193f6eabf5ba41ee, type: 2}
 --- !u!114 &114877861905026406
@@ -8774,7 +8776,7 @@ ParticleSystem:
     enabled: 0
     multiplier: 1
   ClampVelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
