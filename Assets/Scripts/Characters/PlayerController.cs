@@ -128,7 +128,9 @@ public class PlayerController : MonoBehaviour
 
         ProcessButtonInput(aimDirection);
 
-        _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
+        var animMoveSpeed = horizontalInput * Math.Sign(aimDirection.x);
+        animMoveSpeed = animMoveSpeed == 0 ? horizontalInput : animMoveSpeed;
+        _animator.SetFloat("Speed", animMoveSpeed);
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
