@@ -293,7 +293,7 @@ public class PlayerController : MonoBehaviour
     {
         var msg = new HitMessage()
         { HitType = type, Damage = damage, KnockbackValue = knockValue, KnockbackDirection = transform.forward };
-        bodyPart.SendMessage("Initialise", msg);
+        bodyPart.Initialise(msg);
 
         // Debug.Log("Type: " + hit + " Damage: " + damage);
         _animator.SetTrigger(type.ToString());
@@ -355,9 +355,8 @@ public class PlayerController : MonoBehaviour
         OnHit(msg);
     }
 
-    public void OnWeaponPickup (object message)
+    public void OnWeaponPickup (GameObject weapon)
     {
-        var weapon = message as GameObject;
         if (weapon == null || _weapon != null)
             return;
 

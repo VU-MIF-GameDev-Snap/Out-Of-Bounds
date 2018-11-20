@@ -9,10 +9,9 @@ public class HitEvent : MonoBehaviour
 
 
     // Constructor - use class HitMessage as parameter
-    public void Initialise (object message)
+    public void Initialise (HitMessage message)
     {
-        var msg = message as HitMessage;
-        _message = msg == null ? null : msg;
+        _message = message;
     }
 
 
@@ -27,7 +26,7 @@ public class HitEvent : MonoBehaviour
                 return;
 
             var enemy = collider.gameObject.GetComponent<PlayerController>();
-            enemy.SendMessage("OnHit", _message);
+            enemy.OnHit(_message);
 
             // '_message' is explicitly set to null to avoid double hit registration
             _message = null;

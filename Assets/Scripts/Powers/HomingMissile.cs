@@ -22,12 +22,9 @@ public class HomingMissile : MonoBehaviour
 	public float Damage;
 
 	// For now the best way to pass information from one object to another
-	public void Initialize(object owner)
+	public void Initialize(GameObject owner)
 	{
-		if(owner as GameObject)
-		{
-			Owner = owner as GameObject;
-		}
+		Owner = owner as GameObject;
 
 		// Get all other characters to follow
 		var characters = GameObject.FindGameObjectsWithTag("Player");
@@ -100,7 +97,7 @@ public class HomingMissile : MonoBehaviour
 				hitMessage.KnockbackValue = (int)(KnockbackStrength * factor);
 				hitMessage.KnockbackDirection = (target - missilePosition).normalized;
 
-				t.gameObject.SendMessage("OnHit", hitMessage);
+				t.gameObject.GetComponent<PlayerController>().OnHit(hitMessage);
 			}
 		}
 
