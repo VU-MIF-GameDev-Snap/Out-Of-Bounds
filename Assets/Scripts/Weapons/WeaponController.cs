@@ -58,7 +58,8 @@ public class WeaponController : MonoBehaviour
         var bullet = Instantiate(Shot, shotSpawn.position, shotSpawn.rotation);
         var message = new HitMessage()
         { HitType = HitType.Rifle, Damage = Damage, KnockbackValue = KnockbackValue, KnockbackDirection = this.transform.forward };
-        bullet.SendMessage("Initialise", message);
+        bullet.GetComponent<HitEvent>().Initialise(message);
+
         _audio.Play();
         Ammo--;
         if (Ammo <= 0)

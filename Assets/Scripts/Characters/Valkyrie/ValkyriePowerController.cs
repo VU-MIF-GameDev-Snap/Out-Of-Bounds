@@ -21,8 +21,8 @@ public class ValkyriePowerController : MonoBehaviour, ICharacterPowerController
             var rocket1 = Instantiate (Rocket, RocketSpawn1.position, RocketSpawn1.rotation);
             var rocket2 = Instantiate (Rocket, RocketSpawn2.position, RocketSpawn2.rotation);
 
-            rocket1.SendMessage("Initialize", transform.root.gameObject);
-            rocket2.SendMessage("Initialize", transform.root.gameObject);
+            rocket1.GetComponent<HomingMissile>().Initialize(transform.root.gameObject);
+            rocket2.GetComponent<HomingMissile>().Initialize(transform.root.gameObject);
         }
     }
 
