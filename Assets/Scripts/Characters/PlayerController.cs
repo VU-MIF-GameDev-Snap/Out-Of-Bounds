@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -36,12 +36,16 @@ public class PlayerController : MonoBehaviour
     public float LandingDelay = 0.1f;
     public float JumpHoldDuration = 1f;
     public float JumpHoldStrength = 1f;
-    
+
     public Vector3 Drag;
     [Header("Player controller variables")]
     public float DashDuration = 2f;
     public float DashDistance = 5f;
     public float DashDelay = 2f;
+
+    [Header("For External Scripts")]
+    public float KnockbackResistance = 0f;
+    public float DamageResistance = 0f;
 
     private CharacterController _controller;
     private Vector3 _velocity;
@@ -51,7 +55,8 @@ public class PlayerController : MonoBehaviour
     private ICharacterPowerController _powerController;
     private AudioSource _deathSound;
     private float _deathTime;
-    
+    private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
+
     // Necessary for jump delay after landing
     private bool _previousGrounded;
     private float _landedTimeStamp = 0;
@@ -59,10 +64,44 @@ public class PlayerController : MonoBehaviour
     // For jumping higher when holding button
     private bool _isJumping;
     private float _jumpTimeStamp = 0;
-    
+
     // ability - dash
     private float _dashStartTime;
     private Vector3 _currentDashingVelocity;
+
+    public enum PlayerAbility
+    {
+        Walk,
+        Jump,
+        Dash,
+        Punch,
+        Shoot,
+        Aim,
+        PickupWeapon,
+        Power1,
+        Power2,
+    };
+
+    public void AbilityToggle (PlayerAbility ability, Nullable<bool> toggle = null)
+    {
+        if(!_abilitiesAvailable.ContainsKey(ability))
+        {
+            _abilitiesAvailable.Add(ability, toggle.HasValue ? toggle.Value : false);
+            return;
+        }
+        _abilitiesAvailable[ability] = toggle.HasValue ? toggle.Value : !_abilitiesAvailable[ability];
+    }
+
+    public bool AbilityCheck (PlayerAbility ability)
+    {
+        bool abilityAvailable = true;
+        if(!_abilitiesAvailable.TryGetValue(ability, out abilityAvailable))
+        {
+            // Ability not in list, return true by default.
+            abilityAvailable = true;
+        }
+        return abilityAvailable;
+    }
 
     void Start ()
     {
@@ -78,21 +117,26 @@ public class PlayerController : MonoBehaviour
     void Update ()
     {
         var horizontalInput = _inputManager.GetAxis(PlayerInputManager.Key.MoveHorizontal);
-        var direction = new Vector3(horizontalInput, 0, 0);
+        if(!AbilityCheck(PlayerAbility.Walk))
+        {
+            horizontalInput = 0;
+        }
+
+        var movementDirection = new Vector3(horizontalInput, 0, 0);
         var aimDirection = _inputManager.GetAimDirection();
 
         ProcessButtonInput(aimDirection);
-        
 
         _animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
         _animator.SetBool("IsGrounded", _controller.isGrounded);
         _animator.SetBool("HasRifle", _weapon != null);
 
-
-        _aimIK.TargetDirection = aimDirection;
-
-        if (aimDirection.x != 0)
-            transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+        if(AbilityCheck(PlayerAbility.Aim))
+        {
+            _aimIK.TargetDirection = aimDirection;
+            if (aimDirection.x != 0)
+                transform.rotation = Quaternion.LookRotation(new Vector3(aimDirection.x, 0, 0));
+        }
 
         if (_controller.isGrounded && _velocity.y <= 0)
         {
@@ -103,15 +147,14 @@ public class PlayerController : MonoBehaviour
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-
         _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
+        _velocity.z = 0;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
-        _controller.Move((_velocity + (direction * Speed)) * Time.deltaTime);
-        
+        _controller.Move((_velocity + (movementDirection * Speed)) * Time.deltaTime);
+
         // Force z-axis lock
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
 
         if (_deathTime > 0 && _deathTime <= Time.time)
         {
@@ -121,24 +164,42 @@ public class PlayerController : MonoBehaviour
 
     private void ProcessButtonInput(Vector2 aimDirection)
     {
-        if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
-            Dash(aimDirection);
-
+        if(AbilityCheck(PlayerAbility.Jump))
+        {
+            if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
+                Dash(aimDirection);
+        }
         // It must be called every update
         var jumpAvailable = JumpAvailable();
-        if ((jumpAvailable || _isJumping) && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump))
+        if ((jumpAvailable || _isJumping) && _inputManager.IsButtonDown(PlayerInputManager.Key.Jump) && AbilityCheck(PlayerAbility.Jump))
             Jump();
         else
             _isJumping = false;
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
-            Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
+        if(AbilityCheck(PlayerAbility.Punch))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Punch))
+                Hit(_rightFist, HitType.Punch, PunchDamage, KnockValue);
+        }
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
-            _powerController.StartPower1();
+        if(AbilityCheck(PlayerAbility.Power1))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power1))
+                _powerController.StartPower1();
+        }
 
-        if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
-            Shoot();
+        if(AbilityCheck(PlayerAbility.Power2))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Power2))
+                _powerController.StartPower2();
+        }
+
+        if(AbilityCheck(PlayerAbility.Shoot))
+        {
+            if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Shoot))
+                Shoot();
+        }
+
 
         if (_inputManager.IsButtonDown(PlayerInputManager.Key.Dash))
             Dash(aimDirection);
@@ -252,7 +313,7 @@ public class PlayerController : MonoBehaviour
     // --------------------------------------------
     // ------------------ EVENTS ------------------
     // --------------------------------------------
-    public void OnHit(object message)
+    public void OnHit(HitMessage message)
     {
         if(IsDashing)
         {
@@ -260,24 +321,33 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        var msg = message as HitMessage;
-        if (msg == null)
-            return;
+        var damageResistanceValue = Mathf.Clamp(1 - DamageResistance, 0, 1);
+        var knockbakcResistanceValue = Mathf.Clamp(1 - KnockbackResistance, 0, 1);
+        message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
+        message.Damage = (int)(message.Damage * damageResistanceValue);
 
         if (hitpoints < maxHitpoints)
         {
-            if (msg.Damage + hitpoints <= maxHitpoints)
-                hitpoints += msg.Damage;
-            else if (msg.Damage + hitpoints > maxHitpoints)
+            if (message.Damage + hitpoints <= maxHitpoints)
+                hitpoints += message.Damage;
+            else if (message.Damage + hitpoints > maxHitpoints)
                 hitpoints = maxHitpoints;
         }
 
-        if (msg.KnockbackValue >= 0 && msg.KnockbackValue <= 100)
-            _velocity += msg.KnockbackDirection * msg.KnockbackValue * hitpoints * KnockbackFactor;
+        if (message.KnockbackValue >= 0)
+            _velocity += message.KnockbackDirection * message.KnockbackValue * (hitpoints + 1) * KnockbackFactor;
 
-        Debug.Log(this.name + " got hit by a '" + msg.HitType + "' and received '" + msg.Damage + "' damage");
+        Debug.Log(this.name + " got hit by a '" + message.HitType + "' and received '" + message.Damage + "' damage");
         Debug.Log(" Player HP: '" + hitpoints);
         Debug.Log(" Player Velocity: '" + _velocity);
+    }
+
+    public void OnHit(object message)
+    {
+        var msg = message as HitMessage;
+        if (msg == null)
+            return;
+        OnHit(msg);
     }
 
     public void OnWeaponPickup (object message)
@@ -301,8 +371,18 @@ public class PlayerController : MonoBehaviour
         Debug.Log(gameObject.name + " picked up a " + weapon.name);
     }
 
+    public void ReduceHitpoints (int amount)
+    {
+        hitpoints = Mathf.Clamp(hitpoints - amount, 0, maxHitpoints);
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
+        if(!AbilityCheck(PlayerAbility.PickupWeapon))
+        {
+            return;
+        }
+
         // TODO: Won't work if weapon is on the ground
         if (collision.gameObject.CompareTag("Weapon"))
         {
