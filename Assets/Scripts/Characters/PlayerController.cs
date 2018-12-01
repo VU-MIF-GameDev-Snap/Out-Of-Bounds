@@ -165,7 +165,12 @@ public class PlayerController : MonoBehaviour
 
         if (_deathTime > 0 && _deathTime <= Time.time)
         {
-            Destroy(gameObject);
+			displaySound.Play();
+            
+            // Detach sound emitter from player, will be hang around in scene, shouldn't be a big deal.
+			displaySound.transform.SetParent(null);
+			// Destroy player object right now.
+			Destroy(gameObject);
         }
     }
 
@@ -313,13 +318,17 @@ public class PlayerController : MonoBehaviour
         displaySound.Play();
     }
 
-    public void Die()
+    public void OnExitArena()
     {
         displaySound.clip = _audioController.Death;
-        displaySound.Play();
         _deathTime = Time.time + 2;
+		// Should start something visual to indicate that time is running out.
     }
 
+	public void OnReenterArena ()
+	{
+		_deathTime = 0;
+	}
     private void Shoot()
     {
         if (_weapon == null)
