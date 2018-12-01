@@ -1,0 +1,20 @@
+﻿Menu:
+Main menu soundtrack - yra muzika. Reikia priskirti background video Audio source komponentą įjungiant loop
+Main menu navigation - nėra muzikos, reikia paimti iš unity asset store (nuoroda 3 laboro šaltiniuose)
+Character selection voice - yra garsai, bet nepriskirta (Character selection controller ADD VOICE komentaras)
+
+Gameplay:
+Background music - yra muzika, reikia priskirti game controller, sudėtas skirtingas muzikas paleidžia vieną po kitos
+Player sounds:
+	Name 
+	Death - veikia
+	Hit 1 - veikia
+	Hit 2 - veikia
+	Hit 3 - veikia
+	Jump - veikia
+	Dash - veikia
+	Land - garsas yra, bet nusileidimas nerealizuotas
+	Out of bounds - garsas yra, bet nerealizuotas
+yra garsai, player audio controller priskirti charakteriams ir priskirti garsus kontroleriui.
+Weapon sounds - yra garsai, kiekvieno ginklo audio source reikia nurodyti garsą.
+
