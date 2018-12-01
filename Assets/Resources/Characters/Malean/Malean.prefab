@@ -2340,7 +2340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlackHole: {fileID: 1490911696805110, guid: f49de0d53646c7149a5f5aafb11af676, type: 2}
   BlackHoleSpawn: {fileID: 4826746360174822}
-  Power2Cooldown: 0
+  Power2Cooldown: 10
 --- !u!135 &135482839591374628
 SphereCollider:
   m_ObjectHideFlags: 1

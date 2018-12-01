@@ -231,7 +231,7 @@ public class PlayerController : MonoBehaviour
         if (!_isJumping)
         {
             _velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-            Debug.Log("jump");
+            //Debug.Log("jump");
             _animator.SetTrigger("Jump");
 
             _isJumping = true;
@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Debug.Log("Dash start");
+        //Debug.Log("Dash start");
         _dashStartTime = Time.time;
         _currentDashingVelocity = direction * DashDistance;
         _dashActive = true;
@@ -343,9 +343,9 @@ public class PlayerController : MonoBehaviour
         if (message.KnockbackValue >= 0)
             _velocity += message.KnockbackDirection * message.KnockbackValue * (hitpoints + 1) * KnockbackFactor;
 
-        Debug.Log(this.name + " got hit by a '" + message.HitType + "' and received '" + message.Damage + "' damage");
-        Debug.Log(" Player HP: '" + hitpoints);
-        Debug.Log(" Player Velocity: '" + _velocity);
+        //Debug.Log(this.name + " got hit by a '" + message.HitType + "' and received '" + message.Damage + "' damage");
+        //Debug.Log(" Player HP: '" + hitpoints);
+        //Debug.Log(" Player Velocity: '" + _velocity);
     }
 
     public void OnHit(object message)
@@ -373,7 +373,7 @@ public class PlayerController : MonoBehaviour
         _aimIK.TransformTargetForLeftHand = _weapon.GetLeftHandPosition();
         _aimIK.RifleHoldingMode = true;
 
-        Debug.Log(gameObject.name + " picked up a " + weapon.name);
+        //Debug.Log(gameObject.name + " picked up a " + weapon.name);
     }
 
     public void ReduceHitpoints (int amount)

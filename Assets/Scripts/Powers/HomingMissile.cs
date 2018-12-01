@@ -81,8 +81,6 @@ public class HomingMissile : MonoBehaviour
 			return;
 		}
 
-		Debug.Log(other.name);
-
 		var missilePosition = transform.position;
 
 		// Hit players with explosion if necessary
