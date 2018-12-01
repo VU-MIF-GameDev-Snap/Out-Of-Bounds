@@ -445,6 +445,6 @@ MonoBehaviour:
   Ammo: 5
   Damage: 5
   KnockbackValue: 5
-  Shot: {fileID: 1989668967883728, guid: 99ab7b7acbd3b0c4da1c384c59e29bd2, type: 2}
+  Shot: {fileID: 1706906385787890, guid: 17174218f282cd641964e486818fece5, type: 2}
   shotSpawn: {fileID: 4475767614550628}
   LeftHandPosition: {fileID: 4097144847267794}
