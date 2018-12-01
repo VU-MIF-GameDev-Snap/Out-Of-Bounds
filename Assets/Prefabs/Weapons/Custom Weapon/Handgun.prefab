@@ -418,7 +418,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b7db73611e2a6c54f9b180070c1167a5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -548,10 +548,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b97ab52cf0cd44eaee17f087097635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 0}
+  SelfDestructTimer: 5
+  FireRate: 0.1
+  Ammo: 5
+  Damage: 5
+  KnockbackValue: 5
+  Shot: {fileID: 0}
   shotSpawn: {fileID: 0}
-  fireRate: 0
-  ammo: 0
+  LeftHandPosition: {fileID: 0}
 --- !u!114 &114332237793632834
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -563,7 +567,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b97ab52cf0cd44eaee17f087097635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shot: {fileID: 1732602130769838, guid: 33b888b3af0e8b6489fa1ce0bd341722, type: 2}
+  SelfDestructTimer: 5
+  FireRate: 0.1
+  Ammo: 5
+  Damage: 5
+  KnockbackValue: 5
+  Shot: {fileID: 0}
   shotSpawn: {fileID: 4553019195931006}
-  fireRate: 0.25
-  ammo: 0
+  LeftHandPosition: {fileID: 0}

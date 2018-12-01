@@ -518,11 +518,12 @@ GameObject:
   - component: {fileID: 4985829788188606}
   - component: {fileID: 95989647626879106}
   - component: {fileID: 143032238769855020}
-  - component: {fileID: 82519286725057608}
   - component: {fileID: 114670107898656198}
   - component: {fileID: 114215572472906980}
   - component: {fileID: 114341789394754116}
   - component: {fileID: 114339569195018586}
+  - component: {fileID: 114701185784046494}
+  - component: {fileID: 82863575066287346}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Player
@@ -2175,7 +2176,7 @@ Transform:
   m_Father: {fileID: 4824014377674984}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82519286725057608
+--- !u!82 &82863575066287346
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2184,7 +2185,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c6d76f3c3b06a5b4fb324550c9014fdc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2376,7 +2377,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b6c3710de55764ea3bea29678fe435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 3
+  PlayerId: 1
+--- !u!114 &114701185784046494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1455253603412050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b3c061852b88b43bb671c8647f492b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: {fileID: 8300000, guid: 461eeee5de06f6447bf522dd22611d69, type: 3}
+  Death: {fileID: 8300000, guid: c6d76f3c3b06a5b4fb324550c9014fdc, type: 3}
+  Hit_1: {fileID: 8300000, guid: 3125c70d791add7448fea25bc777a497, type: 3}
+  Hit_2: {fileID: 8300000, guid: a3806da0c2a0bc145b31e18ad81f5b14, type: 3}
+  Hit_3: {fileID: 8300000, guid: 9c303a21143a455458769f59530a434a, type: 3}
+  Attack: {fileID: 8300000, guid: 370b92dc38a6d0347ae72abe0d13d4a3, type: 3}
+  Jump: {fileID: 8300000, guid: b4dcd6f958c653941bd121230d071952, type: 3}
+  Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
+  Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
+  Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
 --- !u!135 &135398138828303464
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(PlaylistController))]
+
 public class GameController : MonoBehaviour
 {
-
+    private AudioSource displayMusic;
+    private PlaylistController _playlistController;
     public List<GameObject> weapons = new List<GameObject>();
+    public List<AudioClip> songs = new List<AudioClip>();
     public Vector3 weaponSpawnValues;
     public float weaponSpawnWait;
 
@@ -14,13 +19,27 @@ public class GameController : MonoBehaviour
     {
         SpawnPlayers();
         StartCoroutine(SpawnWeaponWaves());
+        _playlistController = GetComponent<PlaylistController>();
+        displayMusic = GetComponent<AudioSource>();
+        StartCoroutine(PlayBakgroundMusic());
     }
 
 	// Update is called once per frame
 	void Update ()
     {
+        
+    }
 
-	}
+    IEnumerator PlayBakgroundMusic()
+    {
+        while (true)
+        {
+            songs = _playlistController.Songs;
+            displayMusic.clip = songs[Random.Range(0, songs.Count)];
+            displayMusic.Play();
+            yield return new WaitForSeconds(displayMusic.clip.length);
+        }
+    }
 
     IEnumerator SpawnWeaponWaves()
     {

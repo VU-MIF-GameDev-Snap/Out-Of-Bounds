@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 114273510779346980}
   - component: {fileID: 114182756740768160}
   - component: {fileID: 114420058492876706}
+  - component: {fileID: 114656820326724826}
   - component: {fileID: 114877861905026406}
   m_Layer: 0
   m_Name: Bonbon
@@ -1838,6 +1839,27 @@ MonoBehaviour:
   StoneFormActivationDelay: 1
   OriginalMaterial: {fileID: 2100000, guid: dac90dffb710eee4b9825779200b556d, type: 2}
   StoneFormMaterial: {fileID: 2100000, guid: acb23bffac3cff04193f6eabf5ba41ee, type: 2}
+--- !u!114 &114656820326724826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095315060400738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b3c061852b88b43bb671c8647f492b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: {fileID: 8300000, guid: f752ec8db0545a84c8ad4eab54b95d26, type: 3}
+  Death: {fileID: 8300000, guid: 0bf8eb2222f7d394fa2cccf77b482734, type: 3}
+  Hit_1: {fileID: 8300000, guid: 834d94e2a5c2220448f1e750dad0be93, type: 3}
+  Hit_2: {fileID: 8300000, guid: 96474c880e7d38f4581f584b75a3a616, type: 3}
+  Hit_3: {fileID: 8300000, guid: 128b3dbd22dd2c443908ac49c22cb79f, type: 3}
+  Attack: {fileID: 8300000, guid: 370b92dc38a6d0347ae72abe0d13d4a3, type: 3}
+  Jump: {fileID: 8300000, guid: b4dcd6f958c653941bd121230d071952, type: 3}
+  Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
+  Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
+  Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
 --- !u!114 &114877861905026406
 MonoBehaviour:
   m_ObjectHideFlags: 1
