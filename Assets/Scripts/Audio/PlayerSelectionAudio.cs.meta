@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ce44b163a15457a43a3471e68e48d233
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Penkratjev: {fileID: 8300000, guid: 71902ed1b88465142b0dbd589b8d536d, type: 3}
+  - Malean: {fileID: 8300000, guid: f60d46277beec504e9458f399c0de911, type: 3}
+  - Valkyrie: {fileID: 8300000, guid: 461eeee5de06f6447bf522dd22611d69, type: 3}
+  - Bonbon: {fileID: 8300000, guid: f752ec8db0545a84c8ad4eab54b95d26, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

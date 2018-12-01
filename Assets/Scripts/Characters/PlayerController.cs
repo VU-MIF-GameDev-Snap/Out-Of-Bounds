@@ -7,7 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(PlayerAudioController))]
 [RequireComponent(typeof(ICharacterPowerController))]
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Player's body parts")]
@@ -53,7 +55,8 @@ public class PlayerController : MonoBehaviour
     private AimIK _aimIK;
     private PlayerInputManager _inputManager;
     private ICharacterPowerController _powerController;
-    private AudioSource _deathSound;
+    private AudioSource displaySound;
+    private PlayerAudioController _audioController;
     private float _deathTime;
     private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
 
@@ -110,7 +113,8 @@ public class PlayerController : MonoBehaviour
         _aimIK = GetComponent<AimIK>();
         _controller = GetComponent<CharacterController>();
         _inputManager = GetComponent<PlayerInputManager>();
-        _deathSound = GetComponent<AudioSource>();
+        displaySound = GetComponent<AudioSource>();
+        _audioController = GetComponent<PlayerAudioController>();
         _powerController = GetComponent<ICharacterPowerController>();
         _rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
     }
@@ -235,6 +239,10 @@ public class PlayerController : MonoBehaviour
 
             _isJumping = true;
             _jumpTimeStamp = Time.time + JumpHoldDuration;
+
+            displaySound.clip = _audioController.Jump;
+            displaySound.Play();
+
             return;
         }
 
@@ -264,6 +272,9 @@ public class PlayerController : MonoBehaviour
         _currentDashingVelocity = direction * DashDistance;
         _dashActive = true;
         _animator.SetBool("Dashing", _dashActive);
+
+        displaySound.clip = _audioController.Dash;
+        displaySound.Play();
 
         // _velocity += dashingVelocity;
         // Debug.Log("dashing velo: " + dashingVelocity);
@@ -297,13 +308,15 @@ public class PlayerController : MonoBehaviour
 
         // Debug.Log("Type: " + hit + " Damage: " + damage);
         _animator.SetTrigger(type.ToString());
+
+        displaySound.clip = _audioController.Attack;
+        displaySound.Play();
     }
 
     public void Die()
     {
-        _deathSound.Play();
-        //yield return new WaitForSeconds(1);
-        // wait for 1 sec
+        displaySound.clip = _audioController.Death;
+        displaySound.Play();
         _deathTime = Time.time + 2;
     }
 
@@ -330,6 +343,23 @@ public class PlayerController : MonoBehaviour
         var knockbakcResistanceValue = Mathf.Clamp(1 - KnockbackResistance, 0, 1);
         message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
         message.Damage = (int)(message.Damage * damageResistanceValue);
+
+        int rand = UnityEngine.Random.Range(1, 4);
+        if (rand == 1)
+        {
+            displaySound.clip = _audioController.Hit_1;
+            displaySound.Play();
+        }
+        if (rand == 2)
+        {
+            displaySound.clip = _audioController.Hit_2;
+            displaySound.Play();
+        }
+        if (rand == 3)
+        {
+            displaySound.clip = _audioController.Hit_3;
+            displaySound.Play();
+        }
 
         if (hitpoints < maxHitpoints)
         {

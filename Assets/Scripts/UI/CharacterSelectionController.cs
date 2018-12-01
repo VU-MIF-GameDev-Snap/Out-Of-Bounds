@@ -48,6 +48,7 @@ public class CharacterSelectionController : MonoBehaviour
 
 		if(_inputManager.IsButtonPressed(PlayerInputManager.Key.Jump))
 		{
+            // ADD CONFIRMATION VOICE
 			Confirmed = true;
 			ConfirmedObject.SetActive(true);
 
