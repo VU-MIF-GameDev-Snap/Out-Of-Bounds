@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
 
 	private void HandleGameEnd ()
 	{
-		if (!_gameEnded || _gameEndedAt + 2 > Time.time)
+		if (!_gameEnded || _gameEndedAt + GameWinAnnounceDelay > Time.time)
 		{
 			return;
 		}
