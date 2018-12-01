@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public float JumpHoldStrength = 1f;
 
     public Vector3 Drag;
+    public float GroundedDrag = 1.5f;
     [Header("Player controller variables")]
     public float DashDuration = 0.2f;
     public float DashDistance = 5f;
@@ -150,7 +151,7 @@ public class PlayerController : MonoBehaviour
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-        _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
+        _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? GroundedDrag : 1);
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         _velocity.z = 0;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);

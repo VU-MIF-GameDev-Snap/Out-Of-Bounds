@@ -19,13 +19,17 @@ public class BlackHole : MonoBehaviour {
 	private float _flyTimeStamp;
 	private Vector2 _flyDirection = new Vector2 (1, 0);
 
+	private GameObject _owner;
+
+
 
 	// Use this for initialization
 	void Start () {
 		_flyTimeStamp = Time.time + FlightTime;
 	}
 
-	void Initialize(Vector2 direction) {
+	void Initialize(GameObject owner, Vector2 direction) {
+		_owner = owner;
 		_flyDirection = direction.normalized;
 	}
 	
