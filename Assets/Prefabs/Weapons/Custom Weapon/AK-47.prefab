@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54072830483383354}
   - component: {fileID: 82197463879572286}
   - component: {fileID: 114486786976403314}
+  - component: {fileID: 65087024793242582}
   - component: {fileID: 65943973583069296}
   m_Layer: 0
   m_Name: AK-47
@@ -130,7 +131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1348378874746838}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.369, y: 2.767, z: 0.605113}
+  m_LocalPosition: {x: -1.02, y: 3.27, z: -0.35864818}
   m_LocalScale: {x: 0.03416309, y: 0.03416309, z: 0.03416309}
   m_Children:
   - {fileID: 4920837066223600}
@@ -305,9 +306,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 104
   m_CollisionDetection: 0
---- !u!65 &65943973583069296
+--- !u!65 &65087024793242582
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,7 +318,19 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20, y: 6.2257395, z: 28.586037}
+  m_Size: {x: 20, y: 20, z: 35}
+  m_Center: {x: 0, y: -1.7279598, z: -0.10838463}
+--- !u!65 &65943973583069296
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1348378874746838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 16, y: 5, z: 25}
   m_Center: {x: 0, y: -1.7279598, z: -0.10838463}
 --- !u!82 &82197463879572286
 AudioSource:
