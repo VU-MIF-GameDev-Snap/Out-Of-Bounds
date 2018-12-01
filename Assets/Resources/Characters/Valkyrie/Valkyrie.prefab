@@ -2149,7 +2149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.1281035, y: 0.29660416, z: -0.08664703}
+  m_LocalPosition: {x: -3.591218, y: 0.29660416, z: -0.5366821}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2308,12 +2308,12 @@ MonoBehaviour:
   Speed: 5
   JumpHeight: 2
   Gravity: -30
-  KnockbackFactor: 0.005
+  KnockbackFactor: 0.002
   LandingDelay: 0.1
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
-  GroundedDrag: 1.1
+  GroundedDrag: 20
   DashDuration: 0.2
   DashDistance: 9
   DashCooldown: 2
@@ -2376,7 +2376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b6c3710de55764ea3bea29678fe435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 1
+  PlayerId: 3
 --- !u!135 &135398138828303464
 SphereCollider:
   m_ObjectHideFlags: 1

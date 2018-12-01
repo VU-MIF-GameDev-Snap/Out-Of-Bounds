@@ -52,6 +52,9 @@ public class HomingMissile : MonoBehaviour
 
 		foreach(Transform c in _characters)
 		{
+			if(c == null || c.gameObject == null)
+				continue;
+
 			if(!target ||
 			Vector3.Distance(transform.position, c.position) <
 			Vector3.Distance(transform.position, target.position))

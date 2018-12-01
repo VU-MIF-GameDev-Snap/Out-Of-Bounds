@@ -144,14 +144,14 @@ public class PlayerController : MonoBehaviour
 
         if (_controller.isGrounded && _velocity.y <= 0)
         {
-            _velocity.y = Gravity * Time.deltaTime;
+            _velocity.y = Gravity * 0.01f;
         }
         else if (!_controller.isGrounded)
         {
             _velocity.y += Gravity * Time.deltaTime;
         }
 
-        _velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? GroundedDrag : 1);
+        _velocity.x /= (1 + Drag.x * Time.deltaTime * (_controller.isGrounded ? GroundedDrag : 1));
         _velocity.y /= 1 + Drag.y * Time.deltaTime;
         _velocity.z = 0;
         // Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);

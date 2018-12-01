@@ -102,8 +102,9 @@ MonoBehaviour:
   SpinYLength: 3
   SpinXMinLength: 2
   SpinYMinLength: 2
-  FlightTime: 1
+  FlightTime: 2
   FlightSpeed: 8
+  SuckStrength: 250
 --- !u!135 &135831780986396080
 SphereCollider:
   m_ObjectHideFlags: 1

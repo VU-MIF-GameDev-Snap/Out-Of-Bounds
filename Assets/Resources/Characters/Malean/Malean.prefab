@@ -424,6 +424,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1334631845901724
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4743787165143174}
+  - component: {fileID: 135482839591374628}
+  - component: {fileID: 114267785479529068}
+  m_Layer: 0
+  m_Name: RightHandCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1341018067812046
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +617,21 @@ GameObject:
   - component: {fileID: 4834176706416274}
   m_Layer: 0
   m_Name: mixamorig:RightHandIndex1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1611113753899096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4826746360174822}
+  m_Layer: 0
+  m_Name: BlackHole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1070,6 +1102,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1978142824361352
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4790418323460488}
+  m_Layer: 0
+  m_Name: RiflePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4015682734311510
 Transform:
   m_ObjectHideFlags: 1
@@ -1403,6 +1450,8 @@ Transform:
   - {fileID: 4171769877509088}
   - {fileID: 4076791413427286}
   - {fileID: 4395531014149932}
+  - {fileID: 4743787165143174}
+  - {fileID: 4790418323460488}
   m_Father: {fileID: 4288622797175002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1838,6 +1887,19 @@ Transform:
   m_Father: {fileID: 4807765922174510}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4743787165143174
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334631845901724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.094, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_Children: []
+  m_Father: {fileID: 4271492417088374}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4778744381422210
 Transform:
   m_ObjectHideFlags: 1
@@ -1852,6 +1914,19 @@ Transform:
   m_Father: {fileID: 4566125282273306}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4790418323460488
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1978142824361352}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4271492417088374}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!4 &4806123848837924
 Transform:
   m_ObjectHideFlags: 1
@@ -1911,6 +1986,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4285546670822466}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4826746360174822
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1611113753899096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.955, z: 0.034}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4922525159133300}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4832417823321574
 Transform:
@@ -1987,16 +2075,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1320737711519244}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.766736, y: 0.29660416, z: -0.3189144}
+  m_LocalRotation: {x: -0, y: -0.8706702, z: -0, w: 0.49186742}
+  m_LocalPosition: {x: -1.6413045, y: 0.29660416, z: -0.1430592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4351279252411988}
   - {fileID: 4832417823321574}
   - {fileID: 4807765922174510}
+  - {fileID: 4826746360174822}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -121.073006, z: 0}
 --- !u!4 &4934018958726324
 Transform:
   m_ObjectHideFlags: 1
@@ -2164,6 +2253,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114267785479529068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334631845901724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ef42a023c2c264e9cdd15cdd6569cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114289784722922446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2195,9 +2295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b214f1aa5a572640bde25a0dcd17291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RightFist: {fileID: 1848642684663594, guid: d4a9249b34808ff4ba6bb6904191c9b1, type: 2}
-  RiflePosition: {fileID: 1794781670742514, guid: d4a9249b34808ff4ba6bb6904191c9b1,
-    type: 2}
+  RightFist: {fileID: 1334631845901724}
+  RiflePosition: {fileID: 1978142824361352}
   hitpoints: 0
   maxHitpoints: 300
   PunchDamage: 5
@@ -2210,6 +2309,7 @@ MonoBehaviour:
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
+  GroundedDrag: 20
   DashDuration: 0.2
   DashDistance: 9
   DashCooldown: 2
@@ -2238,6 +2338,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386e05a615cdcab46b0f631bb0feef19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BlackHole: {fileID: 1490911696805110, guid: f49de0d53646c7149a5f5aafb11af676, type: 2}
+  BlackHoleSpawn: {fileID: 4826746360174822}
+  Power2Cooldown: 0
+--- !u!135 &135482839591374628
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334631845901724}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137487100466326896
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
