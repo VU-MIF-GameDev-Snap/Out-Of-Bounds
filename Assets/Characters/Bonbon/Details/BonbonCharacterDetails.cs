@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BonbonCharacterDetails : ICharacterDetails
 {
-
     public string PreviewResource
     {
         get
@@ -21,15 +20,23 @@ public class BonbonCharacterDetails : ICharacterDetails
         }
     }
 
+    public string Power1Name
+    {
+        get
+        {
+            return "Charged punch";
+        }
+    }
+
     public string Power1Description
     {
         get
         {
-            return "Some unknown power.";
+            return "A special punch whose damage depends on how long it was charged.";
         }
     }
 
-    public string Power2Description
+    public string Power2Name
     {
         get
         {
@@ -37,11 +44,19 @@ public class BonbonCharacterDetails : ICharacterDetails
         }
     }
 
-    public string Description
+    public string Power2Description
     {
         get
         {
-            return "Bonbon can't do magic, he just fights.";
+            return "Becomes immune to pushback attacks but moves slower.";
+        }
+    }
+
+    public string BackgroundInformation
+    {
+        get
+        {
+            return "No background information is available on Bonbon. Some say it is due to the fact that he was a pirate and before retiring was able to use his power to erase any traces of him.";
         }
     }
 

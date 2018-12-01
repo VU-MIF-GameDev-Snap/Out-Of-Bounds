@@ -21,6 +21,14 @@ public class CharacterSelectionController : MonoBehaviour
 	public GameObject CharacterDescriptionGroup;
 	public GameObject PressJoinObject;
 
+    [Header("Text fields to display information about the character")]
+    public Text Name;
+    public Text BackgroundInformation;
+    public Text PowerTitle1;
+    public Text PowerDescription1;
+    public Text PowerTitle2;
+    public Text PowerDescription2;
+
 	void Start ()
 	{
 		_inputManager = GetComponent<PlayerInputManager>();
@@ -29,25 +37,26 @@ public class CharacterSelectionController : MonoBehaviour
 
 	void Update ()
 	{
-		if(Confirmed == true)
+		if (Confirmed == true)
 		{
 			return;
 		}
 
-		if(PlayerId == 0)
+		if (PlayerId == 0)
 		{
 			UnloadCharacterData();
 			return;
 		}
 
-		if(TryLoadCharacterData(_selectedCharacterId))
+		if (TryLoadCharacterData(_selectedCharacterId))
 		{
 			// This update just loaded character data, do not check current user input.
 			return;
 		}
 
-		if(_inputManager.IsButtonPressed(PlayerInputManager.Key.Jump))
+		if (_inputManager.IsButtonPressed(PlayerInputManager.Key.Jump))
 		{
+            // ADD CONFIRMATION VOICE
 			Confirmed = true;
 			ConfirmedObject.SetActive(true);
 
@@ -58,10 +67,10 @@ public class CharacterSelectionController : MonoBehaviour
 				});
 		}
 
-		if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0)
+		if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0)
 		{
 			// move down the list
-			if(_selectedCharacterId >= CharactersManager.CharactersList.Count -1)
+			if (_selectedCharacterId >= CharactersManager.CharactersList.Count -1)
 			{
 				// Reached the end.
 			}
@@ -71,7 +80,7 @@ public class CharacterSelectionController : MonoBehaviour
 			}
 
 		}
-		else if(_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0)
+		else if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0)
 		{
 			// move up the list
 			if(_selectedCharacterId <= 0)
@@ -102,7 +111,7 @@ public class CharacterSelectionController : MonoBehaviour
 
 	bool TryLoadCharacterData (int characterId)
 	{
-		if(_loadedData == characterId)
+		if (_loadedData == characterId)
 		{
 			return false;
 		}
@@ -116,16 +125,15 @@ public class CharacterSelectionController : MonoBehaviour
 		imageObj.sprite = Sprite.Create(imageTexture, new Rect(0f, 0f, imageTexture.width, imageTexture.height), new Vector2());
 		imageObj.color = new Color(1f, 1f, 1f);
 
-
 		CharacterDescriptionGroup.SetActive(true);
-		var titleObj = CharacterDescriptionGroup.transform.GetChild(0).GetComponent<Text>();
-		titleObj.text = CharactersManager.CharactersList[characterId].Name;
-		var power1Obj = CharacterDescriptionGroup.transform.GetChild(1).GetComponent<Text>();
-		power1Obj.text = CharactersManager.CharactersList[characterId].Power1Description;
-		var power2Obj = CharacterDescriptionGroup.transform.GetChild(2).GetComponent<Text>();
-		power2Obj.text = CharactersManager.CharactersList[characterId].Power2Description;
-		var descriptionObj = CharacterDescriptionGroup.transform.GetChild(3).GetComponent<Text>();
-		descriptionObj.text = CharactersManager.CharactersList[characterId].Description;
+
+        var character = CharactersManager.CharactersList[characterId];
+        Name.text = character.Name;
+        BackgroundInformation.text = character.BackgroundInformation;
+        PowerTitle1.text = character.Power1Name;
+        PowerDescription1.text = character.Power1Description;
+        PowerTitle2.text = character.Power2Name;
+        PowerDescription2.text = character.Power2Description;
 
 		PressJoinObject.SetActive(false);
 
@@ -135,7 +143,7 @@ public class CharacterSelectionController : MonoBehaviour
 	}
 	void UnloadCharacterData ()
 	{
-		if(_loadedData == -1)
+		if (_loadedData == -1)
 		{
 			return;
 		}

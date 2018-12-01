@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ValkyrieCharacterDetails : ICharacterDetails
 {
-
     public string PreviewResource
     {
         get
@@ -21,11 +20,27 @@ public class ValkyrieCharacterDetails : ICharacterDetails
         }
     }
 
+    public string Power1Name
+    {
+        get
+        {
+            return "Invisibility";
+        }
+    }
+
     public string Power1Description
     {
         get
         {
-            return "Does not like magic";
+            return "For the next 2 seconds become invisible and start healing.";
+        }
+    }
+
+    public string Power2Name
+    {
+        get 
+        {
+            return "Homing Missiles";
         }
     }
 
@@ -33,15 +48,15 @@ public class ValkyrieCharacterDetails : ICharacterDetails
     {
         get
         {
-            return "Likes cakes";
+            return "Launch 2 rockets that will actively seek out enemies.";
         }
     }
 
-    public string Description
+    public string BackgroundInformation
     {
         get
         {
-            return "This is a description, long description, whatever....";
+            return "From the planet of ShanShan-52, Valkyrie has not yet met an opponent she was not able to defeat. Wearing a special battlesuit that was personally tailored by her mother has granted her a special place in the special forces of her home planet.";
         }
     }
 
