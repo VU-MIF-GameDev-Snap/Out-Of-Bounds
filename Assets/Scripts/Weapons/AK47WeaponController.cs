@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Rigidbody))]
-public class WeaponController : MonoBehaviour
+public class AK47WeaponController : BaseWeaponController
 {
 	[Tooltip("Seconds after which the gun will disappear")]
 	public int SelfDestructTimer = 5;
@@ -40,7 +40,7 @@ public class WeaponController : MonoBehaviour
 			Destroy(gameObject);
 	}
 
-	public void Fire ()
+	public override void Fire ()
 	{
 		// Cooldown still active
 		if (Time.time < _nextFire)
@@ -54,9 +54,7 @@ public class WeaponController : MonoBehaviour
 		bullet.GetComponent<HitEvent>().Initialise(message);
 
 		_audio.Play();
-		Ammo--;
-		if (Ammo <= 0)
-			Destroy(gameObject);
+		ReduceAmmo();
 	}
 
 	public Transform GetLeftHandPosition ()
@@ -76,5 +74,16 @@ public class WeaponController : MonoBehaviour
 	private bool IsBeingHeld ()
 	{
 		return _originalParent != gameObject.transform.root;
+	}
+
+	public override WeaponType GetWeaponType ()
+	{
+		return WeaponType.Rifle;
+	}
+
+	public override void ReduceAmmo ()
+	{
+		if (--Ammo <= 0)
+			Destroy(gameObject);
 	}
 }

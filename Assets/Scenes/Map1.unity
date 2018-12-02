@@ -186,11 +186,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weapons.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4410520343830106, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -222,23 +217,6 @@ Prefab:
     - target: {fileID: 4410520343830106, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weapons.Array.data[0]
-      value: 
-      objectReference: {fileID: 1348378874746838, guid: 4e1720b5f64a3cb48a783a99cb3913e2,
-        type: 2}
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weapons.Array.data[1]
-      value: 
-      objectReference: {fileID: 1348378874746838, guid: 4e1720b5f64a3cb48a783a99cb3913e2,
-        type: 2}
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weaponSpawnWait
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
@@ -320,7 +298,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.57
+  orthographic size: 10.45
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

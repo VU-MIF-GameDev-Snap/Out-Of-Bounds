@@ -51,6 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6622ffebdf2942a4fac6b467ce410dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
+  weapons:
+  - {fileID: 1348378874746838, guid: 4e1720b5f64a3cb48a783a99cb3913e2, type: 2}
+  - {fileID: 1992579999206340, guid: eceb239082a9f6343906dc3a735b3c5c, type: 2}
+  songs: []
   weaponSpawnValues: {x: 10, y: 10, z: 0}
-  weaponSpawnWait: 3
+  weaponSpawnWait: 5
