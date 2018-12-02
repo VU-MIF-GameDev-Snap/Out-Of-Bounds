@@ -358,21 +358,24 @@ public class PlayerController : MonoBehaviour
 		message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
 		message.Damage = (int)(message.Damage * damageResistanceValue);
 
-		int rand = UnityEngine.Random.Range(1, 4);
-		if (rand == 1)
+		if (message.Damage > 0)
 		{
-			AudioSource.clip = _audioController.Hit_1;
-			AudioSource.Play();
-		}
-		if (rand == 2)
-		{
-			AudioSource.clip = _audioController.Hit_2;
-			AudioSource.Play();
-		}
-		if (rand == 3)
-		{
-			AudioSource.clip = _audioController.Hit_3;
-			AudioSource.Play();
+			int rand = UnityEngine.Random.Range(1, 4);
+			if (rand == 1)
+			{
+				AudioSource.clip = _audioController.Hit_1;
+				AudioSource.Play();
+			}
+			if (rand == 2)
+			{
+				AudioSource.clip = _audioController.Hit_2;
+				AudioSource.Play();
+			}
+			if (rand == 3)
+			{
+				AudioSource.clip = _audioController.Hit_3;
+				AudioSource.Play();
+			}
 		}
 
 		if (hitpoints < maxHitpoints)
