@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputManager))]
 [RequireComponent(typeof(PlayerAudioController))]
 [RequireComponent(typeof(ICharacterPowerController))]
-
+[RequireComponent(typeof(AimIK))]
 public class PlayerController : MonoBehaviour
 {
 	[Header("Player's body parts")]
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
 	private CharacterController _controller;
 	private Vector3 _velocity;
-	public Vector3 Velocity { get{return _velocity;} set{_velocity = value;} }
+	public Vector3 Velocity { get { return _velocity; } set { _velocity = value; } }
 	private Animator _animator;
 	private AimIK _aimIK;
 	private PlayerInputManager _inputManager;
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
 			_velocity.y += Gravity * Time.deltaTime;
 		}
 
-		_velocity.x /= (1 + Drag.x * Time.deltaTime * (_controller.isGrounded ? GroundedDrag  : 1));
+		_velocity.x /= (1 + Drag.x * Time.deltaTime * (_controller.isGrounded ? GroundedDrag : 1));
 		_velocity.y /= 1 + Drag.y * Time.deltaTime;
 		_velocity.z = 0;
 		// Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
