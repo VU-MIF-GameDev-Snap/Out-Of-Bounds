@@ -1817,8 +1817,9 @@ MonoBehaviour:
   Speed: 5
   JumpHeight: 2
   Gravity: -30
-  KnockbackFactor: 0.002
+  KnockbackFactor: 0.004
   LandingDelay: 0.1
+  JumpDelayAfterThisAirTime: 0.1
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
@@ -1890,6 +1891,8 @@ MonoBehaviour:
   Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
   Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
   Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
+  Power_1: {fileID: 0}
+  Power_2: {fileID: 0}
 --- !u!114 &114877861905026406
 MonoBehaviour:
   m_ObjectHideFlags: 1

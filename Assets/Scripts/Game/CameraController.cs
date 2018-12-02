@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
 			if (!target.gameObject.activeSelf)
 				continue;
 
-			averagePos += target.position;
+			averagePos += new Vector3(target.transform.position.x, target.transform.position.y + target.GetComponent<Collider>().bounds.size.y, target.transform.position.z );
 			numTargets++;
 		}
 
