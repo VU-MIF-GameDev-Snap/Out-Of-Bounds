@@ -9,6 +9,7 @@ public class HomingMissile : MonoBehaviour
 	private Rigidbody _rb;
 	// All potential targets
 	private List<Transform> _characters = new List<Transform>();
+	private float _destroyTimeStamp = 0;
 
 	// Distance in Unity units, speeds in unknown units
 
@@ -16,6 +17,7 @@ public class HomingMissile : MonoBehaviour
 	public float DistanceToFollow;
 	public float AngleChangingSpeed;
 	public float MovementSpeed;
+	public ParticleSystem ExplosionParticles;
 
 	public float ExplosionRadius;
 	public int KnockbackStrength;
@@ -48,6 +50,17 @@ public class HomingMissile : MonoBehaviour
 
 	void FixedUpdate ()
     {
+		if(_destroyTimeStamp > 0)
+		{
+			if(Time.time >= _destroyTimeStamp + 5)
+			{
+				Destroy(transform.gameObject);
+			}
+
+			return;
+		}
+
+
 		Transform target = null;
 
 		foreach(Transform c in _characters)
@@ -76,7 +89,7 @@ public class HomingMissile : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.transform.root.gameObject == Owner || other.CompareTag("Missile") || other.CompareTag("Boundary"))
+		if(other.transform.root.gameObject == Owner || other.CompareTag("Missile") || other.CompareTag("Boundary") || _destroyTimeStamp > 0)
 		{
 			return;
 		}
@@ -105,7 +118,10 @@ public class HomingMissile : MonoBehaviour
 			}
 		}
 
-		Destroy(transform.gameObject);
+		ExplosionParticles.Play();
+		GetComponent<MeshRenderer>().enabled = false;
+
+		_destroyTimeStamp = Time.time;
 	}
 
 

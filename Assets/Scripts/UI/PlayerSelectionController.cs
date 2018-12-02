@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerSelectionController : MonoBehaviour
 {
+    public GameObject CharacterSelectionPanel;
+    public GameObject MapSelectionPanel;
+
 
 	private IEnumerable<PlayerInputManager> _playerInputManagers;
 	private IEnumerable<GameObject> _uiSelectPlayers;
 	// Use this for initialization
 	void Start ()
 	{
+		Globals.Players.Clear();
 		_playerInputManagers = GetComponents(typeof(PlayerInputManager)).Where((Component c) => {
 			return c is PlayerInputManager;
 		}).Select((Component c) => {
@@ -35,7 +38,8 @@ public class PlayerSelectionController : MonoBehaviour
 			return selector.PlayerId != 0 && selector.Confirmed;
 		}))
 		{
-			SceneManager.LoadScene(1);
+			CharacterSelectionPanel.SetActive(false);
+            MapSelectionPanel.SetActive(true);
 		}
 
 		foreach (var manager in _playerInputManagers)

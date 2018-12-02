@@ -2178,7 +2178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 9.162282, y: -0.47920668, z: -0.27974653}
+  m_LocalPosition: {x: -0.7159879, y: -0.008910775, z: -0.7210793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2338,8 +2338,9 @@ MonoBehaviour:
   Speed: 5
   JumpHeight: 2
   Gravity: -30
-  KnockbackFactor: 0.002
+  KnockbackFactor: 0.004
   LandingDelay: 0.1
+  JumpDelayAfterThisAirTime: 0.1
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
@@ -2395,7 +2396,14 @@ MonoBehaviour:
   Rocket: {fileID: 1165751678226566, guid: 4bad190be3814404497a4cc3f54fa2ba, type: 2}
   RocketSpawn1: {fileID: 4252911161229370}
   RocketSpawn2: {fileID: 4060808208882606}
-  Power1Cooldown: 2
+  Power1Cooldown: 10
+  Materials:
+  - {fileID: 2100000, guid: 666d07f3aedf53b43a4f57b379424fbd, type: 2}
+  - {fileID: 2100000, guid: c918b07e1f27f1246be054f75f2646ef, type: 2}
+  Power2Cooldown: 10
+  Power2Duration: 4
+  Power2HealingAmount: 20
+  Power2FadeTime: 0.5
 --- !u!114 &114670107898656198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2429,6 +2437,8 @@ MonoBehaviour:
   Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
   Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
   Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
+  Power_1: {fileID: 0}
+  Power_2: {fileID: 0}
 --- !u!135 &135398138828303464
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -2456,7 +2466,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3c3fc619bafafe241b38f715425451c1, type: 3}
+  - {fileID: 2100000, guid: 666d07f3aedf53b43a4f57b379424fbd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2555,7 +2565,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100002, guid: 3c3fc619bafafe241b38f715425451c1, type: 3}
+  - {fileID: 2100000, guid: c918b07e1f27f1246be054f75f2646ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

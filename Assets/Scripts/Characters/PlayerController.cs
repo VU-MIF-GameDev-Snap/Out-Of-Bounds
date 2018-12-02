@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 	public float Gravity = -9.81f;
 	public float KnockbackFactor = 0.002f;
 	public float LandingDelay = 0.1f;
+	public float JumpDelayAfterThisAirTime = 0.1f;
 	public float JumpHoldDuration = 1f;
 	public float JumpHoldStrength = 1f;
 
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
 	private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
 
 	// Necessary for jump delay after landing
-	private bool _previousGrounded;
+	private float _jumpAgainTimeStamp = 0;
 	private float _landedTimeStamp = 0;
 
 	// For jumping higher when holding button
@@ -225,11 +226,12 @@ public class PlayerController : MonoBehaviour
 	private bool JumpAvailable ()
 	{
 		var grounded = _controller.isGrounded;
-		var previousGrounded = _previousGrounded;
-		_previousGrounded = grounded;
 
-		if (grounded && !previousGrounded)
+		if (grounded && Time.time >= _jumpAgainTimeStamp)
 			_landedTimeStamp = Time.time + LandingDelay;
+
+		if (grounded)
+			_jumpAgainTimeStamp = Time.time + JumpDelayAfterThisAirTime;
 
 		if (grounded && Time.time >= _landedTimeStamp)
 			return true;
@@ -358,21 +360,24 @@ public class PlayerController : MonoBehaviour
 		message.KnockbackValue = (int)(message.KnockbackValue * knockbakcResistanceValue);
 		message.Damage = (int)(message.Damage * damageResistanceValue);
 
-		int rand = UnityEngine.Random.Range(1, 4);
-		if (rand == 1)
+		if (message.Damage > 0)
 		{
-			AudioSource.clip = _audioController.Hit_1;
-			AudioSource.Play();
-		}
-		if (rand == 2)
-		{
-			AudioSource.clip = _audioController.Hit_2;
-			AudioSource.Play();
-		}
-		if (rand == 3)
-		{
-			AudioSource.clip = _audioController.Hit_3;
-			AudioSource.Play();
+			int rand = UnityEngine.Random.Range(1, 4);
+			if (rand == 1)
+			{
+				AudioSource.clip = _audioController.Hit_1;
+				AudioSource.Play();
+			}
+			if (rand == 2)
+			{
+				AudioSource.clip = _audioController.Hit_2;
+				AudioSource.Play();
+			}
+			if (rand == 3)
+			{
+				AudioSource.clip = _audioController.Hit_3;
+				AudioSource.Play();
+			}
 		}
 
 		if (hitpoints < maxHitpoints)

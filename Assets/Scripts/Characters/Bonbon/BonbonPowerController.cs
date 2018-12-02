@@ -34,6 +34,8 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
     private PlayerController _playerController;
     private PlayerInputManager _inputManager;
     private Animator _animator;
+    private PlayerAudioController _audioController;
+    private AudioSource _audioSource;
 
     [SerializeField]
     Renderer RendererForMaterial;
@@ -89,6 +91,9 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
             _playerController.AbilityToggle(ability, false);
         }
         _animator.SetTrigger("ChargePunchTrigger");
+
+        _audioSource.clip = _audioController.Power_1;
+        _audioSource.Play();
     }
 
     private void HandleChargePunch ()
@@ -151,6 +156,10 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
             return playerController != null && playerController.gameObject != gameObject;
         });
 
+        _audioSource.Stop();
+        _audioSource.clip = _audioController.Power_1_1;
+        _audioSource.Play();
+
         foreach (var player in playerCollisions)
         {
             var hitMessage = new HitMessage
@@ -182,6 +191,9 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         var formingParticlesMain = StoneFormFormingParticleSystem.main;
         formingParticlesMain.duration = StoneFormActivationDelay;
         StoneFormFormingParticleSystem.Play();
+
+        _audioSource.clip = _audioController.Power_2;
+        _audioSource.Play();
 
         _stoneFormAlreadyHealedAmount = 0;
         _stoneFormStartTime = Time.time;
@@ -224,7 +236,9 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
             _stoneFormActive = false;
             _stoneFormCooldownStartTime = Time.time;
             StoneFormBreakParticleSystem.Play();
+
             // Player can get hurt again
+            _audioSource.Stop();
             _playerController.DamageResistance = 0f;
             _playerController.KnockbackResistance = 0f;
 
@@ -240,6 +254,8 @@ public class BonbonPowerController : MonoBehaviour, ICharacterPowerController
         _playerController = gameObject.GetComponent<PlayerController>();
         _inputManager = GetComponent<PlayerInputManager>();
         _animator = GetComponent<Animator>();
+        _audioSource = _playerController.AudioSource;
+        _audioController = GetComponent<PlayerAudioController>();
 	}
 
 	void Update ()

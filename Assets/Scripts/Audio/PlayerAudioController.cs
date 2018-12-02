@@ -14,4 +14,8 @@ public class PlayerAudioController : MonoBehaviour
     public AudioClip Dash;
     public AudioClip Land;
     public AudioClip Out_Of_Bounds;
+    public AudioClip Power_1;
+    public AudioClip Power_1_1;
+    public AudioClip Power_2;
+    public AudioClip Power_2_2;
 }
