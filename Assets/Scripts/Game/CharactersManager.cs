@@ -4,9 +4,12 @@ using UnityEngine;
 
 public static class CharactersManager
 {
-	// get full List?
-	// Get by name?
 	private static IList<ICharacterDetails> _charactersList = new List<ICharacterDetails>();
+    public static IList<ICharacterDetails> CharactersList
+    {
+        get { return _charactersList; }
+    }
+
 
 	static CharactersManager ()
 	{
@@ -14,12 +17,4 @@ public static class CharactersManager
         CharactersList.Add(new BonbonCharacterDetails());
         CharactersList.Add(new MaleanCharacterDetails());
 	}
-
-    public static IList<ICharacterDetails> CharactersList
-    {
-        get
-        {
-            return _charactersList;
-        }
-    }
 }
