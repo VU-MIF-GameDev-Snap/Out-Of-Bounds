@@ -2432,8 +2432,10 @@ MonoBehaviour:
   Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
   Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
   Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
-  Power_1: {fileID: 0}
-  Power_2: {fileID: 0}
+  Power_1: {fileID: 8300000, guid: d0b14184e1f07ab4dad01a0011a1790d, type: 3}
+  Power_1_1: {fileID: 0}
+  Power_2: {fileID: 8300000, guid: 9c0ab38dd60583643983a36d189636f2, type: 3}
+  Power_2_2: {fileID: 0}
 --- !u!135 &135482839591374628
 SphereCollider:
   m_ObjectHideFlags: 1

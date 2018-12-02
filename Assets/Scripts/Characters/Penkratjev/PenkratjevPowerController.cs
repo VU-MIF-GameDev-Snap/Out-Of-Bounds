@@ -34,18 +34,22 @@ public class PenkratjevPowerController : MonoBehaviour, ICharacterPowerControlle
 
 	private PlayerInputManager _inputManager;
 	[SerializeField]
-	private LineRenderer _lineRenderer;
+    private LineRenderer _lineRenderer;
+    private PlayerController _playerController;
+    private PlayerAudioController _audioController;
+    private AudioSource _audioSource;
 
 
-
-	public void StartPower1 ()
+    public void StartPower1 ()
 	{
 		if (_laserPowerAvailableAt > Time.time)
 		{
 			return;
 		}
 
-		_laserPowerStarted = true;
+        _audioSource.clip = _audioController.Power_1;
+        _audioSource.Play();
+        _laserPowerStarted = true;
 		_laserPowerStartedAt = Time.time;
 		_laserPowerAlreadyDamageDealtAmount = 0;
 		_lineRenderer.enabled = true;
@@ -143,12 +147,17 @@ public class PenkratjevPowerController : MonoBehaviour, ICharacterPowerControlle
 		var currentPosition = transform.position;
 		transform.position = nearestPlayer.transform.position;
 		nearestPlayer.transform.position = currentPosition;
-	}
+        _audioSource.clip = _audioController.Power_2;
+        _audioSource.Play();
+    }
 
 	// Use this for initialization
 	void Start ()
 	{
-		_inputManager = GetComponent<PlayerInputManager>();
+        _playerController = gameObject.GetComponent<PlayerController>();
+        _inputManager = GetComponent<PlayerInputManager>();
+        _audioSource = _playerController.AudioSource;
+        _audioController = GetComponent<PlayerAudioController>();
 	}
 
 	// Update is called once per frame

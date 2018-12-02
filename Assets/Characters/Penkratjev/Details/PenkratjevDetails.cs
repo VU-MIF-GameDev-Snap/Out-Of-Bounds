@@ -32,7 +32,7 @@ public class PenkratjevDetails : ICharacterDetails
 	{
 		get
 		{
-			return "Shoots a laser out of his head for some reason";
+			return "Shoots a laser out of his head to destroy opponents";
 		}
 	}
 
@@ -48,7 +48,7 @@ public class PenkratjevDetails : ICharacterDetails
 	{
 		get
 		{
-			return "Switches work place positions with poor player nearby";
+			return "Switches work place positions with enemy nearby";
 		}
 	}
 
@@ -56,7 +56,7 @@ public class PenkratjevDetails : ICharacterDetails
 	{
 		get
 		{
-			return "That's the description";
+			return "He is angry because he can't find a job. That's why he wants to avenge everyone. He is ambassador of the darkness and fear of opponents";
 		}
 	}
 

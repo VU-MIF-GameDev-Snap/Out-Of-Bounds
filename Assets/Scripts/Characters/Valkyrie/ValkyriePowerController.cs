@@ -22,6 +22,8 @@ public class ValkyriePowerController : MonoBehaviour, ICharacterPowerController
     private float _power2TimeStamp = 0;
     private PlayerController _playerController;
     private int _healingDone = 0;
+    private PlayerAudioController _audioController;
+    private AudioSource _audioSource;
 
     public void StartPower1()
     {
@@ -34,6 +36,9 @@ public class ValkyriePowerController : MonoBehaviour, ICharacterPowerController
 
             rocket1.GetComponent<HomingMissile>().Initialize(transform.root.gameObject);
             rocket2.GetComponent<HomingMissile>().Initialize(transform.root.gameObject);
+
+            _audioSource.clip = _audioController.Power_1;
+            _audioSource.Play();
         }
     }
 
@@ -44,12 +49,16 @@ public class ValkyriePowerController : MonoBehaviour, ICharacterPowerController
 
         _power2TimeStamp = Time.time;
         _healingDone = 0;
+        _audioSource.clip = _audioController.Power_2;
+        _audioSource.Play();
     }
 
     void Start ()
 	{
-        _playerController =GetComponent<PlayerController>();
-	}
+        _playerController = gameObject.GetComponent<PlayerController>();
+        _audioSource = _playerController.AudioSource;
+        _audioController = GetComponent<PlayerAudioController>();
+    }
 
 	void Update ()
 	{

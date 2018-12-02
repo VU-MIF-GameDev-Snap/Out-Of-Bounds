@@ -2019,7 +2019,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1515623411967144}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 21.368696, y: 13.07885, z: -11.632593}
+  m_LocalPosition: {x: 6.844015, y: 4.182267, z: -0.41060004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4361774736708122}
@@ -2153,7 +2153,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2278,6 +2278,7 @@ MonoBehaviour:
   Gravity: -30
   KnockbackFactor: 0.002
   LandingDelay: 0.1
+  JumpDelayAfterThisAirTime: 0.1
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
@@ -2342,16 +2343,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34b3c061852b88b43bb671c8647f492b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: {fileID: 0}
-  Death: {fileID: 0}
-  Hit_1: {fileID: 0}
-  Hit_2: {fileID: 0}
-  Hit_3: {fileID: 0}
+  Name: {fileID: 8300000, guid: 71902ed1b88465142b0dbd589b8d536d, type: 3}
+  Death: {fileID: 8300000, guid: aced36ad982ee0749b7f41543f1100b4, type: 3}
+  Hit_1: {fileID: 8300000, guid: fbc287d5e8f037f49af2d2abe96ac851, type: 3}
+  Hit_2: {fileID: 8300000, guid: 951b403a19323cd4cbd31431bdc673d6, type: 3}
+  Hit_3: {fileID: 8300000, guid: 2f344b4461bb5984fb22b1fd91db74c9, type: 3}
   Attack: {fileID: 8300000, guid: 370b92dc38a6d0347ae72abe0d13d4a3, type: 3}
   Jump: {fileID: 8300000, guid: b4dcd6f958c653941bd121230d071952, type: 3}
   Dash: {fileID: 8300000, guid: 59e6d9a709b329d4cb790f0122548a05, type: 3}
   Land: {fileID: 8300000, guid: e160f7a927b7dd14492a4e1b825b3862, type: 3}
   Out_Of_Bounds: {fileID: 8300000, guid: 7efef07edadc9a2438ec42e6e4e1e110, type: 3}
+  Power_1: {fileID: 8300000, guid: 18fc49f38153ab64fb32ef256bef8e6e, type: 3}
+  Power_1_1: {fileID: 0}
+  Power_2: {fileID: 8300000, guid: 74754ac291390874d8cdef0a1a13fbc5, type: 3}
+  Power_2_2: {fileID: 0}
 --- !u!114 &114748321568055524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2370,8 +2375,8 @@ MonoBehaviour:
   _laserPowerDelay: 7
   _laserPowerStartPosition: {fileID: 4321921438530704}
   _laserPowerHitParticleSystem: {fileID: 198900219287094976}
-  _exchangePowerDelay: 15
-  _exchangePowerMaxDistance: 7
+  _exchangePowerDelay: 5
+  _exchangePowerMaxDistance: 12
   _lineRenderer: {fileID: 120726275344767680}
 --- !u!120 &120726275344767680
 LineRenderer:
