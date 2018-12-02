@@ -21,11 +21,27 @@ public class MaleanCharacterDetails : ICharacterDetails
         }
     }
 
+    public string Power1Name
+    {
+        get
+        {
+            return "Cyborg Strike";
+        }
+    }
+
     public string Power1Description
     {
         get
         {
             return "Cyborg Strike - strikes very hard up or down";
+        }
+    }
+
+    public string Power2Name
+    {
+        get
+        {
+            return "Black Hole";
         }
     }
 
@@ -37,7 +53,7 @@ public class MaleanCharacterDetails : ICharacterDetails
         }
     }
 
-    public string Description
+    public string BackgroundInformation
     {
         get
         {
