@@ -82,7 +82,7 @@ public class ValkyriePowerController : MonoBehaviour, ICharacterPowerController
         {
             var factor = 1 - ((_power2TimeStamp + Power2Duration + Power2FadeTime - Time.time) / Power2Duration);
 
-            if(Power2HealingAmount * factor - _healingDone >= 1)
+            if(Power2HealingAmount * factor - _healingDone + 1 >= 1)
             {
                 _playerController.ReduceHitpoints(1);
                 ++_healingDone;
