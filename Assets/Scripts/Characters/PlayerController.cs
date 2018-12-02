@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInputManager))]
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(PlayerAudioController))]
 [RequireComponent(typeof(ICharacterPowerController))]
 
@@ -49,6 +48,8 @@ public class PlayerController : MonoBehaviour
 	[Header("For External Scripts")]
 	public float KnockbackResistance = 0f;
 	public float DamageResistance = 0f;
+	[Header("Audio")]
+	public AudioSource AudioSource;
 
 	private CharacterController _controller;
 	private Vector3 _velocity;
@@ -56,7 +57,6 @@ public class PlayerController : MonoBehaviour
 	private AimIK _aimIK;
 	private PlayerInputManager _inputManager;
 	private ICharacterPowerController _powerController;
-	private AudioSource displaySound;
 	private PlayerAudioController _audioController;
 	private float _deathTime;
 	private Dictionary<PlayerAbility, bool> _abilitiesAvailable = new Dictionary<PlayerAbility, bool>();
@@ -114,7 +114,6 @@ public class PlayerController : MonoBehaviour
 		_aimIK = GetComponent<AimIK>();
 		_controller = GetComponent<CharacterController>();
 		_inputManager = GetComponent<PlayerInputManager>();
-		displaySound = GetComponent<AudioSource>();
 		_audioController = GetComponent<PlayerAudioController>();
 		_powerController = GetComponent<ICharacterPowerController>();
 		_rightFist = RightFist ? RightFist.GetComponent<HitEvent>() : null;
@@ -166,6 +165,12 @@ public class PlayerController : MonoBehaviour
 
 		if (_deathTime > 0 && _deathTime <= Time.time)
 		{
+			AudioSource.clip = _audioController.Death;
+			AudioSource.Play();
+
+			// Detach audio emitter from player, will be hang around in scene, shouldn't be a big deal.
+			AudioSource.transform.SetParent(null);
+			// Destroy player object right now.
 			Destroy(gameObject);
 		}
 	}
@@ -241,8 +246,8 @@ public class PlayerController : MonoBehaviour
 			_isJumping = true;
 			_jumpTimeStamp = Time.time + JumpHoldDuration;
 
-			displaySound.clip = _audioController.Jump;
-			displaySound.Play();
+			AudioSource.clip = _audioController.Jump;
+			AudioSource.Play();
 
 			return;
 		}
@@ -274,8 +279,8 @@ public class PlayerController : MonoBehaviour
 		_dashActive = true;
 		_animator.SetBool("Dashing", _dashActive);
 
-		displaySound.clip = _audioController.Dash;
-		displaySound.Play();
+		AudioSource.clip = _audioController.Dash;
+		AudioSource.Play();
 
 		// _velocity += dashingVelocity;
 		// Debug.Log("dashing velo: " + dashingVelocity);
@@ -310,15 +315,19 @@ public class PlayerController : MonoBehaviour
 		// Debug.Log("Type: " + hit + " Damage: " + damage);
 		_animator.SetTrigger(type.ToString());
 
-		displaySound.clip = _audioController.Attack;
-		displaySound.Play();
+		AudioSource.clip = _audioController.Attack;
+		AudioSource.Play();
 	}
 
-	public void Die ()
+	public void OnExitArena ()
 	{
-		displaySound.clip = _audioController.Death;
-		displaySound.Play();
 		_deathTime = Time.time + 2;
+		// Should start something visual to indicate that time is running out.
+	}
+
+	public void OnReenterArena ()
+	{
+		_deathTime = 0;
 	}
 
 	private void Shoot ()
@@ -348,18 +357,18 @@ public class PlayerController : MonoBehaviour
 		int rand = UnityEngine.Random.Range(1, 4);
 		if (rand == 1)
 		{
-			displaySound.clip = _audioController.Hit_1;
-			displaySound.Play();
+			AudioSource.clip = _audioController.Hit_1;
+			AudioSource.Play();
 		}
 		if (rand == 2)
 		{
-			displaySound.clip = _audioController.Hit_2;
-			displaySound.Play();
+			AudioSource.clip = _audioController.Hit_2;
+			AudioSource.Play();
 		}
 		if (rand == 3)
 		{
-			displaySound.clip = _audioController.Hit_3;
-			displaySound.Play();
+			AudioSource.clip = _audioController.Hit_3;
+			AudioSource.Play();
 		}
 
 		if (hitpoints < maxHitpoints)

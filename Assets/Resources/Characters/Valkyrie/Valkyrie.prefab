@@ -86,6 +86,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1075125312115888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4842016254105130}
+  - component: {fileID: 82039980134206356}
+  m_Layer: 0
+  m_Name: AudioEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1084050240468528
 GameObject:
   m_ObjectHideFlags: 1
@@ -523,7 +539,6 @@ GameObject:
   - component: {fileID: 114341789394754116}
   - component: {fileID: 114339569195018586}
   - component: {fileID: 114701185784046494}
-  - component: {fileID: 82863575066287346}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Player
@@ -2032,6 +2047,19 @@ Transform:
   m_Father: {fileID: 4558387810867482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4842016254105130
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1075125312115888}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_Children: []
+  m_Father: {fileID: 4985829788188606}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4858434279303076
 Transform:
   m_ObjectHideFlags: 1
@@ -2150,7 +2178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1455253603412050}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.591218, y: 0.29660416, z: -0.5366821}
+  m_LocalPosition: {x: 9.162282, y: -0.47920668, z: -0.27974653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4005215532132596}
@@ -2158,6 +2186,7 @@ Transform:
   - {fileID: 4375323687867206}
   - {fileID: 4252911161229370}
   - {fileID: 4060808208882606}
+  - {fileID: 4842016254105130}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 193.90999, z: 0}
@@ -2176,12 +2205,12 @@ Transform:
   m_Father: {fileID: 4824014377674984}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82863575066287346
+--- !u!82 &82039980134206356
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1455253603412050}
+  m_GameObject: {fileID: 1075125312115888}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -2320,6 +2349,7 @@ MonoBehaviour:
   DashCooldown: 2
   KnockbackResistance: 0
   DamageResistance: 0
+  AudioSource: {fileID: 82039980134206356}
 --- !u!114 &114304187482691622
 MonoBehaviour:
   m_ObjectHideFlags: 1

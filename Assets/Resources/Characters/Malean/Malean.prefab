@@ -412,7 +412,6 @@ GameObject:
   - component: {fileID: 4922525159133300}
   - component: {fileID: 95477754484724784}
   - component: {fileID: 143769653501790550}
-  - component: {fileID: 82068062844175098}
   - component: {fileID: 114463609666780060}
   - component: {fileID: 114306934689012190}
   - component: {fileID: 114637578447850206}
@@ -633,6 +632,22 @@ GameObject:
   - component: {fileID: 4826746360174822}
   m_Layer: 0
   m_Name: BlackHole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1641112744530756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4284818313166862}
+  - component: {fileID: 82875601235300974}
+  m_Layer: 0
+  m_Name: AudioEmitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1498,6 +1513,19 @@ Transform:
   m_Father: {fileID: 4206402331401708}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4284818313166862
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641112744530756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4922525159133300}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4285546670822466
 Transform:
   m_ObjectHideFlags: 1
@@ -2077,13 +2105,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1320737711519244}
   m_LocalRotation: {x: -0, y: -0.8706702, z: -0, w: 0.49186742}
-  m_LocalPosition: {x: -1.7187831, y: -0.008910656, z: -0.31290978}
+  m_LocalPosition: {x: -1.5160835, y: -0.008910656, z: -0.40074587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4351279252411988}
   - {fileID: 4832417823321574}
   - {fileID: 4807765922174510}
   - {fileID: 4826746360174822}
+  - {fileID: 4284818313166862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -121.073006, z: 0}
@@ -2141,12 +2170,12 @@ Transform:
   m_Father: {fileID: 4509976905287148}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82068062844175098
+--- !u!82 &82875601235300974
 AudioSource:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1320737711519244}
+  m_GameObject: {fileID: 1641112744530756}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -2316,6 +2345,7 @@ MonoBehaviour:
   DashCooldown: 2
   KnockbackResistance: 0
   DamageResistance: 0
+  AudioSource: {fileID: 82875601235300974}
 --- !u!114 &114463609666780060
 MonoBehaviour:
   m_ObjectHideFlags: 1
