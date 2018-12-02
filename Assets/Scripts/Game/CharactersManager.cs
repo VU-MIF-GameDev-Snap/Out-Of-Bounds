@@ -14,7 +14,8 @@ public static class CharactersManager
 	static CharactersManager ()
 	{
 		CharactersList.Add(new ValkyrieCharacterDetails());
-        CharactersList.Add(new BonbonCharacterDetails());
-        CharactersList.Add(new MaleanCharacterDetails());
+		CharactersList.Add(new BonbonCharacterDetails());
+		CharactersList.Add(new MaleanCharacterDetails());
+		CharactersList.Add(new PenkratjevDetails());
 	}
 }
