@@ -11,15 +11,16 @@ public static class CharactersManager
 	static CharactersManager ()
 	{
 		CharactersList.Add(new ValkyrieCharacterDetails());
-        CharactersList.Add(new BonbonCharacterDetails());
-        CharactersList.Add(new MaleanCharacterDetails());
+		CharactersList.Add(new BonbonCharacterDetails());
+		CharactersList.Add(new MaleanCharacterDetails());
+		CharactersList.Add(new PenkratjevDetails());
 	}
 
-    public static IList<ICharacterDetails> CharactersList
-    {
-        get
-        {
-            return _charactersList;
-        }
-    }
+	public static IList<ICharacterDetails> CharactersList
+	{
+		get
+		{
+			return _charactersList;
+		}
+	}
 }
