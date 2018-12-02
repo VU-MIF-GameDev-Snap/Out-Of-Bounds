@@ -86,6 +86,9 @@ public class HomingMissile : MonoBehaviour
 		// Hit players with explosion if necessary
 		foreach(Transform t in _characters)
 		{
+			if(t == null || t.gameObject == null)
+				continue;
+
 			var target = t.GetComponent<Collider>().bounds.center;
 			var distance = Vector3.Distance(missilePosition, target);
 

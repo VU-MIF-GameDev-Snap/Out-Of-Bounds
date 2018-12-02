@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
 	private CharacterController _controller;
 	private Vector3 _velocity;
+	public Vector3 Velocity { get{return _velocity;} set{_velocity = value;} }
 	private Animator _animator;
 	private AimIK _aimIK;
 	private PlayerInputManager _inputManager;
