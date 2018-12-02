@@ -20,6 +20,9 @@ public class ShowPlayerHPScreen : MonoBehaviour
 
 	void Start ()
 	{
+		// Reset time scale, in case it's still frozen from last play.
+		Time.timeScale = 1;
+
 		_allPlayers = GameObject.FindGameObjectsWithTag("Player");
 
 		foreach (var player in _allPlayers)
@@ -28,7 +31,8 @@ public class ShowPlayerHPScreen : MonoBehaviour
 
 			var hpShow = Instantiate(PlayerHpShowPrefab, new Vector3(), new Quaternion());
 			hpShow.transform.SetParent(transform, false);
-			_healthTrackers.Add(new HealthTracker{
+			_healthTrackers.Add(new HealthTracker
+			{
 				PlayerIM = player.GetComponent<PlayerInputManager>(),
 				PlayerC = player.GetComponent<PlayerController>(),
 				Text = hpShow
