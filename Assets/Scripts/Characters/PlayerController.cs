@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	public int KnockValue = 5;
 	//public Vector3 KnockDirection = GameObject.transform.forward;
 
-	private WeaponController _weapon;
+	private BaseWeaponController _weapon;
 
 
 	[Header("Player controller variables")]
@@ -135,7 +135,9 @@ public class PlayerController : MonoBehaviour
 		animMoveSpeed = animMoveSpeed == 0 ? horizontalInput : animMoveSpeed;
 		_animator.SetFloat("Speed", animMoveSpeed);
 		_animator.SetBool("IsGrounded", _controller.isGrounded);
-		_animator.SetBool("HasRifle", _weapon != null);
+
+		_animator.SetBool("HasBaseballBat", _weapon != null && _weapon.GetWeaponType() == WeaponType.BaseballBat);
+		_animator.SetBool("HasRifle", _weapon != null && _weapon.GetWeaponType() == WeaponType.Rifle);
 
 		if (AbilityCheck(PlayerAbility.Aim))
 		{
@@ -335,6 +337,7 @@ public class PlayerController : MonoBehaviour
 			return;
 
 		_weapon.Fire();
+		_animator.SetTrigger("Shoot");
 	}
 
 	// --------------------------------------------
@@ -399,17 +402,30 @@ public class PlayerController : MonoBehaviour
 		if (weapon == null || _weapon != null)
 			return;
 
+		weapon.transform.Find("");
 		// Will make it stick when player jumps instead of detaching
 		weapon.GetComponent<Rigidbody>().isKinematic = true;
 
-		weapon.transform.position = RiflePosition.transform.position;
-		weapon.transform.rotation = RiflePosition.transform.rotation;
-		// Stick it to the player's hand
-		weapon.transform.SetParent(RiflePosition.transform, true);
-		_weapon = weapon.GetComponent<WeaponController>();
 
-		_aimIK.TransformTargetForLeftHand = _weapon.GetLeftHandPosition();
-		_aimIK.RifleHoldingMode = true;
+		_weapon = weapon.GetComponent<BaseWeaponController>();
+
+		if (_weapon.GetWeaponType() == WeaponType.Rifle)
+		{
+			weapon.transform.position = RiflePosition.transform.position;
+			weapon.transform.rotation = RiflePosition.transform.rotation;
+			// Stick it to the player's hand
+			weapon.transform.SetParent(RiflePosition.transform, true);
+			_aimIK.TransformTargetForLeftHand = (_weapon as AK47WeaponController).GetLeftHandPosition();
+			_aimIK.RifleHoldingMode = true;
+		}
+		else if (_weapon.GetWeaponType() == WeaponType.BaseballBat)
+		{
+			weapon.transform.position = RiflePosition.transform.position;
+			weapon.transform.rotation = RiflePosition.transform.rotation;
+			// Stick it to the player's hand
+			weapon.transform.SetParent(RiflePosition.transform, true);
+		}
+
 
 		Debug.Log(gameObject.name + " picked up a " + weapon.name);
 	}
@@ -434,5 +450,17 @@ public class PlayerController : MonoBehaviour
 			}
 			OnWeaponPickup(collision.gameObject);
 		}
+	}
+
+	public void BaseballBatAnimationFinished ()
+	{
+		_weapon.ReduceAmmo();
+	}
+
+	public void DropWeapon ()
+	{
+		if (_weapon != null)
+			_weapon.transform.SetParent(null);
+		_weapon = null;
 	}
 }
