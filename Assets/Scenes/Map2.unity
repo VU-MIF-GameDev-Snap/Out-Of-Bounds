@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -729,11 +729,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weapons.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4410520343830106, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 7.4164686
@@ -768,12 +763,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
         type: 2}
-      propertyPath: weapons.Array.data[0]
-      value: 
-      objectReference: {fileID: 1348378874746838, guid: 4e1720b5f64a3cb48a783a99cb3913e2,
-        type: 2}
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
       propertyPath: GameEndingPanel
       value: 
       objectReference: {fileID: 1372989438}
@@ -782,12 +771,6 @@ Prefab:
       propertyPath: GameEndingWinnerTextField
       value: 
       objectReference: {fileID: 195681060}
-    - target: {fileID: 114299934463564494, guid: fd8fcc26c187cdc498cfda54b6055a4b,
-        type: 2}
-      propertyPath: weapons.Array.data[1]
-      value: 
-      objectReference: {fileID: 1992579999206340, guid: eceb239082a9f6343906dc3a735b3c5c,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
   m_IsPrefabAsset: 0
