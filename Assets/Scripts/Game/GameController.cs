@@ -21,9 +21,10 @@ public class GameController : MonoBehaviour
 	private PlaylistController _playlistController;
 	private float _gameEndedAt = 0;
 	private bool _gameEnded = false;
-	public List<GameObject> weapons = new List<GameObject>();
+
 	public List<AudioClip> songs = new List<AudioClip>();
-	public Vector3 weaponSpawnValues;
+    public List<GameObject> weapons = new List<GameObject>();
+    public Vector3 weaponSpawnValues;
 	public float weaponSpawnWait;
 
 
