@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 813937424}
   m_Layer: 0
   m_Name: node_id9
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -868,6 +868,30 @@ Prefab:
     - target: {fileID: 400038, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 100018, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100038, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100036, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1f7ae01536a5744a8ae4384c6da567, type: 3}
