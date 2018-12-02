@@ -314,7 +314,7 @@ public class PlayerController : MonoBehaviour
 	private void Hit (HitEvent bodyPart, HitType type, int damage, int knockValue)
 	{
 		var msg = new HitMessage()
-		{ HitType = type, Damage = damage, KnockbackValue = knockValue, KnockbackDirection = transform.forward };
+		{ HitType = type, Damage = damage, KnockbackValue = knockValue, KnockbackDirection = _inputManager.GetAimDirection() };
 		bodyPart.Initialise(msg);
 
 		// Debug.Log("Type: " + hit + " Damage: " + damage);
