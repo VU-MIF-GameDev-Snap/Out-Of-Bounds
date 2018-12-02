@@ -1817,8 +1817,9 @@ MonoBehaviour:
   Speed: 5
   JumpHeight: 2
   Gravity: -30
-  KnockbackFactor: 0.002
+  KnockbackFactor: 0.004
   LandingDelay: 0.1
+  JumpDelayAfterThisAirTime: 0.1
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}

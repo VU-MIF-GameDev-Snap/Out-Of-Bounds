@@ -10,6 +10,8 @@ public class CharacterSelectionController : MonoBehaviour
 	private PlayerInputManager _inputManager;
 	private int _loadedData = 0;
 	private int _selectedCharacterId = 0;
+	private bool _ableToScroll = true;
+
 
 	public bool Confirmed = false;
 
@@ -67,8 +69,10 @@ public class CharacterSelectionController : MonoBehaviour
 				});
 		}
 
-		if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0)
+		if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) < 0 && _ableToScroll)
 		{
+			_ableToScroll = false;
+
 			// move down the list
 			if (_selectedCharacterId >= CharactersManager.CharactersList.Count -1)
 			{
@@ -80,8 +84,10 @@ public class CharacterSelectionController : MonoBehaviour
 			}
 
 		}
-		else if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0)
+		else if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) > 0 && _ableToScroll)
 		{
+			_ableToScroll = false;
+
 			// move up the list
 			if(_selectedCharacterId <= 0)
 			{
@@ -91,6 +97,10 @@ public class CharacterSelectionController : MonoBehaviour
 			{
 				_selectedCharacterId--;
 			}
+		}
+		else if (_inputManager.GetAxis(PlayerInputManager.Key.MoveVertical) == 0)
+		{
+			_ableToScroll = true;
 		}
 	}
 

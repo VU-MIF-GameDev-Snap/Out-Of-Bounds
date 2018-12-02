@@ -12,6 +12,7 @@ public class PlayerSelectionController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		Globals.Players.Clear();
 		_playerInputManagers = GetComponents(typeof(PlayerInputManager)).Where((Component c) => {
 			return c is PlayerInputManager;
 		}).Select((Component c) => {
