@@ -8,7 +8,10 @@ public class MaleanPowerController : MonoBehaviour, ICharacterPowerController
 	private CharacterController _characterController;
     private PlayerController _playerController;
     private List<GameObject> _characters = new List<GameObject>();
+    private PlayerAudioController _audioController;
+    private AudioSource _audioSource;
     private bool _strikeHappened = true;
+
 
 	[Header("Power 1")]
 	public float Power1Cooldown;
@@ -42,6 +45,9 @@ public class MaleanPowerController : MonoBehaviour, ICharacterPowerController
         _power1TimeStamp = Time.time + Power1Cooldown;
         _strikeHappened = false;
 
+        _audioSource.clip = _audioController.Power_1;
+        _audioSource.Play();
+
         var v =_playerController.Velocity;
         if(v.y > 0)
         {
@@ -62,7 +68,10 @@ public class MaleanPowerController : MonoBehaviour, ICharacterPowerController
 			var blackHole = Instantiate(BlackHole, BlackHoleSpawn.position, BlackHoleSpawn.rotation);
 
 			blackHole.GetComponent<BlackHole>().Initialize(transform.root.gameObject, _playerInputManager.GetAimDirection());
-		}
+
+            _audioSource.clip = _audioController.Power_2;
+            _audioSource.Play();
+        }
 	}
 
 	void Start ()
@@ -70,9 +79,11 @@ public class MaleanPowerController : MonoBehaviour, ICharacterPowerController
 		_playerInputManager = GetComponent<PlayerInputManager>();
 		_characterController = GetComponent<CharacterController>();
         _playerController = GetComponent<PlayerController>();
+        _audioSource = _playerController.AudioSource;
+        _audioController = GetComponent<PlayerAudioController>();
 
         // Get all other characters to follow
-		var characters = GameObject.FindGameObjectsWithTag("Player");
+        var characters = GameObject.FindGameObjectsWithTag("Player");
 
 		foreach(GameObject c in characters)
 		{

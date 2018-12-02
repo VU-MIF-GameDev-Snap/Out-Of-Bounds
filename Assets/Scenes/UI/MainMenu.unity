@@ -8218,124 +8218,57 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\\section{Resurs\u0173 \u0161altiniai}\r\nPateikiami dokumente referuojam\u0173
-    modeli\u0173 ir gars\u0173 \u0161altiniai.\r\n\r\n\r\n% -------------------------------------------\r\n%
-    ----------- 6.1 Veik\u0117j\u0173 modeliai ----------\r\n% -------------------------------------------\r\n\\subsection{Veik\u0117j\u0173
-    modeliai}\r\nToliau pateikiamas s\u0105ra\u0161as su veik\u0117jais ir j\u0173
-    atitinkan\u010Di\u0173 modeli\u0173 \u0161altiniais:\r\n\\begin{itemize}\r\n    \\item
-    \\textbf{Malean} - \\textit{Y Bot} (aut. \\textit{Mixamo}) (https://www.mixamo.com);\r\n
-    \   \\item \\textbf{Valkyrie} - \\textit{X Bot} (aut. \\textit{Mixamo}) (https://www.mixamo.com);\r\n
-    \   \\item \\textbf{Penkratjevas} - \\textit{Vanguard} (aut. T. Choonyung) (https://www.mixamo.com);\r\n
-    \   \\item \\textbf{Bonbon} - \\textit{Sci-Fi Soldier} (aut. Yurov Viktor) (https://assetstore.unity.com/packages/3d/
-    characters/humanoids/sci-fi-soldier-29559).\r\n\\end{itemize}\r\n\r\n\r\n% -------------------------------------------\r\n%
-    ----------- 6.2 Ginkl\u0173 modeliai -----------\r\n% -------------------------------------------\r\n\\subsection{Ginkl\u0173
-    modeliai}\r\nToliau pateikiamas s\u0105ra\u0161as su ginklais ir j\u0173 atitinkan\u010Di\u0173
-    modeli\u0173 \u0161altiniais:\r\n\\begin{itemize}\r\n    \\item \\textbf{Pistoletas}
-    - \\textit{Low Poly Gun Pack} (aut. DUANE'S MIND) i\u0161 \\textit{Unity Asset
-    Store} (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\r\n
-    \   \\item \\textbf{Automatas} - \\textit{Low Poly Gun Pack} (aut. DUANE'S MIND)
-    i\u0161 \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\r\n
-    \   \\item \\textbf{\u0160ratinis} - \\textit{Low Poly Gun Pack} (aut. DUANE'S
-    MIND) i\u0161 \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\r\n
-    \   \\item \\textbf{Snaiperis} - \\textit{Low Poly Gun Pack} (aut. DUANE'S MIND)
-    i\u0161 \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\r\n
-    \   \\item \\textbf{Raketsvaidis} - \\textit{Low Poly Gun Pack} (aut. DUANE'S
-    MIND) i\u0161 \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\r\n
-    \   \\item \\textbf{Beisbolo lazda} - \\textit{Baseball Bats - Pack} (aut. CGUNWALE)
-    i\u0161  \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/weapons/baseball-bats-pack-102171);\r\n
-    \   \\item \\textbf{Dalgis} - \\textit{Skull Scythe} (aut. CALAVERA GAME STUDIO)
-    i\u0161  \\textit{Unity Asset Store} (https://assetstore.unity.com/packages/3d/props/weapons/skull-scythe-11982);\r\n
-    \   \\item \\textbf{Peilis} - \\textit{M9 Knife} (aut. URBANITY) i\u0161  \\textit{Unity
-    Asset Store} (https://assetstore.unity.com/packages/3d/props/weapons/m9-knife-7597).\r\n\\end{itemize}\r\n\r\n\r\n%
-    -------------------------------------------\r\n% --------------- 6.3 Garsai ----------------\r\n%
-    -------------------------------------------\r\n\\subsection{Garsai}\r\n\u0160iame
-    skyriuje pateikiami s\u0105ra\u0161ai su audio garsais ir j\u0173 \u0161altiniais.\r\n\r\n\r\n%
-    ---------------------------------------\r\n% ------- 6.3.1 Bendri veik\u0117jams
-    --------\r\n% ---------------------------------------\r\n\\subsubsection{Bendri
-    veik\u0117jams}\r\nToliau pateikiamas s\u0105ra\u0161as su bendrais veik\u0117j\u0173
-    audio garsais ir j\u0173 \u0161altiniais:\r\n\\item - \\textbf{Veik\u0117jas pa\u0161oka
-    auk\u0161tyn} - \\textit{Jump Sound Effects All Sounds} (aut. \\textit{All Sounds})
-    i\u0161 (https://www.youtube.com/watch?v=\\_eqKyzxa0dM);\r\n\\item - \\textbf{Veik\u0117jas
-    nusileid\u017Eia ant pavir\u0161iaus} - \\textit{Footstep Free sound effect} (aut.
-    \\textit{Free SoundEffects}) i\u0161 (https://www.youtube.com/watch?v=B6Ajq-3ivvY);\r\n\\item
-    - \\textbf{Veik\u0117jas d\u0117l var\u017Eovo sm\u016Bgio kyla auk\u0161tyn}
-    - \\textit{Swoosh sound effect} (aut. \\textit{John Lubiz}) i\u0161 (https://www.youtube.com/watch?v=VS9fDfmlJPM);\r\n\\item
-    - \\textbf{Veik\u0117jas mir\u0161ta, nes per ilgai buvo u\u017E apskritimo rib\u0173}
-    - \\textit{Whip Sound Effect} (aut. \\textit{Sound Effects}) i\u0161 (https://www.youtube.com/watch?v=CQWAtviZ1I4);\r\n\\item
-    - \\textbf{Veik\u0117jas ginasi} - \\textit{Swish, Swoosh, Cutscene Sound Effect}
-    (aut. \\textit{Animal Jam Giveaway}) i\u0161 (https://www.youtube.com/watch?v=EFY9TX2Fghg).\r\n\r\n\r\n%
-    ---------------------------------------\r\n% ------ 6.3.2 Unikal\u016Bs veik\u0117jams
-    -------\r\n% ---------------------------------------\r\n\\subsubsection{Unikal\u016Bs
-    veik\u0117jams}\r\nToliau pateikiamas s\u0105ra\u0161as su bendrais veik\u0117j\u0173
-    audio garsais ir j\u0173 \u0161altiniais:\r\n\r\n\\item - \\textbf{Malean veik\u0117jas
-    su\u017Eeid\u017Eiamas (1 variacija)} (aut. \\textit{Emilijus Stankus});\r\n\\item
-    - \\textbf{Malean veik\u0117jas su\u017Eeid\u017Eiamas (2 variacija)} (aut. \\textit{Emilijus
-    Stankus});\r\n\\item - \\textbf{Malean veik\u0117jas su\u017Eeid\u017Eiamas (3
-    variacija)} (aut. \\textit{Emilijus Stankus});\r\n\\item - \\textbf{Malean veik\u0117jas
-    mir\u0161ta} (aut. \\textit{Emilijus Stankus});\r\n\\item - \\textbf{Malean veik\u0117jo
-    vardo i\u0161tarimas} (aut. \\textit{Emilijus Stankus});\r\n\r\n\\item - \\textbf{Valkyrie
-    veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija)} (aut. \\textit{Benas Bagdanovas});\r\n\\item
-    - \\textbf{Valkyrie veik\u0117jas su\u017Eeid\u017Eiamas (2 variacija)} (aut.
-    \\textit{Benas Bagdanovas});\r\n\\item - \\textbf{Valkyrie veik\u0117jas su\u017Eeid\u017Eiamas
-    (3 variacija)} (aut. \\textit{Benas Bagdanovas});\r\n\\item - \\textbf{Valkyrie
-    veik\u0117jas mir\u0161ta} (aut. \\textit{Benas Bagdanovas});\r\n\\item - \\textbf{Valkyrie
-    veik\u0117jo vardo i\u0161tarimas} (aut. \\textit{Benas Bagdanovas});\r\n\r\n\\item
-    - \\textbf{Penkratjev veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija)} (aut.
-    \\textit{Gediminas Krasauskas});\r\n\\item - \\textbf{Penkratjev veik\u0117jas
-    su\u017Eeid\u017Eiamas (2 variacija)} (aut. \\textit{Gediminas Krasauskas});\r\n\\item
-    - \\textbf{Penkratjev veik\u0117jas su\u017Eeid\u017Eiamas (3 variacija)} (aut.
-    \\textit{Gediminas Krasauskas});\r\n\\item - \\textbf{Penkratjev veik\u0117jas
-    mir\u0161ta} (aut. \\textit{Gediminas Krasauskas});\r\n\\item - \\textbf{Penkratjev
-    veik\u0117jo vardo i\u0161tarimas} (aut. \\textit{Gediminas Krasauskas});\r\n\r\n\\item
-    - \\textbf{Bonbon veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija)} (aut. \\textit{Karolis
-    U\u017Ekuraitis});\r\n\\item - \\textbf{Bonbon veik\u0117jas su\u017Eeid\u017Eiamas
-    (2 variacija)} (aut. \\textit{Karolis U\u017Ekuraitis});\r\n\\item - \\textbf{Bonbon
-    veik\u0117jas su\u017Eeid\u017Eiamas (3 variacija)} (aut. \\textit{Karolis U\u017Ekuraitis});\r\n\\item
-    - \\textbf{Bonbon veik\u0117jas mir\u0161ta} (aut. \\textit{Karolis U\u017Ekuraitis});\r\n\\item
-    - \\textbf{Bonbon veik\u0117jo vardo i\u0161tarimas} (aut. \\textit{Karolis U\u017Ekuraitis}).\r\n\r\n\r\n%
-    -------------------------------\r\n% ------- 6.3.3 Ginklai ---------\r\n% -------------------------------\r\n\\subsubsection{Ginklai}\r\nToliau
-    pateikiamas s\u0105ra\u0161as su ginkl\u0173 audio garsais ir j\u0173 \u0161altiniais:\r\n\\begin{itemize}\r\n
-    \   % Pistoletas\r\n    \\item \\textbf{Pistoleto i\u0161\u0161ovimas} - \\textit{All
-    the old CS:GO Sounds} (aut. \\textit{Josh McKendry}) i\u0161 (https://www.youtube.com/watch?v=pVlVBVlkuus);\r\n
-    \   \\item \\textbf{Pistoleto atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n    % Automatas\r\n
-    \   \\item \\textbf{Automato i\u0161\u0161ovimas} - \\textit{All the old CS:GO
-    Sounds} (aut. \\textit{Josh McKendry}) i\u0161 (https://www.youtube.com/watch?v=pVlVBVlkuus);\r\n
-    \   \\item \\textbf{Automato atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n    % \u0160ratinis\r\n
-    \   \\item \\textbf{\u0160ratinio i\u0161\u0161ovimas} - \\textit{All the old
-    CS:GO Sounds} (aut. \\textit{Josh McKendry}) i\u0161 (https://www.youtube.com/watch?v=pVlVBVlkuus);\r\n
-    \   \\item \\textbf{\u0160ratinio atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n    % Snaiperis\r\n
-    \   \\item \\textbf{Snaiperio i\u0161\u0161ovimas} - \\textit{All the old CS:GO
-    Sounds} (aut. \\textit{Josh McKendry}) i\u0161 (https://www.youtube.com/watch?v=pVlVBVlkuus);\r\n
-    \   \\item \\textbf{Snaiperio atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n    % Raketsvaidis\r\n
-    \   \\item \\textbf{Raketsvaid\u017Eio i\u0161\u0161ovimas} - \\textit{Modern
-    Warfare 2 All Weapons + Camos Gameplay} (aut. \\textit{Undeath92}) i\u0161 (https://www.youtube.com/watch?v=Nglhgj1Zy3c);\r\n
-    \   \\item \\textbf{Raketsvaid\u017Eio raketos sprogimas} - \\textit{Explosion
-    and Action Sound Effects} (aut. \\textit{Pigment Ajans - Visual Effects}) i\u0161
-    (https://www.youtube.com/watch?v=qfcCNzESwKk);\r\n    \\item \\textbf{Raketsvaid\u017Eio
-    atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai atsiradus arenoje)} - \\textit{Gun
-    Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n
-    \   % Beisbolas\r\n    \\item \\textbf{Beisbolo lazdos u\u017Esimojimas} - \\textit{Swoosh
-    Whoosh Sword Air Swing Sound Effect} (aut. Iwan Sounds and DIY) i\u0161 (https://www.youtube.com/watch?v=9eUFdAquFJs);\r\n
-    \   \\item \\textbf{Beisbolo lazdos atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n    % Dalgis\r\n
-    \   \\item \\textbf{Dalgio u\u017Esimojimas} - \\textit{Swoosh Whoosh Sword Air
-    Swing Sound Effect} (aut. Iwan Sounds and DIY) i\u0161 (https://www.youtube.com/watch?v=9eUFdAquFJs);\r\n
-    \   \\item \\textbf{Dalgio atsitrenkimas \u012F pavir\u0161i\u0173 } - \\textit{Gun
-    Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk);\r\n
-    \   % Peilis\r\n    \\item \\textbf{Peilio u\u017Esimojimas} - \\textit{Swoosh
-    Whoosh Sword Air Swing Sound Effect} (aut. Iwan Sounds and DIY) i\u0161 (https://www.youtube.com/watch?v=9eUFdAquFJs);\r\n
-    \   \\item \\textbf{Peilio atsitrenkimas \u012F pavir\u0161i\u0173 (atsitiktinai
-    atsiradus arenoje)} - \\textit{Gun Drop on Cement [SOUND EFFECT]} (aut. \\textit{Freeify
-    Music}) i\u0161 (https://www.youtube.com/watch?v=5vfcYDgvQsk).\r\n\\end{itemize}"
+  m_Text: "Veik\u0117j\u0173 modeliai:\n\u2022 Malean-Y Bot (aut.Mixamo) (https://www.mixamo.com);\n\u2022
+    Valkyrie-X Bot (aut.Mixamo) (https://www.mixamo.com);\n\u2022 Penkratjevas-Vanguard
+    (aut. T. Choonyung) (https://www.mixamo.com);\n\u2022 Bonbon-Sci-Fi Soldier (aut.
+    Yurov Viktor) (https://assetstore.unity.com/packages/3d/characters/humanoids/sci-fi-soldier-29559).
+    \n\nGinkl\u0173 modeliai:\n\u2022 Pistoletas-Low Poly Gun Pack (aut. DUANE\u2019S
+    MIND) i\u0161Unity Asset Store (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\n\u2022
+    Automatas-Low Poly Gun Pack (aut. DUANE\u2019S MIND) i\u0161Unity Asset Store
+    (https://assetstore.unity.com/packages/3d/props/guns/low-poly-gun-pack-4725);\n\u2022
+    Beisbolo lazda-Baseball Bats - Pack (aut. CGUNWALE) i\u0161Unity Asset Store (https://assetstore.unity.com/packages/3d/props/weapons/baseball-bats-pack-102171);\n\nGarsai:\nBendri
+    veik\u0117jams:\n- Veik\u0117jas pa\u0161oka auk\u0161tyn - Jump Sound Effects
+    All Sounds (aut. All Sounds) i\u0161 (https://www.youtube.com/watch?v=_eqKyzxa0dM);\r\n-
+    Veik\u0117jas skrod\u017Eia oru - Cartoon Dash Sound Effect i\u0161 (https://www.youtube.com/watch?v=rC8iceP_nMI)\n-
+    Veik\u0117jas trenkia - Swoosh Whoosh Sword Air Swing Sound Effect (aut. IwanSounds
+    and DIY) i\u0161 (https://www.youtube.com/watch?v=9eUFdAquFJs);\n\nUnikal\u016Bs
+    veik\u0117jams:\n- Malean veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija) (aut.
+    Emilijus Stankus);\n- Malean veik\u0117jas su\u017Eeid\u017Eiamas (2 variacija)
+    (aut. Emilijus Stankus);\n- Malean veik\u0117jas su\u017Eeid\u017Eiamas (3 variacija)
+    (aut. Emilijus Stankus);\n- Malean veik\u0117jas mir\u0161ta (aut. Emilijus Stankus);
+    \n- Malean veik\u0117jo vardo i\u0161tarimas (aut. Emilijus Stankus);\n- Valkyrie
+    veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija) (aut. Benas Bagdanovas);\n-
+    Valkyrie veik\u0117jas su\u017Eeid\u017Eiamas (2 variacija) (aut. Benas Bagdanovas);\n-
+    Valkyrie veik\u0117jas su\u017Eeid\u017Eiamas (3 variacija) (aut. Benas Bagdanovas);\n-
+    Valkyrie veik\u0117jas mir\u0161ta (aut. Benas Bagdanovas);\n- Valkyrie veik\u0117jo
+    vardo i\u0161tarimas (aut. Benas Bagdanovas);\n- Penkratjev veik\u0117jas su\u017Eeid\u017Eiamas
+    (1 variacija) (aut. Gediminas Krasauskas);\n- Penkratjev veik\u0117jas su\u017Eeid\u017Eiamas
+    (2 variacija) (aut. Gediminas Krasauskas);\n- Penkratjev veik\u0117jas su\u017Eeid\u017Eiamas
+    (3 variacija) (aut. Gediminas Krasauskas);\n- Penkratjev veik\u0117jas mir\u0161ta
+    (aut. Gediminas Krasauskas);\n- Penkratjev veik\u0117jo vardo i\u0161tarimas (aut.
+    Gediminas Krasauskas);\n- Bonbon veik\u0117jas su\u017Eeid\u017Eiamas (1 variacija)
+    (aut. Karolis U\u017Ekuraitis);\n- Bonbon veik\u0117jas su\u017Eeid\u017Eiamas
+    (2 variacija) (aut. Karolis U\u017Ekuraitis);\n- Bonbon veik\u0117jas su\u017Eeid\u017Eiamas
+    (3 variacija) (aut. Karolis U\u017Ekuraitis);\n- Bonbon veik\u0117jas mir\u0161ta
+    (aut. Karolis U\u017Ekuraitis);\n- Bonbon veik\u0117jo vardo i\u0161tarimas (aut.
+    Karolis U\u017Ekuraitis).\n\r\nVeik\u0117j\u0173 galios:\n- Malean Juodoji skyl\u0117
+    - Lightning Strike Sound Effect (aut. SoundEffectsFactory\r) i\u0161 (https://www.youtube.com/watch?v=-GKqjZuMvUo)\n-
+    Malean Kiborgo sm\u016Bgis - Rocket League (aut. Adrm\r) i\u0161 (https://www.youtube.com/watch?v=9_56YY1ohGU),
+    Low Flying Jets (aut. VIDSTORM\r) i\u0161 (https://www.youtube.com/watch?v=9f2wBmFC3Rk)\n-
+    Bonbon Kaupiamas sm\u016Bgis - Goku charging up (aut. \rManuel Gonzalez\r) i\u0161
+    (https://www.youtube.com/watch?v=uKi5sVmOabw), Kamehameha (aut. BSLc .985.\r\r)
+    i\u0161 (https://www.youtube.com/watch?v=wolDR1gVrCo)\n- Bonbon Akmens forma -
+    Falling Rock Sound Effect (aut. Sounds Recorded\r) i\u0161 (https://www.youtube.com/watch?v=wOS1YRwduCA)\n-
+    Valkyrie Nematomumas - \n- Valkyrie Persekiojan\u010Dios raketos - Missile SOUND
+    EFFECT (aut. Audio Productions\r) i\u0161 (https://www.youtube.com/watch?v=y-5zAoJ46fU)\n-
+    Penkratjev Apsikeitimas - \n- Penkratjev Pagie\u017Eos lazeris - \n\nGinklai:\n\u2022
+    Pistoleto i\u0161\u0161ovimas-All the old CS:GO Sounds (aut. Josh McKendry) i\u0161
+    (https://www.youtube.com/watch?v=pVlVBVlkuus);\n\u2022 Automato i\u0161\u0161ovimas-All
+    the old CS:GO Sounds (aut. Josh McKendry) i\u0161(https://www.youtube.com/watch?v=pVlVBVlkuus);\n\u2022
+    Beisbolo lazdos u\u017Esimojimas - Swoosh Whoosh Sword Air Swing Sound Effect
+    (aut. IwanSounds and DIY) i\u0161 (https://www.youtube.com/watch?v=9eUFdAquFJs);\n\nMeniu:\n\u2022
+    Meniu muzika - I\u2019ll Be There For You (aut. The  Rembrandts) i\u0161 (https://www.youtube.com/watch?v=2VbODnX0dVs);\n\n\u017Daidimo
+    eiga:\n- "
 --- !u!222 &2116510357
 CanvasRenderer:
   m_ObjectHideFlags: 0

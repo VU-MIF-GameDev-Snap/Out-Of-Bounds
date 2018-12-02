@@ -218,6 +218,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114656820326724826, guid: f8fe2c4f816c57c42a84c9f48f425ba9,
+        type: 2}
+      propertyPath: Power_1
+      value: 
+      objectReference: {fileID: 8300000, guid: 23b89d47fd6d5a344a1687db6f0e1339, type: 3}
+    - target: {fileID: 114273510779346980, guid: f8fe2c4f816c57c42a84c9f48f425ba9,
+        type: 2}
+      propertyPath: PlayerId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114656820326724826, guid: f8fe2c4f816c57c42a84c9f48f425ba9,
+        type: 2}
+      propertyPath: Power_1_1
+      value: 
+      objectReference: {fileID: 8300000, guid: 3660dcd68a4728449983469128767fd6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8fe2c4f816c57c42a84c9f48f425ba9, type: 2}
   m_IsPrefabAsset: 0
@@ -310,6 +325,11 @@ Prefab:
       propertyPath: songs.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: 82fe72e19e785be458004bffb2bd3242, type: 3}
+    - target: {fileID: 82289089921397110, guid: fd8fcc26c187cdc498cfda54b6055a4b,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd8fcc26c187cdc498cfda54b6055a4b, type: 2}
   m_IsPrefabAsset: 0
@@ -546,6 +566,46 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 95477754484724784, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 143769653501790550, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114463609666780060, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114306934689012190, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114637578447850206, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114289784722922446, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114792348929050896, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: Power_2
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c0ab38dd60583643983a36d189636f2, type: 3}
+    - target: {fileID: 114792348929050896, guid: e350a0fa73a087042b57c0be54df7c0a,
+        type: 2}
+      propertyPath: Power_1
+      value: 
+      objectReference: {fileID: 8300000, guid: d0b14184e1f07ab4dad01a0011a1790d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e350a0fa73a087042b57c0be54df7c0a, type: 2}
   m_IsPrefabAsset: 0
