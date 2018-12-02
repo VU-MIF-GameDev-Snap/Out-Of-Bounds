@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	public int KnockValue = 5;
 	//public Vector3 KnockDirection = GameObject.transform.forward;
 
-	private WeaponController _weapon;
+	private BaseWeaponController _weapon;
 
 
 	[Header("Player controller variables")]
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 	public float JumpHoldStrength = 1f;
 
 	public Vector3 Drag;
+	public float GroundedDrag = 1.5f;
 	[Header("Player controller variables")]
 	public float DashDuration = 0.2f;
 	public float DashDistance = 5f;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
 	private CharacterController _controller;
 	private Vector3 _velocity;
+	public Vector3 Velocity { get{return _velocity;} set{_velocity = value;} }
 	private Animator _animator;
 	private AimIK _aimIK;
 	private PlayerInputManager _inputManager;
@@ -135,7 +137,9 @@ public class PlayerController : MonoBehaviour
 		animMoveSpeed = animMoveSpeed == 0 ? horizontalInput : animMoveSpeed;
 		_animator.SetFloat("Speed", animMoveSpeed);
 		_animator.SetBool("IsGrounded", _controller.isGrounded);
-		_animator.SetBool("HasRifle", _weapon != null);
+
+		_animator.SetBool("HasBaseballBat", _weapon != null && _weapon.GetWeaponType() == WeaponType.BaseballBat);
+		_animator.SetBool("HasRifle", _weapon != null && _weapon.GetWeaponType() == WeaponType.Rifle);
 
 		if (AbilityCheck(PlayerAbility.Aim))
 		{
@@ -146,14 +150,14 @@ public class PlayerController : MonoBehaviour
 
 		if (_controller.isGrounded && _velocity.y <= 0)
 		{
-			_velocity.y = Gravity * Time.deltaTime;
+			_velocity.y = Gravity * 0.01f;
 		}
 		else if (!_controller.isGrounded)
 		{
 			_velocity.y += Gravity * Time.deltaTime;
 		}
 
-		_velocity.x /= (1 + Drag.x * Time.deltaTime) * (_controller.isGrounded ? 5 : 1);
+		_velocity.x /= (1 + Drag.x * Time.deltaTime * (_controller.isGrounded ? GroundedDrag  : 1));
 		_velocity.y /= 1 + Drag.y * Time.deltaTime;
 		_velocity.z = 0;
 		// Debug.Log("velo: " + _velocity + " + grounded: " + _controller.isGrounded);
@@ -335,6 +339,7 @@ public class PlayerController : MonoBehaviour
 			return;
 
 		_weapon.Fire();
+		_animator.SetTrigger("Shoot");
 	}
 
 	// --------------------------------------------
@@ -399,17 +404,30 @@ public class PlayerController : MonoBehaviour
 		if (weapon == null || _weapon != null)
 			return;
 
+		weapon.transform.Find("");
 		// Will make it stick when player jumps instead of detaching
 		weapon.GetComponent<Rigidbody>().isKinematic = true;
 
-		weapon.transform.position = RiflePosition.transform.position;
-		weapon.transform.rotation = RiflePosition.transform.rotation;
-		// Stick it to the player's hand
-		weapon.transform.SetParent(RiflePosition.transform, true);
-		_weapon = weapon.GetComponent<WeaponController>();
 
-		_aimIK.TransformTargetForLeftHand = _weapon.GetLeftHandPosition();
-		_aimIK.RifleHoldingMode = true;
+		_weapon = weapon.GetComponent<BaseWeaponController>();
+
+		if (_weapon.GetWeaponType() == WeaponType.Rifle)
+		{
+			weapon.transform.position = RiflePosition.transform.position;
+			weapon.transform.rotation = RiflePosition.transform.rotation;
+			// Stick it to the player's hand
+			weapon.transform.SetParent(RiflePosition.transform, true);
+			_aimIK.TransformTargetForLeftHand = (_weapon as AK47WeaponController).GetLeftHandPosition();
+			_aimIK.RifleHoldingMode = true;
+		}
+		else if (_weapon.GetWeaponType() == WeaponType.BaseballBat)
+		{
+			weapon.transform.position = RiflePosition.transform.position;
+			weapon.transform.rotation = RiflePosition.transform.rotation;
+			// Stick it to the player's hand
+			weapon.transform.SetParent(RiflePosition.transform, true);
+		}
+
 
 		Debug.Log(gameObject.name + " picked up a " + weapon.name);
 	}
@@ -434,5 +452,17 @@ public class PlayerController : MonoBehaviour
 			}
 			OnWeaponPickup(collision.gameObject);
 		}
+	}
+
+	public void BaseballBatAnimationFinished ()
+	{
+		_weapon.ReduceAmmo();
+	}
+
+	public void DropWeapon ()
+	{
+		if (_weapon != null)
+			_weapon.transform.SetParent(null);
+		_weapon = null;
 	}
 }

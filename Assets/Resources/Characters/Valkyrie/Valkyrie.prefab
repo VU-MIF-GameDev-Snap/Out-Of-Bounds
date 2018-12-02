@@ -2334,7 +2334,7 @@ MonoBehaviour:
   hitpoints: 0
   maxHitpoints: 300
   PunchDamage: 5
-  KnockValue: 100
+  KnockValue: 15
   Speed: 5
   JumpHeight: 2
   Gravity: -30
@@ -2343,6 +2343,7 @@ MonoBehaviour:
   JumpHoldDuration: 1
   JumpHoldStrength: 1.6
   Drag: {x: 1, y: 1, z: 0}
+  GroundedDrag: 20
   DashDuration: 0.2
   DashDistance: 9
   DashCooldown: 2
