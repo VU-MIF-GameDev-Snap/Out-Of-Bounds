@@ -389,8 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DampTime: 0.2
-  ScreenEdgeBuffer: 4
-  MinSize: 6.5
+  ScreenEdgeBuffer: 2
+  MinSize: 3
 --- !u!1 &571972052
 GameObject:
   m_ObjectHideFlags: 0
