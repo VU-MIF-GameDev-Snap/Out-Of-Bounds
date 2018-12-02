@@ -21,8 +21,8 @@ public class GameController : MonoBehaviour
 	private PlaylistController _playlistController;
 	private float _gameEndedAt = 0;
 	private bool _gameEnded = false;
+	private List<AudioClip> songs = new List<AudioClip>();
 
-	public List<AudioClip> songs = new List<AudioClip>();
     public List<GameObject> weapons = new List<GameObject>();
     public Vector3 weaponSpawnValues;
 	public float weaponSpawnWait;
@@ -95,11 +95,11 @@ public class GameController : MonoBehaviour
 		while (true)
 		{
 			songs = _playlistController.Songs;
-			if (songs.Count < 1)
-			{
-				// Nothing to play.
-				break;
-			}
+			//if (songs.Count < 1)
+			//{
+			//	// Nothing to play.
+			//	break;
+			//}
 			displayMusic.clip = songs[UnityEngine.Random.Range(0, songs.Count)];
 			displayMusic.Play();
 			yield return new WaitForSeconds(displayMusic.clip.length);
